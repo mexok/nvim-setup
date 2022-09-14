@@ -8,3 +8,5 @@ bindkey '^[h' backward-word
 bindkey '^[l' forward-word
 bindkey '^[f' accept-line
 
+export LUA_PATH=~/.config/nvim/?.lua
+
