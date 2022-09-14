@@ -1,5 +1,3 @@
-vim.cmd "colorscheme eldar"
-
 vim.g.mapleader = " "
 vim.g.vimspector_base_dir = vim.fn.expand("$HOME/.config/nvim/vimspector-config")
 vim.g.vimspector_enable_mappings = 'HUMAN'
