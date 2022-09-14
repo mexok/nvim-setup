@@ -61,7 +61,7 @@ nmap <silent> <A-q> <cmd>q<cr>
 nmap <silent> <A-w> <cmd>w<cr>
 
 let g:vimspector_base_dir=expand( '$HOME/.config/nvim/vimspector-config' )
-let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools', 'CodeLLDB', 'vscode-node-debug2' ]
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools', 'CodeLLDB', 'vscode-node-debug2', 'vscode-firefox-debug' ]
 let g:vimspector_enable_mappings = 'HUMAN'
 nmap <F1> <cmd>VimspectorReset<cr>
 
@@ -99,13 +99,13 @@ nnoremap <A-o> m`o<Esc>``
 nnoremap <A-O> m`O<Esc>``
 
 " AltGr + asdfg for buffers
-nnoremap æ "a
-nnoremap ſ "s
-nnoremap ð "d
-nnoremap đ "f
-nnoremap ŋ "g
+noremap æ "a
+noremap ſ "s
+noremap ð "d
+noremap đ "f
+noremap ŋ "g
 " AltGr + r for list of registers
-nnoremap ¶ :registers<CR>
+noremap ¶ :registers<CR>
 
 xnoremap iu :lua require"treesitter-unit".select()<CR>
 xnoremap au :lua require"treesitter-unit".select(true)<CR>
