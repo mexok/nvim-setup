@@ -10,10 +10,13 @@ vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { noremap = tr
 
 vim.keymap.set("i", "<A-d>", "<Esc>", { noremap = true })
 
-vim.keymap.set("i", "<A-l>", "coc#pum#visible() ? coc#pum#confirm() : '<A-l>'")
-vim.keymap.set("i", "<A-ö>", "coc#pum#visible() ? '<Esc>' : '<A-ö>'")
-vim.keymap.set("i", "<A-j>", "coc#pum#visible() ? coc#pum#next(1) : '<A-j>'")
-vim.keymap.set("i", "<A-k>", "coc#pum#visible() ? coc#pum#prev(1) : '<A-k>'")
+vim.cmd([[
+inoremap <expr> <A-l> coc#pum#visible() ? coc#pum#confirm() : "\<A-l>"
+inoremap <expr> <A-ö> coc#pum#visible() ? "<Esc>" : "\<A-ö>"
+inoremap <expr> <A-j> coc#pum#visible() ? coc#pum#next(1) : "\<A-j>"
+inoremap <expr> <A-k> coc#pum#visible() ? coc#pum#prev(1) : "\<A-k>"
+]])
+
 vim.keymap.set("i", "<A-h>", "coc#refresh()")
 vim.keymap.set("n", "<leader>rn", "<Plug>(coc-rename)")
 
