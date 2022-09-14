@@ -51,6 +51,8 @@ Plug 'David-Kunz/treesitter-unit'
 " For git blame
 Plug 'tpope/vim-fugitive'
 
+Plug 'Vimjas/vim-python-pep8-indent'
+
 call plug#end()
 
 colorscheme eldar
@@ -95,6 +97,15 @@ nnoremap ; ,
 
 nnoremap <A-o> m`o<Esc>``
 nnoremap <A-O> m`O<Esc>``
+
+" AltGr + asdfg for buffers
+nnoremap æ "a
+nnoremap ſ "s
+nnoremap ð "d
+nnoremap đ "f
+nnoremap ŋ "g
+" AltGr + r for list of registers
+nnoremap ¶ :registers<CR>
 
 xnoremap iu :lua require"treesitter-unit".select()<CR>
 xnoremap au :lua require"treesitter-unit".select(true)<CR>
