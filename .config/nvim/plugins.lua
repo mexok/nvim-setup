@@ -32,7 +32,11 @@ require('packer').startup(function(use)
     -- For better indentation
     use 'Vimjas/vim-python-pep8-indent'
 
+    use 'mexok/voice-command.nvim'
+
 end)
+
+require('voice-command').setup()
 
 require('nvim-autopairs').setup({
   disable_filetype = { 'TelescopePrompt' },
