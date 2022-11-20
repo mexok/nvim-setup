@@ -1,6 +1,5 @@
 vim.g.mapleader = " "
-vim.g.vimspector_base_dir = vim.fn.expand("$HOME/.config/nvim/vimspector-config")
-vim.g.vimspector_enable_mappings = 'HUMAN'
+vim.g.python3_host_prog = 'python3'
 
 vim.opt.exrc = true
 vim.opt.foldmethod = "indent"
@@ -22,5 +21,4 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.incsearch = true
 
-vim.opt.colorcolumn = "80"
-
+vim.opt.colorcolumn = "120"

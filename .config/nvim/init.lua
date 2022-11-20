@@ -1,7 +1,7 @@
 require("settings")
 require("keymaps")
 require("plugins")
+require("lsp")
 require("autogroups")
 require("voice-commands")
 require("theme")
-

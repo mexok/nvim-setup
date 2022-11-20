@@ -3,13 +3,15 @@ require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- Theme
-    use 'agude/vim-eldar'
+    use 'ayu-theme/ayu-vim'
 
     -- Debugging
-    use 'puremourning/vimspector'
+    use 'mfussenegger/nvim-dap'
 
     -- Code completion
-    use { 'neoclide/coc.nvim', branch = 'release' }
+    use 'neovim/nvim-lspconfig'
+    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/cmp-nvim-lsp'
 
     -- File lookup
     use { 'nvim-telescope/telescope.nvim', tag = '0.1.0' }
@@ -20,11 +22,9 @@ require('packer').startup(function(use)
     use 'kyazdani42/nvim-tree.lua'
 
     -- Editor smoothness
-    use 'windwp/nvim-autopairs'
+    use 'kana/vim-smartinput'
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use 'David-Kunz/treesitter-unit'
 
     -- For git blame
     use 'tpope/vim-fugitive'
@@ -38,28 +38,24 @@ end)
 
 require('voice-command').setup()
 
-require('nvim-autopairs').setup({
-  disable_filetype = { 'TelescopePrompt' },
-})
-
 require('nvim-tree').setup()
 
-require('nvim-treesitter.configs').setup({
-  ensure_installed = { "c", "python", "typescript", "javascript"},
-  sync_install = false,
-  auto_install = true,
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
+require("telescope").setup({
+    defaults = {
+        layout_strategy = "horizontal"
     },
-  },
+    pickers = {
+        find_files = {
+            theme = "ivy"
+        },
+        live_grep = {
+            theme = "ivy"
+        },
+        buffers = {
+            theme = "ivy"
+        },
+        help_tags = {
+            theme = "ivy"
+        },
+    }
 })
-

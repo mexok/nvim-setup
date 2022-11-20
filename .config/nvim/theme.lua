@@ -1,2 +1,4 @@
-vim.cmd "colorscheme eldar"
-
+vim.cmd [[
+set termguicolors"
+colorscheme ayu
+]]
