@@ -29,7 +29,6 @@ require('packer').startup(function(use)
     use 'kyazdani42/nvim-tree.lua'
 
     -- Editor smoothness
-    use 'kana/vim-smartinput'
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
 

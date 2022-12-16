@@ -28,6 +28,22 @@ dap.configurations.python = {
         name = "Launch file";
         program = "${file}";
         cwd = "${workspaceFolder}";
+        justMyCode = false;
+        pythonPath = function()
+            return 'python3'
+        end;
+        env = {
+            REG_F = "${env:REG_F}";
+        };
+    },
+    {
+        type = 'python';
+        request = 'launch';
+        name = "Pytest src";
+        args = {"src"};
+        module = "pytest";
+        cwd = "${workspaceFolder}";
+        justMyCode = false;
         pythonPath = function()
             return 'python3'
         end;
@@ -42,6 +58,7 @@ dap.configurations.python = {
         args = {"${file}"};
         module = "pytest";
         cwd = "${workspaceFolder}";
+        justMyCode = false;
         pythonPath = function()
             return 'python3'
         end;
@@ -56,6 +73,7 @@ dap.configurations.python = {
         args = {"${file}::${env:REG_A}::${env:REG_S}"};
         module = "pytest";
         cwd = "${workspaceFolder}";
+        justMyCode = false;
         pythonPath = function()
             return 'python3'
         end;
@@ -106,12 +124,25 @@ dap.configurations.vue = {
 
 
 -- lsp
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require('lspconfig')
+local lsp_defaults = lspconfig.util.default_config
+lsp_defaults.capabilities = vim.tbl_deep_extend(
+    'force',
+    lsp_defaults.capabilities,
+    require('cmp_nvim_lsp').default_capabilities()
+)
+
 local servers = { 'pyright', 'tsserver', 'vuels'}
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
-        capabilities = capabilities,
+        root_dir = function () return vim.fn.getcwd() end,
+        settings = {
+            python = {
+                autoSearchPaths = true,
+                diagnosticMode = "workspace",
+                useLibraryCodeForTypes = true
+            }
+        }
     }
 end
 
@@ -121,8 +152,6 @@ end
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 local cmp = require 'cmp'
-
-local select_opts = {behavior = cmp.SelectBehavior.Select}
 
 cmp.setup {
     snippet = {
@@ -134,8 +163,8 @@ cmp.setup {
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
-        ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
+        ['<Enter>'] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Select,
             select = true,
         },
         ['<Tab>'] = cmp.mapping(function(fallback)
