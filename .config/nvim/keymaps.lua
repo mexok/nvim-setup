@@ -97,6 +97,10 @@ vim.g.mexoks_find = function(char)
     if char ~= "[" and char ~= "]" then
         search_text = "["..char.."]"
     end
+    if char == "\\" then
+        -- we have to encapsulate '\'
+        search_text = "\\\\"
+    end
 
     for i=1, math.max(vim.v.count, 1) do
         local row, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -125,6 +129,10 @@ augroup END
 ]])
 
 vim.keymap.set({"n", "v"}, "@", "<cmd>lua vim.g.mexoks_find('@')<cr>", {noremap = true})
+vim.keymap.set({"n", "v"}, "$", "<cmd>lua vim.g.mexoks_find('$')<cr>", {noremap = true})
+vim.keymap.set({"n", "v"}, "%", "<cmd>lua vim.g.mexoks_find('%')<cr>", {noremap = true})
+vim.keymap.set({"n", "v"}, "&", "<cmd>lua vim.g.mexoks_find('&')<cr>", {noremap = true})
+vim.keymap.set({"n", "v"}, "?", "<cmd>lua vim.g.mexoks_find('?')<cr>", {noremap = true})
 vim.keymap.set({"n", "v"}, "_", "<cmd>lua vim.g.mexoks_find('_')<cr>", {noremap = true})
 vim.keymap.set({"n", "v"}, ":", "<cmd>lua vim.g.mexoks_find(':')<cr>", {noremap = true})
 vim.keymap.set({"n", "v"}, "<", "<cmd>lua vim.g.mexoks_find('<')<cr>", {noremap = true})
@@ -140,11 +148,12 @@ vim.keymap.set({"n", "v"}, "+", "<cmd>lua vim.g.mexoks_find('+')<cr>", {noremap 
 vim.keymap.set({"n", "v"}, "*", "<cmd>lua vim.g.mexoks_find('*')<cr>", {noremap = true})
 vim.keymap.set({"n", "v"}, "#", "<cmd>lua vim.g.mexoks_find('#')<cr>", {noremap = true})
 vim.keymap.set({"n", "v"}, ".", "<cmd>lua vim.g.mexoks_find('.')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "'", "<cmd>lua vim.g.mexoks_find(''')<cr>", {noremap = true})
+vim.keymap.set({"n", "v"}, "'", "<cmd>lua vim.g.mexoks_find(\"'\")<cr>", {noremap = true})
 vim.keymap.set({"n", "v"}, "\"", "<cmd>lua vim.g.mexoks_find('\"')<cr>", {noremap = true})
 vim.keymap.set({"n", "v"}, "=", "<cmd>lua vim.g.mexoks_find('=')<cr>", {noremap = true})
 vim.keymap.set({"n", "v"}, "!", "<cmd>lua vim.g.mexoks_find('!')<cr>", {noremap = true})
 vim.keymap.set({"n", "v"}, "/", "<cmd>lua vim.g.mexoks_find('/')<cr>", {noremap = true})
+vim.keymap.set({"n", "v"}, "\\", "<cmd>lua vim.g.mexoks_find('\\\\')<cr>", {noremap = true})
 vim.keymap.set({"n", "v"}, "~", "<cmd>lua vim.g.mexoks_find('~')<cr>", {noremap = true})
 
 vim.keymap.set("n", "<leader>f", "/", {noremap = true})
