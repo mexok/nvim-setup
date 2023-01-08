@@ -15,6 +15,7 @@ require('packer').startup(function(use)
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/nvim-cmp'
+
     -- snippet support
     use 'hrsh7th/cmp-vsnip'
     use 'hrsh7th/vim-vsnip'
@@ -31,6 +32,8 @@ require('packer').startup(function(use)
     -- Editor smoothness
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
+    use 'tpope/vim-abolish'
+    use 'mg979/vim-visual-multi'
 
     -- For git blame
     use 'tpope/vim-fugitive'

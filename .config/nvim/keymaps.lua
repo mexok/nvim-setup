@@ -2,14 +2,14 @@ vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>r", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true })
 vim.keymap.set("v", "<leader>r", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp })<cr>", { noremap = true })
-vim.keymap.set("n", "<leader>lg", "<cmd>lua require('telescope.builtin').live_grep()<cr>", { noremap = true })
-vim.keymap.set("v", "<leader>lg", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').live_grep({ default_text = tmp })<cr>", { noremap = true })
+vim.keymap.set("n", "<leader>s", "<cmd>lua require('telescope.builtin').live_grep()<cr>", { noremap = true })
+vim.keymap.set("v", "<leader>s", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').live_grep({ default_text = tmp })<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>tp", "<cmd>PackerUpdate<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>b", "<cmd>Git blame<cr>", { noremap = true })
 vim.keymap.set({"n", "v"}, "<leader>c", ":", { noremap = true })
 vim.keymap.set("n", "<leader>a", "gg0vG$", { noremap = true })
-vim.keymap.set("n", "<leader>lv", "<cmd>cex system('PYTHONPATH=src vulture src/*') | copen<cr>")
+vim.keymap.set("n", "<leader>tv", "<cmd>cex system('PYTHONPATH=src vulture src/*') | copen<cr>")
 vim.keymap.set("n", "<leader>H", ":h ", { noremap = true })
 vim.keymap.set({"n", "v"}, "<leader>,", ",", { noremap = true })
 vim.keymap.set({"n", "v"}, "<leader>.", ";", { noremap = true })
@@ -17,6 +17,7 @@ vim.keymap.set({"n", "v"}, "<leader>\"", "\"", { noremap = true })
 vim.keymap.set({"n", "v"}, "<leader>p", "@", { noremap = true })
 vim.keymap.set({"n", "v"}, "<leader>ü", "@@", { noremap = true })
 vim.keymap.set({"n", "v"}, "s", "\"_s", { noremap = true })
+vim.keymap.set({"n", "v"}, "<leader>l", "<cmd>lua vim.cmd(':'..vim.v.count)<cr>", { noremap = true })
 
 -- debugging
 local reg_cmd = "<cmd>let $REG_A = @a<cr><cmd>let $REG_S = @s<cr><cmd>let $REG_D = @d<cr><cmd>let $REG_F = @f<cr>"
@@ -89,6 +90,7 @@ vim.keymap.set("i", "{", "{}<left>", { noremap=true })
 vim.keymap.set("i", "{}", "{}", { noremap=true })
 vim.keymap.set("i", "{{", "{", { noremap=true })
 vim.keymap.set("i", "{<cr>", "{<cr>}<ESC>O", { noremap=true })
+vim.keymap.set("i", "<", "<><left>", { noremap=true })
 
 
 -- remappings for better find
@@ -114,12 +116,27 @@ vim.g.mexoks_find = function(char)
     end
 end
 
+vim.g.mexoks_findv = function(char)
+    local search_text = char
+    if char ~= "[" and char ~= "]" then
+        search_text = "["..char.."]"
+    end
+    if char == "\\" then
+        -- we have to encapsulate '\'
+        search_text = "\\\\"
+    end
+
+    for i=1, math.max(vim.v.count, 1) do
+        vim.fn.search(search_text, "", vim.fn.line("w$"))
+    end
+end
+
 vim.cmd([[
 function! SetBracketMappings()
     nnoremap <silent><nowait><buffer> [ <cmd>lua vim.g.mexoks_find('[')<cr>
-    vnoremap <silent><nowait><buffer> [ <cmd>lua vim.g.mexoks_find('[')<cr>
+    vnoremap <silent><nowait><buffer> [ <cmd>lua vim.g.mexoks_findv('[')<cr>
     nnoremap <silent><nowait><buffer> ] <cmd>lua vim.g.mexoks_find(']')<cr>
-    vnoremap <silent><nowait><buffer> ] <cmd>lua vim.g.mexoks_find(']')<cr>
+    vnoremap <silent><nowait><buffer> ] <cmd>lua vim.g.mexoks_findv(']')<cr>
 endfunction
 
 augroup bracketmaps
@@ -128,40 +145,53 @@ augroup bracketmaps
 augroup END
 ]])
 
-vim.keymap.set({"n", "v"}, "@", "<cmd>lua vim.g.mexoks_find('@')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "$", "<cmd>lua vim.g.mexoks_find('$')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "%", "<cmd>lua vim.g.mexoks_find('%')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "&", "<cmd>lua vim.g.mexoks_find('&')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "?", "<cmd>lua vim.g.mexoks_find('?')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "_", "<cmd>lua vim.g.mexoks_find('_')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, ":", "<cmd>lua vim.g.mexoks_find(':')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "<", "<cmd>lua vim.g.mexoks_find('<')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, ">", "<cmd>lua vim.g.mexoks_find('>')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "{", "<cmd>lua vim.g.mexoks_find('{')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "}", "<cmd>lua vim.g.mexoks_find('}')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, ")", "<cmd>lua vim.g.mexoks_find(')')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "(", "<cmd>lua vim.g.mexoks_find('(')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, ",", "<cmd>lua vim.g.mexoks_find(',')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, ";", "<cmd>lua vim.g.mexoks_find(';')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "-", "<cmd>lua vim.g.mexoks_find('-')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "+", "<cmd>lua vim.g.mexoks_find('+')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "*", "<cmd>lua vim.g.mexoks_find('*')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "#", "<cmd>lua vim.g.mexoks_find('#')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, ".", "<cmd>lua vim.g.mexoks_find('.')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "'", "<cmd>lua vim.g.mexoks_find(\"'\")<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "\"", "<cmd>lua vim.g.mexoks_find('\"')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "=", "<cmd>lua vim.g.mexoks_find('=')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "!", "<cmd>lua vim.g.mexoks_find('!')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "/", "<cmd>lua vim.g.mexoks_find('/')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "\\", "<cmd>lua vim.g.mexoks_find('\\\\')<cr>", {noremap = true})
-vim.keymap.set({"n", "v"}, "~", "<cmd>lua vim.g.mexoks_find('~')<cr>", {noremap = true})
+local set_mexoks_find = function(char)
+    if char == "\\" then
+        vim.keymap.set("n", char, "<cmd>lua vim.g.mexoks_find('\\\\')<cr>", {noremap = true})
+        vim.keymap.set("v", char, "<cmd>lua vim.g.mexoks_findv('\\\\')<cr>", {noremap = true})
+    elseif char == "'"then
+        vim.keymap.set("n", char, "<cmd>lua vim.g.mexoks_find('\\'')<cr>", {noremap = true})
+        vim.keymap.set("v", char, "<cmd>lua vim.g.mexoks_findv('\\'')<cr>", {noremap = true})
+    else
+        vim.keymap.set("n", char, "<cmd>lua vim.g.mexoks_find('"..char.."')<cr>", {noremap = true})
+        vim.keymap.set("v", char, "<cmd>lua vim.g.mexoks_findv('"..char.."')<cr>", {noremap = true})
+    end
+end
+
+set_mexoks_find("@")
+set_mexoks_find("$")
+set_mexoks_find("%")
+set_mexoks_find("&")
+set_mexoks_find("?")
+set_mexoks_find("_")
+set_mexoks_find(":")
+set_mexoks_find("<")
+set_mexoks_find(">")
+set_mexoks_find("{")
+set_mexoks_find("}")
+set_mexoks_find(")")
+set_mexoks_find("(")
+set_mexoks_find(",")
+set_mexoks_find(";")
+set_mexoks_find("-")
+set_mexoks_find("+")
+set_mexoks_find("*")
+set_mexoks_find("#")
+set_mexoks_find(".")
+set_mexoks_find("'")
+set_mexoks_find("\"")
+set_mexoks_find("=")
+set_mexoks_find("!")
+set_mexoks_find("/")
+set_mexoks_find("\\")
+set_mexoks_find("~")
 
 vim.keymap.set("n", "<leader>f", "/", {noremap = true})
 vim.keymap.set("v", "<leader>f", "y/<C-R>\"", {noremap = true})
 vim.keymap.set("n", "<leader>F", "?", {noremap = true})
 vim.keymap.set("v", "<leader>F", "y?<C-R>\"", {noremap = true})
-vim.keymap.set("n", "<leader>s", ":%s/", {noremap = true})
-vim.keymap.set("v", "<leader>s", ":s/", {noremap = true})
+vim.keymap.set("n", "s", ":%s/", {noremap = true})
+vim.keymap.set("v", "s", ":s/", {noremap = true})
 vim.keymap.set("n", "<leader>g", ":%g/", {noremap = true})
 vim.keymap.set("v", "<leader>g", ":g/", {noremap = true})
 vim.keymap.set("n", "<leader>v", ":%v/", {noremap = true})
@@ -176,12 +206,3 @@ vim.keymap.set({"n", "v"}, "ŋ", '"+', { noremap = true }) -- g for global buffe
 
 -- AltGr + r for list of registers
 vim.keymap.set({"n", "v"}, "¶", ":registers<cr>", { noremap = true })
-
--- Queue for copy and paste
-vim.g.buffer_queue = {}
-vim.keymap.set({"n", "v"}, "<leader>zy", "<cmd>lua local q = vim.g.buffer_queue; table.insert(q, vim.fn.getreg('+')); vim.g.buffer_queue = q<cr>", { noremap = true })
-vim.keymap.set({"n", "v"}, "<leader>zs", "<cmd>lua local q = vim.g.buffer_queue; if (#q > 0) then vim.fn.setreg('+', table.remove(q, 1)) end; vim.g.buffer_queue = q<cr>", { noremap = true })
-vim.keymap.set({"n", "v"}, "<leader>zp", "<cmd>lua local q = vim.g.buffer_queue; if (#q > 0) then vim.fn.setreg('+', table.remove(q, #q)) end; vim.g.buffer_queue = q<cr>", { noremap = true })
-vim.keymap.set({"n", "v"}, "<leader>zl", "<cmd>lua for i, value in pairs(vim.g.buffer_queue) do print(i, value) end<cr>", { noremap = true })
-vim.keymap.set({"n", "v"}, "<leader>zc", "<cmd>lua vim.g.buffer_queue = {}<cr>", { noremap = true })
-vim.keymap.set("i", "<A-p>", "<C-R>+", { noremap=true })
