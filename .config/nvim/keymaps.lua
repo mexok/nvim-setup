@@ -54,22 +54,23 @@ vim.keymap.set('n', '<leader>th', vim.diagnostic.open_float, bufopts)
 vim.keymap.set('n', '<leader>tl', vim.diagnostic.setloclist, bufopts)
 
 -- editing
-local kwords = "A-Za-z0-9_"
-local search_word_forward_begin = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("\\\\(\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)['..kwords..']", "e", vim.fn.line("w$")) end<cr>'
-local search_word_forward_end = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("['..kwords..']\\\\(\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)", "", vim.fn.line("w$")) end<cr>'
-local search_word_backward = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("\\\\(^\\\\|\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)['..kwords..']", "be", vim.fn.line("w0")) end<cr>'
-vim.keymap.set({"n", "o", "v"}, "w", search_word_forward_begin)
-vim.keymap.set("i", "<A-w>", "<right><esc>"..search_word_forward_begin.."i")
-vim.keymap.set({"n", "o", "v"}, "e", search_word_forward_end)
-vim.keymap.set("i", "<A-e>", "<esc>"..search_word_forward_end.."a")
-vim.keymap.set({"n", "o", "v"}, "b", search_word_backward)
-vim.keymap.set("i", "<A-b>", "<right><esc>"..search_word_backward.."i")
+vim.keymap.set("i", "<A-w>", "<right><esc>wi")
+vim.keymap.set("i", "<A-W>", "<right><esc>Wi")
+vim.keymap.set("i", "<A-e>", "<esc>ea")
+vim.keymap.set("i", "<A-E>", "<esc>Ea")
+vim.keymap.set("i", "<A-b>", "<right><esc>bi")
+vim.keymap.set("i", "<A-B>", "<right><esc>Bi")
 
 vim.keymap.set("i", "<A-a>", "<right><esc>", { noremap=true })
 vim.keymap.set("i", "<A-i>", "<esc>", { noremap=true })
 vim.keymap.set("i", "<A-d>", "<del>", { noremap=true })
 vim.keymap.set("i", "<A-l>", "<right>", { noremap=true })
 vim.keymap.set("i", "<A-h>", "<left>", { noremap=true })
+
+vim.keymap.set("n", "<A-j>", "<Down>", {noremap = true})
+vim.keymap.set("n", "<A-k>", "<Up>", {noremap = true})
+vim.keymap.set("n", "<A-h>", "<Left>", {noremap = true})
+vim.keymap.set("n", "<A-l>", "<Right>", {noremap = true})
 
 vim.keymap.set("i", "\"<cr>", "\"<cr>\"<ESC>O", { noremap=true })
 vim.keymap.set("i", "\"[", "\"\"\"<cr>\"\"\"<ESC>O", { noremap=true })
@@ -88,12 +89,6 @@ vim.keymap.set("n", "L", "vloho", {noremap = true})
 vim.keymap.set("n", "H", "vholo", {noremap = true})
 vim.keymap.set("v", "L", "loho", {noremap = true})
 vim.keymap.set("v", "H", "holo", {noremap = true})
-vim.keymap.set("n", "t", "vt", {noremap = true})
-vim.keymap.set("n", "f", "vf", {noremap = true})
-vim.keymap.set("n", "T", "vT", {noremap = true})
-vim.keymap.set("n", "F", "vF", {noremap = true})
-
-vim.keymap.set("n", "S", "vi", { noremap = true })
 
 vim.keymap.set("n", "<leader>s", ":%s/", {noremap = true})
 vim.keymap.set("v", "<leader>s", ":s/", {noremap = true})
@@ -102,33 +97,14 @@ vim.keymap.set("v", "<leader>g", ":g/", {noremap = true})
 vim.keymap.set("n", "<leader>v", ":%v/", {noremap = true})
 vim.keymap.set("v", "<leader>v", ":v/", {noremap = true})
 
-vim.keymap.set("n", "<A-j>", "<Down>", {noremap = true})
-vim.keymap.set("n", "<A-k>", "<Up>", {noremap = true})
-vim.keymap.set("n", "<A-h>", "<Left>", {noremap = true})
-vim.keymap.set("n", "<A-l>", "<Right>", {noremap = true})
+vim.keymap.set("n", "i", "vi", {noremap = true})
+vim.keymap.set("n", "a", "va", {noremap = true})
+vim.keymap.set({"n", "v"}, "<A-i>", "<esc>i", {noremap = true})
+vim.keymap.set({"n", "v"}, "<A-a>", "<esc>a", {noremap = true})
 
 vim.cmd([[
 let g:VM_maps = {}
 let g:VM_maps["Add Cursor Down"] = '<C-j>'
 let g:VM_maps["Add Cursor Up"] = '<C-k>'
 let g:VM_maps["Add Cursor At Pos"] = '<A-ö>'
-
-function! SetBracketMappings()
-    nnoremap <silent><nowait><buffer> D va
-    vnoremap <silent><nowait><buffer> D va
-    nnoremap <silent><nowait><buffer> d x
-    vnoremap <silent><nowait><buffer> d x
-    nnoremap <silent><nowait><buffer> x V
-    vnoremap <silent><nowait><buffer> x V
-    nnoremap <silent><nowait><buffer> c vi
-    vnoremap <silent><nowait><buffer> c v
-    nnoremap <silent><nowait><buffer> y va
-    vnoremap <silent><nowait><buffer> y v
-    nnoremap <silent><nowait><buffer> z y
-    vnoremap <silent><nowait><buffer> z y
-endfunction
-augroup bracketmaps
-    autocmd!
-    autocmd FileType * call SetBracketMappings()
-augroup END
 ]])
