@@ -23,8 +23,8 @@ To solve these goals, I've taken following steps:
 Things to notice
 ================
 
-* I usually work with German keyboard, therefore I will have some keyboard bindings on keys like 'ö' because they are quite easy to reach
-* I usually do 10 finger writing and don't look at my keyboard at all. If you do, I wouldn't recommend nvim, but to learn 10 finger writing first.
+* I usually work with German keyboard, therefore I will have some keyboard bindings on keys like 'ö' because they are quite easy to reach or remappings of 'y' and 'z' because on a German keyboard they are switched and 'z' is easier to reach on a German keyboard than 'y'.
+* I do 10 finger writing and don't look at my keyboard at all. If you do, I recommend learning 10 finger writing - starting yesterday.
 
 
 How to setup
@@ -41,11 +41,9 @@ Then copy the config files to their approriate locations:
 
 * .config/ and .tmux.conf -> just copy paste to home dir
 * .zshrc -> append to home dir .zshrc
-* vimspector.json -> see vimspector nvim plugin for location
-* Install pynvim for vimspector plugin
+* Install debugpy and pytest if needed
 * Install nerdfont (I use DejaVu Sans Mono)
 
 ...and you should be ready to go.
 
 Feel free to reach out to me for problems/ issues.
-
