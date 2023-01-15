@@ -23,17 +23,18 @@ require('packer').startup(function(use)
 
     -- File lookup
     use { 'nvim-telescope/telescope.nvim', tag = '0.1.0' }
-    use 'nvim-lua/plenary.nvim'  -- Needed for telescope
+    use 'nvim-lua/plenary.nvim'
 
     -- File explorer
-    use 'kyazdani42/nvim-web-devicons'
-    use 'kyazdani42/nvim-tree.lua'
+    use 'nvim-tree/nvim-web-devicons'
+    use 'nvim-tree/nvim-tree.lua'
 
     -- Editor smoothness
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
     use 'tpope/vim-abolish'
     use 'mg979/vim-visual-multi'
+    use 'mbbill/undotree'
 
     -- For git blame
     use 'tpope/vim-fugitive'
@@ -64,6 +65,9 @@ require("telescope").setup({
             theme = "ivy"
         },
         help_tags = {
+            theme = "ivy"
+        },
+        marks = {
             theme = "ivy"
         },
     }

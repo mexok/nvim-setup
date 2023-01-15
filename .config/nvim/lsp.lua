@@ -165,7 +165,7 @@ cmp.setup {
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<Enter>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Select,
-            select = true,
+            select = false,
         },
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
