@@ -1,3 +1,4 @@
+vim.keymap.set("n", "<leader> ", " ", { noremap = true })
 vim.keymap.set("n", "<leader>q", "<cmd>q<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>r", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true })
@@ -8,7 +9,6 @@ vim.keymap.set("n", "<leader>j", "<cmd>lua require('telescope.builtin').marks()<
 vim.keymap.set("v", "<leader>j", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').marks({ default_text = tmp })<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { noremap = true })
 vim.keymap.set("n", "<leader>b", "<cmd>Git blame<cr>", { noremap = true })
-vim.keymap.set({"n", "v"}, "<leader>c", ":", { noremap = true })
 vim.keymap.set("n", "<leader>a", "gg0vG$", { noremap = true })
 vim.keymap.set("n", "<leader>tv", "<cmd>cex system('PYTHONPATH=src vulture src/*') | copen<cr>")
 vim.keymap.set("n", "<leader>H", ":h ", { noremap = true })
@@ -66,6 +66,7 @@ vim.keymap.set("i", "<A-i>", "<esc>", { noremap=true })
 vim.keymap.set("i", "<A-d>", "<del>", { noremap=true })
 vim.keymap.set("i", "<A-l>", "<right>", { noremap=true })
 vim.keymap.set("i", "<A-h>", "<left>", { noremap=true })
+vim.keymap.set("n", "<A-p>", "<C-R>\"", {noremap = true})
 
 vim.keymap.set("n", "<A-j>", "<Down>", {noremap = true})
 vim.keymap.set("n", "<A-k>", "<Up>", {noremap = true})
@@ -80,7 +81,10 @@ vim.keymap.set("i", "(<cr>", "(<cr>)<ESC>O", { noremap=true })
 vim.keymap.set("i", "[<cr>", "[<cr>]<ESC>O", { noremap=true })
 vim.keymap.set("i", "{<cr>", "{<cr>}<ESC>O", { noremap=true })
 
-vim.keymap.set("x", "<leader>p", "P", { noremap=true })
+vim.keymap.set({"n", "v"}, "<leader>p", "\"+p", { noremap=true })
+vim.keymap.set({"n", "v"}, "<leader>P", "\"+P", { noremap=true })
+vim.keymap.set({"n", "v"}, "<leader>z", "\"+yl", { noremap=true })
+vim.keymap.set({"n", "v"}, "<leader>Z", "\"+Y", { noremap=true })
 
 vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv")
@@ -97,14 +101,31 @@ vim.keymap.set("v", "<leader>g", ":g/", {noremap = true})
 vim.keymap.set("n", "<leader>v", ":%v/", {noremap = true})
 vim.keymap.set("v", "<leader>v", ":v/", {noremap = true})
 
-vim.keymap.set("n", "i", "vi", {noremap = true})
-vim.keymap.set("n", "a", "va", {noremap = true})
-vim.keymap.set({"n", "v"}, "<A-i>", "<esc>i", {noremap = true})
-vim.keymap.set({"n", "v"}, "<A-a>", "<esc>a", {noremap = true})
+vim.keymap.set({"n", "v"}, "x", "V", {noremap = true})
 
 vim.cmd([[
-let g:VM_maps = {}
-let g:VM_maps["Add Cursor Down"] = '<C-j>'
-let g:VM_maps["Add Cursor Up"] = '<C-k>'
-let g:VM_maps["Add Cursor At Pos"] = '<A-ö>'
+fun! SetKeymaps()
+    nnoremap <nowait><buffer> d x
+    nnoremap <nowait><buffer> c viw
+    vnoremap <nowait><buffer> c <esc>viw
+    nnoremap <nowait><buffer> C viW
+    vnoremap <nowait><buffer> C <esc>viW
+    nnoremap <nowait><buffer> yy zz
+    vnoremap <nowait><buffer> yy zz
+    nnoremap <nowait><buffer> y= z=
+    vnoremap <nowait><buffer> y= z=
+    nnoremap <nowait><buffer> z yl
+    vnoremap <nowait><buffer> z y
+    nnoremap <leader>cr <Plug>(abolish-coerce-word)
+    nnoremap <leader>ds <Plug>Dsurround
+    nnoremap <leader>cs <Plug>Csurround
+    nnoremap <leader>cS <Plug>CSurround
+    xnoremap S <Plug>VSurround
+    xnoremap gs <Plug>VgSurround
+endfun
+
+augroup set_keymaps
+    autocmd!
+    autocmd FileType * :call SetKeymaps()
+augroup end
 ]])

@@ -33,7 +33,6 @@ require('packer').startup(function(use)
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
     use 'tpope/vim-abolish'
-    use 'mg979/vim-visual-multi'
     use 'mbbill/undotree'
 
     -- For git blame

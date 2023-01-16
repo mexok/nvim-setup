@@ -3,7 +3,6 @@ vim.g.python3_host_prog = 'python3'
 
 vim.opt.guicursor="sm-n:block-blinkwait100-blinkoff100-blinkon100,c-ci-i:ver100,cr-r:hor100,v-ve:block"
 
-vim.opt.clipboard = "unnamedplus"
 vim.opt.exrc = true
 vim.opt.foldmethod = "indent"
 vim.opt.foldlevel = 99
