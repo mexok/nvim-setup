@@ -7,6 +7,7 @@ require('packer').startup(function(use)
 
     -- Debugging
     use 'mfussenegger/nvim-dap'
+    use 'rcarriga/nvim-dap-ui'
 
     -- Code completion
     use 'neovim/nvim-lspconfig'

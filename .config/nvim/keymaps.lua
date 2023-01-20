@@ -68,11 +68,6 @@ vim.keymap.set("i", "<A-l>", "<right>", { noremap=true })
 vim.keymap.set("i", "<A-h>", "<left>", { noremap=true })
 vim.keymap.set("n", "<A-p>", "<C-R>\"", {noremap = true})
 
-vim.keymap.set("n", "<A-j>", "<Down>", {noremap = true})
-vim.keymap.set("n", "<A-k>", "<Up>", {noremap = true})
-vim.keymap.set("n", "<A-h>", "<Left>", {noremap = true})
-vim.keymap.set("n", "<A-l>", "<Right>", {noremap = true})
-
 vim.keymap.set("i", "\"<cr>", "\"<cr>\"<ESC>O", { noremap=true })
 vim.keymap.set("i", "\"[", "\"\"\"<cr>\"\"\"<ESC>O", { noremap=true })
 vim.keymap.set("i", "'<cr>", "'<cr>'<ESC>O", { noremap=true })
@@ -94,14 +89,27 @@ vim.keymap.set("n", "H", "vholo", {noremap = true})
 vim.keymap.set("v", "L", "loho", {noremap = true})
 vim.keymap.set("v", "H", "holo", {noremap = true})
 
+vim.keymap.set("n", "<A-j>", "<Down>", {noremap = true})
+vim.keymap.set("n", "<A-k>", "<Up>", {noremap = true})
+vim.keymap.set("n", "<A-h>", "<Left>", {noremap = true})
+vim.keymap.set("n", "<A-l>", "<Right>", {noremap = true})
+
+vim.keymap.set("n", "<C-j>", "<C-v>j", {noremap = true})
+vim.keymap.set("n", "<C-k>", "<C-v>k", {noremap = true})
+vim.keymap.set("n", "<C-h>", "<C-v>h", {noremap = true})
+vim.keymap.set("n", "<C-l>", "<C-v>l", {noremap = true})
+
+vim.keymap.set("v", "<C-j>", "j", {noremap = true})
+vim.keymap.set("v", "<C-k>", "k", {noremap = true})
+vim.keymap.set("v", "<C-h>", "h", {noremap = true})
+vim.keymap.set("v", "<C-l>", "l", {noremap = true})
+
 vim.keymap.set("n", "<leader>s", ":%s/", {noremap = true})
 vim.keymap.set("v", "<leader>s", ":s/", {noremap = true})
 vim.keymap.set("n", "<leader>g", ":%g/", {noremap = true})
 vim.keymap.set("v", "<leader>g", ":g/", {noremap = true})
 vim.keymap.set("n", "<leader>v", ":%v/", {noremap = true})
 vim.keymap.set("v", "<leader>v", ":v/", {noremap = true})
-
-vim.keymap.set({"n", "v"}, "x", "V", {noremap = true})
 
 vim.cmd([[
 fun! SetKeymaps()
@@ -110,12 +118,15 @@ fun! SetKeymaps()
     vnoremap <nowait><buffer> c <esc>viw
     nnoremap <nowait><buffer> C viW
     vnoremap <nowait><buffer> C <esc>viW
+    nnoremap <nowait><buffer> x V
+    vnoremap <nowait><buffer> x V
     nnoremap <nowait><buffer> yy zz
     vnoremap <nowait><buffer> yy zz
     nnoremap <nowait><buffer> y= z=
     vnoremap <nowait><buffer> y= z=
     nnoremap <nowait><buffer> z yl
     vnoremap <nowait><buffer> z y
+
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround
     nnoremap <leader>cs <Plug>Csurround
