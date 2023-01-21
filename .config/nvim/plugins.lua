@@ -3,7 +3,9 @@ require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- Theme
-    use 'ayu-theme/ayu-vim'
+    use 'navarasu/onedark.nvim'
+    use 'nvim-lualine/lualine.nvim'
+    use 'folke/which-key.nvim'
 
     -- Debugging
     use 'mfussenegger/nvim-dap'
@@ -17,10 +19,15 @@ require('packer').startup(function(use)
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/nvim-cmp'
 
+    -- Treesitter
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use 'nvim-treesitter/nvim-treesitter-textobjects'
+    use 'simrat39/symbols-outline.nvim'
+
     -- snippet support
     use 'hrsh7th/cmp-vsnip'
     use 'hrsh7th/vim-vsnip'
-    use "rafamadriz/friendly-snippets"
+    use 'rafamadriz/friendly-snippets'
 
     -- File lookup
     use { 'nvim-telescope/telescope.nvim', tag = '0.1.0' }
@@ -38,9 +45,6 @@ require('packer').startup(function(use)
 
     -- For git blame
     use 'tpope/vim-fugitive'
-
-    -- For better indentation
-    use 'Vimjas/vim-python-pep8-indent'
 
     use 'mexok/voice-command.nvim'
 
