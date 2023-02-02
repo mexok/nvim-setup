@@ -10,7 +10,6 @@ vim.opt.hlsearch = false
 vim.opt.hidden = true
 
 vim.opt.number = true
-vim.opt.scroll = 10
 vim.opt.scrolloff = 10
 vim.opt.errorbells = false
 

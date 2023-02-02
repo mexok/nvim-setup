@@ -63,7 +63,7 @@ set("i", "<A-i>", "<esc>", { noremap=true })
 set("i", "<A-d>", "<del>", { noremap=true })
 set("i", "<A-l>", "<right>", { noremap=true })
 set("i", "<A-h>", "<left>", { noremap=true })
-set("n", "<A-p>", "<C-R>\"", {noremap = true})
+set({"v", "n"}, "<A-d>", "\"_x", { noremap=true })
 
 set("i", "\"<cr>", "\"<cr>\"<ESC>O", { noremap=true })
 set("i", "\"[", "\"\"\"<cr>\"\"\"<ESC>O", { noremap=true })
@@ -77,6 +77,8 @@ set({"n", "v"}, "<leader>p", "\"+p", { noremap=true })
 set({"n", "v"}, "<leader>P", "\"+P", { noremap=true })
 set({"n", "v"}, "<leader>z", "\"+yl", { noremap=true })
 set({"n", "v"}, "<leader>Z", "\"+Y", { noremap=true })
+set({"n", "v"}, "<leader>d", "\"+x", { noremap=true })
+set({"n", "v"}, "<leader>D", "\"+D", { noremap=true })
 
 set("v", "J", ":m '>+1<cr>gv=gv")
 set("v", "K", ":m '<-2<cr>gv=gv")
@@ -86,15 +88,37 @@ set("n", "H", "vholo", {noremap = true})
 set("v", "L", "loho", {noremap = true})
 set("v", "H", "holo", {noremap = true})
 
-set("n", "<C-j>", "<C-v>j", {noremap = true})
-set("n", "<C-k>", "<C-v>k", {noremap = true})
-set("n", "<C-h>", "<C-v>h", {noremap = true})
-set("n", "<C-l>", "<C-v>l", {noremap = true})
+set({"n", "v"}, "ü", "p", {noremap = true})
+set("v", "p", "P", {noremap = true})
 
+set({"n", "v"}, "ö", "\"")
+set("v", "iö", "i\"")
+set("v", "aö", "a\"")
+set("v", "fö", "f\"")
+set("v", "Fö", "F\"")
+set("v", "tö", "t\"")
+set("v", "Tö", "T\"")
+set({"n", "v"}, "ä", "'")
+set("v", "iä", "i'")
+set("v", "aä", "a'")
+set("v", "fä", "f'")
+set("v", "Fä", "F'")
+set("v", "tä", "t'")
+set("v", "Tä", "T'")
+
+set("n", "<C-j>", "<C-v>j", {noremap = true})
 set("v", "<C-j>", "j", {noremap = true})
+set("n", "<C-k>", "<C-v>k", {noremap = true})
 set("v", "<C-k>", "k", {noremap = true})
+set("n", "<C-h>", "<C-v>h", {noremap = true})
 set("v", "<C-h>", "h", {noremap = true})
+set("n", "<C-l>", "<C-v>l", {noremap = true})
 set("v", "<C-l>", "l", {noremap = true})
+
+set("n", "<A-j>", "<Down>")
+set("n", "<A-k>", "<Up>")
+set("n", "<A-h>", "<Left>")
+set("n", "<A-l>", "<Right>")
 
 set("n", "<leader>s", ":%s/", {noremap = true})
 set("v", "<leader>s", ":s/", {noremap = true})
@@ -103,9 +127,15 @@ set("v", "<leader>g", ":g/", {noremap = true})
 set("n", "<leader>v", ":%v/", {noremap = true})
 set("v", "<leader>v", ":v/", {noremap = true})
 
+set("v", "<", "<gv", {noremap = true})
+set("v", ">", ">gv", {noremap = true})
+
 vim.cmd([[
 fun! SetKeymaps()
     nnoremap <nowait><buffer> d x
+    vnoremap <nowait><buffer> d x
+    nnoremap <nowait><buffer> s "_s
+    vnoremap <nowait><buffer> s "_s
     nnoremap <nowait><buffer> c viw
     vnoremap <nowait><buffer> c <esc>viw
     nnoremap <nowait><buffer> C viW
@@ -118,7 +148,6 @@ fun! SetKeymaps()
     vnoremap <nowait><buffer> y= z=
     nnoremap <nowait><buffer> z yl
     vnoremap <nowait><buffer> z y
-
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround
     nnoremap <leader>cs <Plug>Csurround

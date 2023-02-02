@@ -7,6 +7,9 @@ require('packer').startup(function(use)
     use 'nvim-lualine/lualine.nvim'
     use 'folke/which-key.nvim'
 
+    -- Tooling
+    use 'williamboman/mason.nvim'
+
     -- Debugging
     use 'mfussenegger/nvim-dap'
     use 'rcarriga/nvim-dap-ui'
@@ -42,6 +45,7 @@ require('packer').startup(function(use)
     use 'tpope/vim-commentary'
     use 'tpope/vim-abolish'
     use 'mbbill/undotree'
+    use 'karb94/neoscroll.nvim'
 
     -- For git blame
     use 'tpope/vim-fugitive'
@@ -76,3 +80,7 @@ require("telescope").setup({
         },
     }
 })
+
+require('neoscroll').setup()
+
+require("mason").setup()
