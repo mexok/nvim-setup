@@ -172,6 +172,7 @@ end
 
 require("lspconfig").cmake.setup({})
 require("lspconfig").clangd.setup({})
+require("lspconfig").perlpls.setup({})
 
 -- cmp
 
@@ -231,9 +232,6 @@ cmp.setup.cmdline(':', {
         { name = 'cmdline' }
     })
 })
-
-
-
 
 -- to disable weired behavior when entering insert mode
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
