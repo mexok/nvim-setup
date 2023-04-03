@@ -44,6 +44,8 @@ Then copy the config files to their approriate locations:
 * Install debugpy and pytest if needed
 * Install nerdfont (I use DejaVu Sans Mono)
 
+You can also use the setup.sh script, but it overrides some of your local configs, e.g. for tmux and neovim, so use with care.
+
 ...and you should be ready to go.
 
 Feel free to reach out to me for problems/ issues.
