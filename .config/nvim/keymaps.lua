@@ -37,6 +37,9 @@ set("n", "<leader>ts", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.
 set("n", "<leader>tp", "<cmd>PackerUpdate<cr>", { noremap = true, desc = "update plugins"})
 set("n", "<leader>tg", vim.cmd.Git, {desc = "open git"})
 set("n", "<leader>to", "<cmd>SymbolsOutline<cr>")
+set("n", "<leader>k", "<cmd>ToggleTerm<cr>")
+set("n", "<leader>j", ":ToggleTermSendCurrentLine<cr>")
+set("v", "<leader>j", ":ToggleTermSendVisualSelection<cr>")
 
 -- lsp setup
 set('n', 'gs', vim.lsp.buf.declaration, { noremap=true, silent=true, desc="go to declaration" })

@@ -22,6 +22,9 @@ require('packer').startup(function(use)
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/nvim-cmp'
 
+    -- Code formatting
+    use 'jose-elias-alvarez/null-ls.nvim'
+
     -- Treesitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -39,6 +42,8 @@ require('packer').startup(function(use)
     -- File explorer
     use 'nvim-tree/nvim-web-devicons'
     use 'nvim-tree/nvim-tree.lua'
+
+    use {"akinsho/toggleterm.nvim", tag = '*'}
 
     -- Editor smoothness
     use 'tpope/vim-surround'
@@ -84,3 +89,16 @@ require("telescope").setup({
 require('neoscroll').setup()
 
 require("mason").setup()
+
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.diagnostics.eslint,
+        null_ls.builtins.completion.spell,
+    },
+})
+
+require("toggleterm").setup({
+    start_in_insert = false,
+})
