@@ -1,6 +1,5 @@
-
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "python",  "lua", "vim", "help" },
+  ensure_installed = { "c", "python", "perl", "lua", "vim", "help" },
   sync_install = true,
   auto_install = true,
   highlight = {

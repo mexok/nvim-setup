@@ -7,9 +7,6 @@ require('packer').startup(function(use)
     use 'nvim-lualine/lualine.nvim'
     use 'folke/which-key.nvim'
 
-    -- Tooling
-    use 'williamboman/mason.nvim'
-
     -- Debugging
     use 'mfussenegger/nvim-dap'
     use 'rcarriga/nvim-dap-ui'
@@ -87,8 +84,6 @@ require("telescope").setup({
 })
 
 require('neoscroll').setup()
-
-require("mason").setup()
 
 local null_ls = require("null-ls")
 null_ls.setup({

@@ -12,7 +12,7 @@ require('lualine').setup {
     lualine_a = {'branch'},
     lualine_b = {'diagnostics'},
     lualine_c = {'filename'},
-    lualine_x = {'fileformat'},
+    lualine_x = {},
     lualine_y = {},
     lualine_z = {}
   },
