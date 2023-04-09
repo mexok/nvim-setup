@@ -82,17 +82,24 @@ set({"n", "v"}, "<leader>D", "\"+D", { noremap=true, desc="D using global buffer
 set("v", "J", ":m '>+1<cr>gv=gv")
 set("v", "K", ":m '<-2<cr>gv=gv")
 
-set({"n", "v"}, "ü", "p", {noremap = true})
+set("n", "<A-p>", "vp", {noremap = true})
+set("v", "<A-p>", "p", {noremap = true})
 set("v", "p", "P", {noremap = true})
 
 set("n", "ö", 'vi"f"oF"o', {noremap = true})
 set("v", "ö", '<esc>vi"f"oF"o', {noremap = true})
-set("n", "ä", 'vi"', {noremap = true})
-set("v", "ä", '<esc>vi"', {noremap = true})
-set("n", "Ö", "vi'f'oF'o", {noremap = true})
-set("v", "Ö", "<esc>vi'f'oF'o", {noremap = true})
-set("n", "Ä", "vi'", {noremap = true})
-set("v", "Ä", "<esc>vi'", {noremap = true})
+set("n", "Ö", 'vi"', {noremap = true})
+set("v", "Ö", '<esc>vi"', {noremap = true})
+
+set("n", "ü", "vi'f'oF'o", {noremap = true})
+set("v", "ü", "<esc>vi'f'oF'o", {noremap = true})
+set("n", "Ü", "vi'", {noremap = true})
+set("v", "Ü", "<esc>vi'", {noremap = true})
+
+set("n", "ä", 'vib', {noremap = true})
+set("v", "ä", '<esc>vib', {noremap = true})
+set("n", "Ä", 'vibf)oF(o', {noremap = true})
+set("v", "Ä", '<esc>vibf)oF(o', {noremap = true})
 
 set("n", "<C-j>", "<C-v>j", {noremap = true})
 set("v", "<C-j>", "j", {noremap = true})
