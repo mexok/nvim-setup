@@ -5,9 +5,15 @@ fun! TrimWhitespaces()
     call winrestview(l:save)
 endfun
 
+fun! RefreshGitGutter()
+    execute ':GitGutterDisable'
+    execute ':GitGutterEnable'
+endfun
+
 augroup trim_whitespaces
     autocmd!
     autocmd BufWritePre * :call TrimWhitespaces()
+    autocmd BufWritePost * :call RefreshGitGutter()
 augroup end
 ]]
 

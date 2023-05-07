@@ -2,10 +2,11 @@ local set = vim.keymap.set
 set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
 set("n", "<leader>q", "<cmd>q<cr>", { noremap = true, desc = "quit" })
 set("n", "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "write" })
-set("n", "<leader>F", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true, desc = "search files in project" })
-set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp })<cr>", { noremap = true, desc = "search files in project with marked text"})
+
 set("n", "<leader>f", "<cmd>lua require('telescope.builtin').live_grep()<cr>", { noremap = true, desc = "search text in project" })
 set("v", "<leader>f", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').live_grep({ default_text = tmp })<cr>", { noremap = true, desc = "search marked text in project"})
+set("n", "<leader>F", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true, desc = "search files in project" })
+set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp })<cr>", { noremap = true, desc = "search files in project with marked text"})
 set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
 set("n", "<leader>b", "<cmd>Git blame<cr>", { desc = "git blame"})
 set("n", "<leader>a", "gg0vG$", { noremap = true, desc = "select all"})
@@ -38,7 +39,6 @@ set("n", "<leader>tf", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.
 set("n", "<leader>tt", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').threads).open()<cr>", { silent = true, desc = "open debug threads"})
 set("n", "<leader>ts", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').scopes).open()<cr>", { silent = true, desc = "open debug scopes"})
 set("n", "<leader>tp", "<cmd>PackerUpdate<cr>", { noremap = true, desc = "update plugins"})
-set("n", "<leader>tg", vim.cmd.Git, {desc = "open git"})
 set("n", "<leader>to", "<cmd>SymbolsOutline<cr>")
 set({"n", "v"}, "<C-K>", "<cmd>ToggleTerm<cr>")
 set("n", "<C-x>", ":ToggleTermSendCurrentLine<cr>")
@@ -158,85 +158,6 @@ for i=1, 6 do
     set({"n", "v"}, "g"..i, "<cmd>lua require(\"harpoon.ui\").nav_file("..i..")<cr>")
 end
 
-vim.g.YANK_LIST_INDEX = 1
-
-vim.g.GET_REGISTER_NAME = function(value)
-    local values = {
-        "q",  --  1
-        "w",  --  2
-        "e",  --  3
-        "r",  --  4
-        "t",  --  5
-        "a",  --  6
-        "s",  --  7
-        "d",  --  8
-        "f",  --  9
-        "g",  -- 10
-        "z",  -- 11
-        "u",  -- 12
-        "i",  -- 13
-        "o",  -- 14
-        "p",  -- 15
-        "y",  -- 16
-        "x",  -- 17
-        "c",  -- 18
-        "v",  -- 19
-        "b",  -- 20
-    }
-    return values[value]
-end
-
-for i = 1, 20 do
-    local reg = vim.g.GET_REGISTER_NAME(i)
-    set({"n", "v"}, "<leader>r"..reg, "<cmd>lua vim.g.YANK_LIST_INDEX = "..i.."<cr>", {desc="Set index to "..(i-1)})
-end
-
-vim.g.APPEND_REGISTER = function(value)
-    local reg = vim.g.GET_REGISTER_NAME(vim.g.YANK_LIST_INDEX)
-    vim.fn.setreg(reg, value)
-    vim.g.YANK_LIST_INDEX = vim.g.YANK_LIST_INDEX + 1
-end
-
-vim.g.GET_REGISTER = function(index)
-    local reg = vim.g.GET_REGISTER_NAME(index)
-    return vim.fn.getreg(reg)
-end
-
-vim.g.YANK_LIST_IMPORT = function ()
-    local vstart = vim.fn.getpos("'<")
-    local vend = vim.fn.getpos("'>")
-    local line_start = vstart[2]
-    local line_end = vend[2]
-    for line = line_start, line_end do
-        local content = vim.fn.getline(line)
-        vim.g.APPEND_REGISTER(content)
-    end
-end
-
-vim.g.YANK_LIST_EXPORT = function ()
-    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-    local t = {}
-    for i = 1, vim.g.YANK_LIST_INDEX - 1 do
-        t[i] = vim.g.GET_REGISTER(i)
-    end
-    vim.api.nvim_buf_set_lines(0, row-1, row-1, 0, t)
-end
-
-set({"v"}, "<leader>li", "<esc><cmd>lua vim.g.YANK_LIST_IMPORT()<cr>", {desc = 'Import yank list'})
-set({"n"}, "<leader>le", "<cmd>lua vim.g.YANK_LIST_EXPORT()<cr>", {desc = 'Export yank list'})
-set({"v"}, "<leader>le", "d<cmd>lua vim.g.YANK_LIST_EXPORT()<cr>", {desc = 'Export yank list'})
-set({"n", "v"}, "<leader>lc", "<cmd>lua vim.g.YANK_LIST_INDEX = 1<cr>", {desc = 'Set index to zero'})
-set({"n", "v"}, "<leader>lg", "<cmd>lua print(vim.g.YANK_LIST_INDEX-1)<cr>", {desc = 'Print current index cnt'})
-set({"n", "v"}, "<leader>lr", "<cmd>lua for i=1, vim.g.YANK_LIST_INDEX - 1 do print((i-1)..': '..vim.g.GET_REGISTER(i)) end<cr>", {desc = 'Print current registers'})
-set("n", "<leader>lp", "<cmd>lua vim.fn.setreg('\"', vim.g.GET_REGISTER(vim.g.YANK_LIST_INDEX)); vim.g.YANK_LIST_INDEX = vim.g.YANK_LIST_INDEX + 1<cr>p", {desc = 'Paste next'})
-set("n", "<leader>lP", "<cmd>lua vim.fn.setreg('\"', vim.g.GET_REGISTER(vim.g.YANK_LIST_INDEX)); vim.g.YANK_LIST_INDEX = vim.g.YANK_LIST_INDEX + 1<cr>P", {desc = 'Paste next'})
-set("v", "<leader>lp", "<cmd>lua vim.fn.setreg('\"', vim.g.GET_REGISTER(vim.g.YANK_LIST_INDEX)); vim.g.YANK_LIST_INDEX = vim.g.YANK_LIST_INDEX + 1<cr>P", {desc = 'Paste next'})
-
-local yank_list_push_cmd = "<cmd>lua vim.g.APPEND_REGISTER(vim.fn.getreg('\"'))<cr>"
-set("n", "<leader>lz", "yl"..yank_list_push_cmd, {desc = 'Yank next to list'})
-set("v", "<leader>lz", "y"..yank_list_push_cmd, {desc = 'Yank next to list'})
-set("n", "<leader>ld", "x"..yank_list_push_cmd, {desc = 'Delete next to list'})
-set("v", "<leader>ld", "x"..yank_list_push_cmd, {desc = 'Delete next to list'})
 
 vim.cmd([[
 fun! SetKeymaps()

@@ -164,5 +164,3 @@ dap.configurations.vue = {
         }
     }
 }
-
-require("dapui").setup()

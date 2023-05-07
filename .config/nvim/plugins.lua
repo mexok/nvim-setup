@@ -9,7 +9,6 @@ require('packer').startup(function(use)
 
     -- Debugging
     use 'mfussenegger/nvim-dap'
-    use 'rcarriga/nvim-dap-ui'
 
     -- Code completion
     use 'neovim/nvim-lspconfig'
@@ -40,6 +39,7 @@ require('packer').startup(function(use)
     use 'nvim-tree/nvim-web-devicons'
     use 'nvim-tree/nvim-tree.lua'
 
+    -- Terminal
     use {"akinsho/toggleterm.nvim", tag = '*'}
 
     -- harpoon
@@ -49,11 +49,12 @@ require('packer').startup(function(use)
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
     use 'tpope/vim-abolish'
+    use 'AndrewRadev/splitjoin.vim'
     use 'mbbill/undotree'
     use 'karb94/neoscroll.nvim'
 
-    -- For git blame
-    use 'tpope/vim-fugitive'
+    -- Git
+    use 'tpope/vim-fugitive'  -- only for git blame
     use 'airblade/vim-gitgutter'
 
     use 'mexok/voice-command.nvim'
@@ -66,14 +67,25 @@ require('nvim-tree').setup()
 
 require("telescope").setup({
     defaults = {
-        layout_strategy = "horizontal"
+        layout_strategy = "horizontal",
+        hidden = true,
+        vimgrep_arguments = {
+            "rg",
+            "--color=never",
+            "--no-heading",
+            "--with-filename",
+            "--line-number",
+            "--column",
+            "--smart-case",
+            "--hidden"
+        }
     },
     pickers = {
         find_files = {
             theme = "ivy"
         },
         live_grep = {
-            theme = "ivy"
+            theme = "ivy",
         },
         buffers = {
             theme = "ivy"
