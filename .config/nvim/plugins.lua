@@ -42,6 +42,9 @@ require('packer').startup(function(use)
 
     use {"akinsho/toggleterm.nvim", tag = '*'}
 
+    -- harpoon
+    use 'ThePrimeagen/harpoon'
+
     -- Editor smoothness
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
