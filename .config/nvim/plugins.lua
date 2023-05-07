@@ -54,6 +54,7 @@ require('packer').startup(function(use)
 
     -- For git blame
     use 'tpope/vim-fugitive'
+    use 'airblade/vim-gitgutter'
 
     use 'mexok/voice-command.nvim'
 
