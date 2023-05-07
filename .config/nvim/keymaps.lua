@@ -2,8 +2,8 @@ local set = vim.keymap.set
 set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
 set("n", "<leader>q", "<cmd>q<cr>", { noremap = true, desc = "quit" })
 set("n", "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "write" })
-set("n", "<leader>r", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true, desc = "search files in project" })
-set("v", "<leader>r", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp })<cr>", { noremap = true, desc = "search files in project with marked text"})
+set("n", "<leader>F", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true, desc = "search files in project" })
+set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp })<cr>", { noremap = true, desc = "search files in project with marked text"})
 set("n", "<leader>f", "<cmd>lua require('telescope.builtin').live_grep()<cr>", { noremap = true, desc = "search text in project" })
 set("v", "<leader>f", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').live_grep({ default_text = tmp })<cr>", { noremap = true, desc = "search marked text in project"})
 set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
@@ -158,122 +158,81 @@ for i=1, 6 do
     set({"n", "v"}, "g"..i, "<cmd>lua require(\"harpoon.ui\").nav_file("..i..")<cr>")
 end
 
-vim.g.YANK_LIST_TMP = 1
-vim.g.YANK_LIST_CNT = 1
-vim.g.YANK_LIST_CONTENT = {}
+vim.g.YANK_LIST_INDEX = 1
+
+vim.g.GET_REGISTER_NAME = function(value)
+    local values = {
+        "q",  --  1
+        "w",  --  2
+        "e",  --  3
+        "r",  --  4
+        "t",  --  5
+        "a",  --  6
+        "s",  --  7
+        "d",  --  8
+        "f",  --  9
+        "g",  -- 10
+        "z",  -- 11
+        "u",  -- 12
+        "i",  -- 13
+        "o",  -- 14
+        "p",  -- 15
+        "y",  -- 16
+        "x",  -- 17
+        "c",  -- 18
+        "v",  -- 19
+        "b",  -- 20
+    }
+    return values[value]
+end
+
+for i = 1, 20 do
+    local reg = vim.g.GET_REGISTER_NAME(i)
+    set({"n", "v"}, "<leader>r"..reg, "<cmd>lua vim.g.YANK_LIST_INDEX = "..i.."<cr>", {desc="Set index to "..(i-1)})
+end
+
+vim.g.APPEND_REGISTER = function(value)
+    local reg = vim.g.GET_REGISTER_NAME(vim.g.YANK_LIST_INDEX)
+    vim.fn.setreg(reg, value)
+    vim.g.YANK_LIST_INDEX = vim.g.YANK_LIST_INDEX + 1
+end
+
+vim.g.GET_REGISTER = function(index)
+    local reg = vim.g.GET_REGISTER_NAME(index)
+    return vim.fn.getreg(reg)
+end
 
 vim.g.YANK_LIST_IMPORT = function ()
-    vim.g.YANK_LIST_CLEAR()
     local vstart = vim.fn.getpos("'<")
     local vend = vim.fn.getpos("'>")
     local line_start = vstart[2]
     local line_end = vend[2]
     for line = line_start, line_end do
         local content = vim.fn.getline(line)
-        local m = vim.g.YANK_LIST_CONTENT
-        m[vim.g.YANK_LIST_CNT] = content
-        vim.g.YANK_LIST_CONTENT = m
-        vim.g.YANK_LIST_CNT = vim.g.YANK_LIST_CNT + 1
+        vim.g.APPEND_REGISTER(content)
     end
-    vim.g.YANK_LIST_SETUP_NUM_KEYS()
 end
 
 vim.g.YANK_LIST_EXPORT = function ()
     local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-    vim.api.nvim_buf_set_lines(0, row-1, row-1, 0, vim.g.YANK_LIST_CONTENT)
-end
-
-vim.g.YANK_LIST_CLEAR = function ()
-    vim.g.YANK_LIST_CNT = 1
-    vim.g.YANK_LIST_TMP = 1
-    vim.g.YANK_LIST_CONTENT = {}
-    vim.g.YANK_LIST_SETUP_NUM_KEYS()
+    local t = {}
+    for i = 1, vim.g.YANK_LIST_INDEX - 1 do
+        t[i] = vim.g.GET_REGISTER(i)
+    end
+    vim.api.nvim_buf_set_lines(0, row-1, row-1, 0, t)
 end
 
 set({"v"}, "<leader>li", "<esc><cmd>lua vim.g.YANK_LIST_IMPORT()<cr>", {desc = 'Import yank list'})
-set({"n"}, "<leader>le", "<cmd>lua vim.g.YANK_LIST_SETUP_NUM_KEYS(); vim.g.YANK_LIST_EXPORT()<cr>", {desc = 'Export yank list'})
-set({"v"}, "<leader>le", "d<cmd>lua vim.g.YANK_LIST_SETUP_NUM_KEYS(); vim.g.YANK_LIST_EXPORT()<cr>", {desc = 'Export yank list'})
-set({"n", "v"}, "<leader>lr", "<cmd>lua vim.g.YANK_LIST_SETUP_NUM_KEYS(); vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Reset tmp cnt'})
-set({"n", "v"}, "<leader>lg", "<cmd>lua vim.g.YANK_LIST_SETUP_NUM_KEYS(); print(vim.g.YANK_LIST_CNT-1)<cr>", {desc = 'Print current list cnt'})
-set({"n", "v"}, "<leader>lt", "<cmd>lua vim.g.YANK_LIST_SETUP_NUM_KEYS(); print(vim.g.YANK_LIST_TMP-1)<cr>", {desc = 'Print current tmp cnt'})
-set({"n", "v"}, "<leader>ll", "<cmd>lua vim.g.YANK_LIST_SETUP_NUM_KEYS(); for i=1, vim.g.YANK_LIST_CNT - 1 do print(i..': '..vim.g.YANK_LIST_CONTENT[i]) end<cr>", {desc = 'Print current registers'})
-set({"n", "v"}, "<leader>lc", "<cmd>lua vim.g.YANK_LIST_CLEAR()<cr>", {desc = 'Clear yank list'})
-set("n", "<leader>ln", "<cmd>lua vim.fn.setreg('\"', vim.g.YANK_LIST_CONTENT[vim.g.YANK_LIST_TMP]); vim.g.YANK_LIST_TMP = vim.g.YANK_LIST_TMP + 1<cr>p", {desc = 'Paste next'})
-set("v", "<leader>ln", "<cmd>lua vim.fn.setreg('\"', vim.g.YANK_LIST_CONTENT[vim.g.YANK_LIST_TMP]); vim.g.YANK_LIST_TMP = vim.g.YANK_LIST_TMP + 1<cr>P", {desc = 'Paste next'})
+set({"n"}, "<leader>le", "<cmd>lua vim.g.YANK_LIST_EXPORT()<cr>", {desc = 'Export yank list'})
+set({"v"}, "<leader>le", "d<cmd>lua vim.g.YANK_LIST_EXPORT()<cr>", {desc = 'Export yank list'})
+set({"n", "v"}, "<leader>lc", "<cmd>lua vim.g.YANK_LIST_INDEX = 1<cr>", {desc = 'Set index to zero'})
+set({"n", "v"}, "<leader>lg", "<cmd>lua print(vim.g.YANK_LIST_INDEX-1)<cr>", {desc = 'Print current index cnt'})
+set({"n", "v"}, "<leader>lr", "<cmd>lua for i=1, vim.g.YANK_LIST_INDEX - 1 do print((i-1)..': '..vim.g.GET_REGISTER(i)) end<cr>", {desc = 'Print current registers'})
+set("n", "<leader>lp", "<cmd>lua vim.fn.setreg('\"', vim.g.GET_REGISTER(vim.g.YANK_LIST_INDEX)); vim.g.YANK_LIST_INDEX = vim.g.YANK_LIST_INDEX + 1<cr>p", {desc = 'Paste next'})
+set("n", "<leader>lP", "<cmd>lua vim.fn.setreg('\"', vim.g.GET_REGISTER(vim.g.YANK_LIST_INDEX)); vim.g.YANK_LIST_INDEX = vim.g.YANK_LIST_INDEX + 1<cr>P", {desc = 'Paste next'})
+set("v", "<leader>lp", "<cmd>lua vim.fn.setreg('\"', vim.g.GET_REGISTER(vim.g.YANK_LIST_INDEX)); vim.g.YANK_LIST_INDEX = vim.g.YANK_LIST_INDEX + 1<cr>P", {desc = 'Paste next'})
 
-
-for i=0, 9 do
-    local char_t = {'"', "'", ",", ".", "[", "]", "(", ")", "{", "}", "$", "@", "%", "<", ">", "_", "-"}
-    if (i == 0) then
-        char_t = {0}  -- some performance optimization
-    end
-    for i_char, char in ipairs(char_t) do
-        local f_t = {'f', 't'}
-        for i_f, f in ipairs(f_t) do
-            local tmp = i..f..char
-            if (i == 0) then
-                tmp = ''
-            elseif (i == 1) then
-                tmp = f..char
-            end
-            set("n", "<leader>la\""..tmp.."p", ":normal _"..tmp.."vi\"f\"oF\"o<leader>lnj<cr><cmd>lua vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Paste content buffer to outer "'})
-            set("n", "<leader>li\""..tmp.."p", ":normal _"..tmp.."vi\"<leader>lnj<cr><cmd>lua vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Paste content to inner "'})
-            set("n", "<leader>la'"..tmp.."p", ":normal _"..tmp.."vi'f'oF'o<leader>lnj<cr><cmd>lua vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Paste content buffer to outer \''})
-            set("n", "<leader>li'"..tmp.."p", ":normal _"..tmp.."vi'<leader>lnj<cr><cmd>lua vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Paste content to inner \''})
-            set("n", "<leader>lab"..tmp.."p", ":normal _"..tmp.."vab<leader>lnj<cr><cmd>lua vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Paste content buffer to outer block'})
-            set("n", "<leader>lib"..tmp.."p", ":normal _"..tmp.."vib<leader>lnj<cr><cmd>lua vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Paste content buffer to inner block'})
-            set("n", "<leader>law"..tmp.."p", ":normal _"..tmp.."vaw<leader>lnj<cr><cmd>lua vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Paste content buffer to outer word'})
-            set("n", "<leader>liw"..tmp.."p", ":normal _"..tmp.."viw<leader>lnj<cr><cmd>lua vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Paste content buffer to inner word'})
-            set("n", "<leader>laW"..tmp.."p", ":normal _"..tmp.."vaW<leader>lnj<cr><cmd>lua vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Paste content buffer to outer Word'})
-            set("n", "<leader>liW"..tmp.."p", ":normal _"..tmp.."viW<leader>lnj<cr><cmd>lua vim.g.YANK_LIST_TMP = 1<cr>", {desc = 'Paste content buffer to inner Word'})
-
-            set("n", "<leader>la\""..tmp.."z", ":normal _"..tmp.."vi\"f\"oF\"o<leader>lzj<cr>", {desc = 'Yank content buffer to outer "'})
-            set("n", "<leader>li\""..tmp.."z", ":normal _"..tmp.."vi\"<leader>lzj<cr>", {desc = 'Yank content to inner "'})
-            set("n", "<leader>la'"..tmp.."z", ":normal _"..tmp.."vi'f'oF'o<leader>lzj<cr>", {desc = 'Yank content buffer to outer \''})
-            set("n", "<leader>li'"..tmp.."z", ":normal _"..tmp.."vi'<leader>lzj<cr>", {desc = 'Yank content to inner \''})
-            set("n", "<leader>lab"..tmp.."z", ":normal _"..tmp.."vab<leader>lzj<cr>", {desc = 'Yank content buffer to outer block'})
-            set("n", "<leader>lib"..tmp.."z", ":normal _"..tmp.."vib<leader>lzj<cr>", {desc = 'Yank content buffer to inner block'})
-            set("n", "<leader>law"..tmp.."z", ":normal _"..tmp.."vaw<leader>lzj<cr>", {desc = 'Yank content buffer to outer word'})
-            set("n", "<leader>liw"..tmp.."z", ":normal _"..tmp.."viw<leader>lzj<cr>", {desc = 'Yank content buffer to inner word'})
-            set("n", "<leader>laW"..tmp.."z", ":normal _"..tmp.."vaW<leader>lzj<cr>", {desc = 'Yank content buffer to outer Word'})
-            set("n", "<leader>liW"..tmp.."z", ":normal _"..tmp.."viW<leader>lzj<cr>", {desc = 'Yank content buffer to inner Word'})
-
-            set("n", "<leader>la\""..tmp.."d", ":normal _"..tmp.."vi\"f\"oF\"o<leader>ldj<cr>", {desc = 'Delete content buffer to outer "'})
-            set("n", "<leader>li\""..tmp.."d", ":normal _"..tmp.."vi\"<leader>ldj<cr>", {desc = 'Delete content to inner "'})
-            set("n", "<leader>la'"..tmp.."d", ":normal _"..tmp.."vi'f'oF'o<leader>ldj<cr>", {desc = 'Delete content buffer to outer \''})
-            set("n", "<leader>li'"..tmp.."d", ":normal _"..tmp.."vi'<leader>ldj<cr>", {desc = 'Delete content to inner \''})
-            set("n", "<leader>lab"..tmp.."d", ":normal _"..tmp.."vab<leader>ldj<cr>", {desc = 'Delete content buffer to outer block'})
-            set("n", "<leader>lib"..tmp.."d", ":normal _"..tmp.."vib<leader>ldj<cr>", {desc = 'Delete content buffer to inner block'})
-            set("n", "<leader>law"..tmp.."d", ":normal _"..tmp.."vaw<leader>ldj<cr>", {desc = 'Delete content buffer to outer word'})
-            set("n", "<leader>liw"..tmp.."d", ":normal _"..tmp.."viw<leader>ldj<cr>", {desc = 'Delete content buffer to inner word'})
-            set("n", "<leader>laW"..tmp.."d", ":normal _"..tmp.."vaW<leader>ldj<cr>", {desc = 'Delete content buffer to outer Word'})
-            set("n", "<leader>liW"..tmp.."d", ":normal _"..tmp.."viW<leader>ldj<cr>", {desc = 'Delete content buffer to inner Word'})
-        end
-    end
-end
-
-vim.g.YANK_LIST_SETUP_NUM_KEYS = function()
-    for i=1, 9 do
-        vim.keymap.set({"n", "v"}, "<leader>l"..i, "")
-        vim.keymap.del({"n", "v"}, "<leader>l"..i)
-        if (i < vim.g.YANK_LIST_CNT) then
-            vim.keymap.set("n", "<leader>l"..i, "<cmd>lua vim.fn.setreg('\"', vim.g.YANK_LIST_CONTENT["..i.."])<cr>p", {desc = vim.g.YANK_LIST_CONTENT[i]})
-            vim.keymap.set("v", "<leader>l"..i, "<cmd>lua vim.fn.setreg('\"', vim.g.YANK_LIST_CONTENT["..i.."])<cr>P", {desc = vim.g.YANK_LIST_CONTENT[i]})
-        else
-            vim.keymap.set({"n", "v"}, "<leader>l"..i, "<cmd>lua print(\"Buffer empty\")<cr>", {desc = "[Buffer empty]"})
-        end
-    end
-end
-
-vim.g.YANK_LIST_PUSH_FN = function()
-    local m = vim.g.YANK_LIST_CONTENT
-    m[vim.g.YANK_LIST_CNT] = vim.fn.getreg('"')
-    vim.g.YANK_LIST_CONTENT = m
-    vim.g.YANK_LIST_CNT = vim.g.YANK_LIST_CNT + 1
-    vim.g.YANK_LIST_SETUP_NUM_KEYS()
-end
-
-local yank_list_push_cmd = '<cmd>lua vim.g.YANK_LIST_PUSH_FN()<cr>'
+local yank_list_push_cmd = "<cmd>lua vim.g.APPEND_REGISTER(vim.fn.getreg('\"'))<cr>"
 set("n", "<leader>lz", "yl"..yank_list_push_cmd, {desc = 'Yank next to list'})
 set("v", "<leader>lz", "y"..yank_list_push_cmd, {desc = 'Yank next to list'})
 set("n", "<leader>ld", "x"..yank_list_push_cmd, {desc = 'Delete next to list'})
