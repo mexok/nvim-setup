@@ -4,26 +4,32 @@ vim.g.REG_LIST_INDEX = 1
 
 vim.g.GET_REGISTER_NAME = function(value)
     local values = {
-        "q",  --  1
-        "w",  --  2
-        "e",  --  3
-        "r",  --  4
-        "t",  --  5
-        "a",  --  6
-        "s",  --  7
-        "d",  --  8
-        "f",  --  9
-        "g",  -- 10
-        "z",  -- 11
-        "u",  -- 12
-        "i",  -- 13
-        "o",  -- 14
-        "p",  -- 15
-        "y",  -- 16
-        "x",  -- 17
-        "c",  -- 18
-        "v",  -- 19
-        "b",  -- 20
+        "a",  --  1
+        "b",  --  2
+        "c",  --  3
+        "d",  --  4
+        "e",  --  5
+        "f",  --  6
+        "g",  --  7
+        "h",  --  8
+        "i",  --  9
+        "j",  -- 10
+        "l",  -- 11
+        "k",  -- 12
+        "m",  -- 13
+        "n",  -- 14
+        "o",  -- 15
+        "p",  -- 16
+        "q",  -- 17
+        "e",  -- 18
+        "s",  -- 19
+        "t",  -- 20
+        "u",  -- 21
+        "v",  -- 22
+        "w",  -- 23
+        "x",  -- 24
+        "y",  -- 25
+        "z",  -- 26
     }
     return values[value]
 end
@@ -88,3 +94,4 @@ set("v", "<leader>ld", "x"..reg_list_push_cmd, {desc = 'Delete next to list'})
 
 set({"n", "v"}, "<leader>l+", "<cmd>lua vim.g.REG_LIST_INDEX = vim.g.REG_LIST_INDEX + 1; vim.g.PRINT_REGISTER(vim.g.REG_LIST_INDEX)<cr>", {desc = 'Increment current index'})
 set({"n", "v"}, "<leader>l-", "<cmd>lua vim.g.REG_LIST_INDEX = vim.g.REG_LIST_INDEX - 1; vim.g.PRINT_REGISTER(vim.g.REG_LIST_INDEX)<cr>", {desc = 'Decrement current index'})
+set({"n", "v"}, "<leader>lc", "<cmd>lua vim.g.REG_LIST_INDEX = 1; print(\"Reg list index resetted\")<cr>", {desc = 'Clear reg list index'})
