@@ -34,6 +34,7 @@ require('packer').startup(function(use)
     -- File lookup
     use { 'nvim-telescope/telescope.nvim', tag = '0.1.0' }
     use 'nvim-lua/plenary.nvim'
+    use 'nvim-telescope/telescope-live-grep-args.nvim'
 
     -- File explorer
     use 'nvim-tree/nvim-web-devicons'

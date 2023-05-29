@@ -3,8 +3,11 @@ set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
 set("n", "<leader>q", "<cmd>q<cr>", { noremap = true, desc = "quit" })
 set("n", "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "write" })
 
-set("n", "<leader>f", "<cmd>lua require('telescope.builtin').live_grep()<cr>", { noremap = true, desc = "search text in project" })
-set("v", "<leader>f", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').live_grep({ default_text = tmp })<cr>", { noremap = true, desc = "search marked text in project"})
+set("n", "<leader>f", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
+    { noremap = true, desc = "search text in project" })
+set("v", "<leader>f", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); "..
+    "require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\", default_text = tmp })<cr>",
+    { noremap = true, desc = "search marked text in project"})
 set("n", "<leader>F", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true, desc = "search files in project" })
 set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp })<cr>", { noremap = true, desc = "search files in project with marked text"})
 set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
