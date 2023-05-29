@@ -1,0 +1,2 @@
+# We need this whitelist so that rg will search also in .config
+!.config/
