@@ -1,7 +1,7 @@
 local set = vim.keymap.set
 set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
-set("n", "<leader>q", "<cmd>q<cr>", { noremap = true, desc = "quit" })
-set("n", "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "write" })
+set({"v", "n"}, "<leader>q", "<cmd>q<cr>", { noremap = true, desc = "quit" })
+set({"v", "n"}, "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "write" })
 
 set("n", "<leader>f", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
     { noremap = true, desc = "search text in project" })
@@ -17,8 +17,16 @@ set("n", "<leader>tv", "<cmd>cex system('PYTHONPATH=src vulture src/*') | copen<
 set("n", "<leader>H", ":h ", { noremap = true, desc = "help" })
 set("n", "<leader>u", "<cmd>UndotreeToggle<cr>", { noremap = true, desc = "toggle undotree" })
 
-set("v", "/", "y/<C-R>\"<cr>", { noremap = true })
-set("v", "?", "y?<C-R>\"<cr>", { noremap = true })
+vim.g.SEARCH = function(key)
+    local reg_start = vim.api.nvim_buf_get_mark(0, "<")
+    local reg_end = vim.api.nvim_buf_get_mark(0, ">")
+    local buff = vim.api.nvim_buf_get_text(0, reg_start[1]-1, reg_start[2], reg_start[1]-1, reg_end[2]+1, {})[1]
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, false, true), 'm', false)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(buff, true, false, true), 'm', false)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<cr>", true, false, true), 'm', false)
+end
+set("v", "/", "<esc><cmd>lua vim.g.SEARCH('/')<cr>", { noremap = true })
+set("v", "?", "<esc><cmd>lua vim.g.SEARCH('?')<cr>n", { noremap = true })
 
 -- debugging
 local reg_cmd = "<cmd>let $REG_A = @a<cr><cmd>let $REG_S = @s<cr><cmd>let $REG_D = @d<cr><cmd>let $REG_F = @f<cr>"
@@ -62,6 +70,9 @@ set('n', '[t', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diag
 
 
 -- editing
+set("n", "<bs>", "hx")
+set("v", "<bs>", "x")
+
 set("i", "<A-w>", "<right><esc>wi")
 set("i", "<A-W>", "<right><esc>Wi")
 set("i", "<A-e>", "<esc>ea")
@@ -73,11 +84,6 @@ set("i", "<A-H>", "<right><esc>Bi")
 
 set("i", "<A-a>", "<right><esc>", { noremap=true })
 set("i", "<A-i>", "<esc>", { noremap=true })
-set("i", "<A-d>", "<del>", { noremap=true })
-set("i", "<A-l>", "<right>", { noremap=true })
-set("i", "<A-h>", "<left>", { noremap=true })
-set({"v", "n"}, "<A-d>", "\"_x", { noremap=true })
-
 
 set({"n", "v"}, "<leader>p", "\"+p", { noremap=true, desc="p using global buffer" })
 set({"n", "v"}, "<leader>P", "\"+P", { noremap=true, desc="P using global buffer" })
@@ -96,21 +102,6 @@ set("n", "<C-p>", "vp", {noremap = true})
 set("v", "<C-p>", "p", {noremap = true})
 set("v", "p", "P", {noremap = true})
 
-set("n", "ö", 'vi"f"oF"o', {noremap = true})
-set("v", "ö", '<esc>vi"f"oF"o', {noremap = true})
-set("n", "Ö", 'vi"', {noremap = true})
-set("v", "Ö", '<esc>vi"', {noremap = true})
-
-set("n", "ä", "vi'f'oF'o", {noremap = true})
-set("v", "ä", "<esc>vi'f'oF'o", {noremap = true})
-set("n", "Ä", "vi'", {noremap = true})
-set("v", "Ä", "<esc>vi'", {noremap = true})
-
-set("n", "ü", 'vib', {noremap = true})
-set("v", "ü", '<esc>vib', {noremap = true})
-set("n", "Ü", 'vibf)oF(o', {noremap = true})
-set("v", "Ü", '<esc>vibf)oF(o', {noremap = true})
-
 set("n", "<leader>s", ":%s/", {noremap = true})
 set("v", "<leader>s", ":s/", {noremap = true})
 set("n", "<leader>g", ":%g/", {noremap = true})
@@ -128,12 +119,27 @@ set("v", "H", "<gv", {noremap=true})
 set({"n", "v"}, "<C-L>", "L", {noremap = true})
 set({"n", "v"}, "<C-H>", "H", {noremap = true})
 
-set({"n", "v"}, "<A-3>", "0", { noremap = true })
-set({"n", "v"}, "<A-4>", "$", { noremap = true })
 set({"n", "v"}, "0", "_", { noremap = true })
-set("i", "<A-3>", "<esc>0i", { noremap = true })
-set("i", "<A-4>", "<esc>$a", { noremap = true })
-set("i", "<A-0>", "<esc>_i", { noremap = true })
+
+set("n", "ä", 'vi"f"oF"o', {noremap = true})
+set("v", "ä", '<esc>vi"f"oF"o', {noremap = true})
+set("n", "Ä", 'vi"', {noremap = true})
+set("v", "Ä", '<esc>vi"', {noremap = true})
+
+set("n", "ü", "vi'f'oF'o", {noremap = true})
+set("v", "ü", "<esc>vi'f'oF'o", {noremap = true})
+set("n", "Ü", "vi'", {noremap = true})
+set("v", "Ü", "<esc>vi'", {noremap = true})
+
+set("n", "ö", 'vib', {noremap = true})
+set("v", "ö", '<esc>vib', {noremap = true})
+set("n", "Ö", 'vibf)oF(o', {noremap = true})
+set("v", "Ö", '<esc>vibf)oF(o', {noremap = true})
+
+set("n", "ß", 'vi{', {noremap = true})
+set("v", "ß", '<esc>vi{', {noremap = true})
+set("n", "€", 'vi{f}oF{o', {noremap = true})
+set("v", "€", '<esc>vi{f}oF{o', {noremap = true})
 
 set("i", "\"\"", "\"\"<Left>", { noremap=true })
 set("i", "\"<cr>", "\"<cr>\"<ESC>O", { noremap=true })
@@ -149,6 +155,7 @@ set("i", "[]", "[]<Left>", { noremap=true })
 set("i", "[<cr>", "[<cr>]<ESC>O", { noremap=true })
 set("i", "{}", "{}<Left>", { noremap=true })
 set("i", "{<cr>", "{<cr>}<ESC>O", { noremap=true })
+set("i", "<>", "<lt>><Left>", { noremap=true })
 
 set({"i", "c", "o"}, "<C-V>", "<C-R>", { noremap=true })
 set({"i", "c", "o"}, "<C-V><C-V>", "<C-R>\"", { noremap=true })
@@ -181,6 +188,7 @@ fun! SetKeymaps()
     vnoremap <nowait><buffer> y= z=
     nnoremap <nowait><buffer> z yl
     vnoremap <nowait><buffer> z y
+
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround
     nnoremap <leader>cs <Plug>Csurround
@@ -196,3 +204,5 @@ augroup set_keymaps
     autocmd FileType * :call SetKeymaps()
 augroup end
 ]])
+    --nnoremap <nowait><buffer> <PageUp> <C-u>
+    --nnoremap <nowait><buffer> <PageDown> <C-d>

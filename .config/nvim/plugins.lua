@@ -1,4 +1,4 @@
-require('packer').startup(function(use)
+        require('packer').startup(function(use)
     -- package manager
     use 'wbthomason/packer.nvim'
 
@@ -59,7 +59,8 @@ require('packer').startup(function(use)
     use 'tpope/vim-fugitive'  -- only for git blame
     use 'airblade/vim-gitgutter'
 
-    use 'mexok/voice-command.nvim'
+    use '/home/yumyum/Repos/voice-command.nvim'
+    --use 'mexok/voice-command.nvim'
 
 end)
 
@@ -101,6 +102,13 @@ require("telescope").setup({
 })
 
 require('neoscroll').setup()
+
+local t = {}
+t['<PageUp>'] = {'scroll', {'-vim.wo.scroll', 'true', '250'}}
+t['<PageDown>'] = {'scroll', {'vim.wo.scroll', 'true', '250'}}
+
+require('neoscroll.config').set_mappings(t)
+
 
 local null_ls = require("null-ls")
 null_ls.setup({

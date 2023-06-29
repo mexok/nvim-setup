@@ -30,3 +30,12 @@ end
 
 -- if you only want these mappings for toggle term use term://*toggleterm#* instead
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+
+
+function _G.fix_perl_iskeyword()
+    -- Somehow after opening a new perl file, ':' gets added to is keyword which makes things confusing.
+    -- This is a dirty workaround.
+    vim.opt.iskeyword:remove({":"})
+end
+
+vim.cmd('autocmd BufEnter * lua fix_perl_iskeyword()')
