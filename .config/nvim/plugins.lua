@@ -55,6 +55,16 @@
     use 'mbbill/undotree'
     use 'karb94/neoscroll.nvim'
 
+    use {
+        "williamboman/mason.nvim",
+        run = ":MasonUpdate" -- :MasonUpdate updates registry contents
+    }
+
+    use {
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+    }
+
     -- Git
     use 'tpope/vim-fugitive'  -- only for git blame
     use 'airblade/vim-gitgutter'
@@ -100,6 +110,9 @@ require("telescope").setup({
         },
     }
 })
+
+require("mason").setup()
+require("mason-lspconfig").setup()
 
 require('neoscroll').setup()
 

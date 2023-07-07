@@ -187,6 +187,7 @@ fun! SetKeymaps()
     nnoremap <nowait><buffer> y= z=
     vnoremap <nowait><buffer> y= z=
     nnoremap <nowait><buffer> z yl
+    nnoremap <nowait><buffer> Z v$<left>y
     vnoremap <nowait><buffer> z y
 
     nnoremap <leader>cr <Plug>(abolish-coerce-word)

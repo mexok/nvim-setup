@@ -24,18 +24,31 @@ end
 require("lspconfig").cmake.setup({})
 require("lspconfig").clangd.setup({})
 
-local perlConfig = {
-    cmd = { 'pls' },
+--local perlConfig = {
+--    cmd = { 'pls' },
+--    settings = {
+--        pls = {
+--            syntax = {
+--                enabled = true,
+--                perl = '/usr/bin/perl'
+--            },
+--            cwd = ".",
+--        }
+--    }
+--}
+--require("lspconfig").perlpls.setup(perlConfig)
+
+require'lspconfig'.perlnavigator.setup{
     settings = {
-        pls = {
-            syntax = {
-                enabled = true,
-                perl = '/usr/bin/perl'
-            },
-        }
+      perlnavigator = {
+          perlPath = 'perl',
+          enableWarnings = true,
+          perltidyProfile = '',
+          perlcriticProfile = '',
+          perlcriticEnabled = false,
+      }
     }
 }
-require("lspconfig").perlpls.setup(perlConfig)
 
 -- cmp
 

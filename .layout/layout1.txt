@@ -27,28 +27,38 @@
 {grav}>{grav}{grav}
 {lshf}{grav}>{-lshf}{grav}{grav}{+lshf}
 
-{lshf}{6}>{-lshf}{6}{6}{+lshf}
-{lshf}{7}>{-lshf}{obrk}{+lshf}
-{lshf}{8}>{-lshf}{9}{+lshf}
-{lshf}{9}>{-lshf}{0}{+lshf}
-{lshf}{0}>{-lshf}{cbrk}{+lshf}
-{lshf}{perd}>{cbrk}
-{lshf}{comm}>{obrk}
-{obrk}>{-lshf}{comm}{+lshf}
-{cbrk}>{-lshf}{perd}{+lshf}
-{lshf}{obrk}>{-lshf}{7}{+lshf}
-{lshf}{cbrk}>{-lshf}{8}{+lshf}
-
 {hk4}>{-lshf}{apos}{+lshf}{u}
 {lshf}{hk4}>{-lshf}{apos}{u}{+lshf}
 {hk3}>{-lshf}{apos}{+lshf}{o}
 {lshf}{hk3}>{-lshf}{apos}{o}{+lshf}
-{hk1}>{-ralt}{s}{+ralt}
-{lshf}{hk1}>{-ralt}{5}{+ralt}
 {hk2}>{-lshf}{apos}{+lshf}{a}
 {lshf}{hk2}>{-lshf}{apos}{a}{+lshf}
+{hk1}>{-ralt}{s}{+ralt}
+{lshf}{hk1}>{-ralt}{5}{+ralt}
+
+{lalt}{j}>{down}
+{lalt}{k}>{up}
+{lalt}{h}>{left}
+{lalt}{l}>{rght}
 
 <keypad>
+
+[lshf]>[hyph]
+[rshf]>[bsls]
+[esc]>[eql]
+
+[lctr]>[lalt]
+[rctr]>[lalt]
+[y]>[z]
+[z]>[y]
+
+[x]>[lctr]
+[c]>[lshf]
+
+{del}>{esc}{esc}
+{lshf}{bspc}>{del}
+
+{cbrk}>{-lshf}{scol}{+lshf}
 
 <function1>
 
