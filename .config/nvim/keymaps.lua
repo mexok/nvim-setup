@@ -10,13 +10,13 @@ set("v", "<leader>f", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*
     { noremap = true, desc = "search marked text in project"})
 set("n", "<leader>F", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true, desc = "search files in project" })
 set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp })<cr>", { noremap = true, desc = "search files in project with marked text"})
-set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
+set("n", "<leader>e", "<cmd>NvimTreeFocus<cr>", { desc = "explorer"})
+set("n", "<leader>te", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
 set("n", "<leader>b", "<cmd>Git blame<cr>", { desc = "git blame"})
 set("n", "<leader>a", "gg0vG$", { noremap = true, desc = "select all"})
 set("n", "<leader>tv", "<cmd>cex system('PYTHONPATH=src vulture src/*') | copen<cr>", { desc = "use python vulture for src dir" })
 set("n", "<leader>H", ":h ", { noremap = true, desc = "help" })
 set("n", "<leader>u", "<cmd>UndotreeToggle<cr>", { noremap = true, desc = "toggle undotree" })
-
 vim.g.SEARCH = function(key)
     local reg_start = vim.api.nvim_buf_get_mark(0, "<")
     local reg_end = vim.api.nvim_buf_get_mark(0, ">")
@@ -27,6 +27,11 @@ vim.g.SEARCH = function(key)
 end
 set("v", "/", "<esc><cmd>lua vim.g.SEARCH('/')<cr>", { noremap = true })
 set("v", "?", "<esc><cmd>lua vim.g.SEARCH('?')<cr>n", { noremap = true })
+
+set("n", "mn", require('nvim-tree.api').marks.navigate.next)
+set("n", "mp", require('nvim-tree.api').marks.navigate.prev)
+set("n", "ms", require('nvim-tree.api').marks.navigate.select)
+set("n", "mf", require("nvim-tree.api").marks.toggle)
 
 -- debugging
 local reg_cmd = "<cmd>let $REG_A = @a<cr><cmd>let $REG_S = @s<cr><cmd>let $REG_D = @d<cr><cmd>let $REG_F = @f<cr>"
@@ -45,15 +50,14 @@ set("n", "<leader>h", ":lua require'dap.ui.widgets'.hover()<cr>", { silent = tru
 set("n", "<leader>tr", "<cmd>lua require'dap'.repl.toggle()<cr>", { noremap=true, desc = "toggle repl" })
 set("n", "<leader>tb", "<cmd>lua require'dap'.list_breakpoints()<cr>", { noremap=true, desc = "list breakpoints"})
 set("n", "<leader>tc", "<cmd>lua require'dap'.clear_breakpoints()<cr>", { noremap=true, desc = "clear breakpoints"})
-set("n", "<leader>te", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').expressions).open()<cr>", { silent = true, desc = "open debug expressions"})
 set("n", "<leader>tf", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').frames).open()<cr>", { silent = true, desc = "open debug frames"})
 set("n", "<leader>tt", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').threads).open()<cr>", { silent = true, desc = "open debug threads"})
 set("n", "<leader>ts", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').scopes).open()<cr>", { silent = true, desc = "open debug scopes"})
 set("n", "<leader>tp", "<cmd>PackerUpdate<cr>", { noremap = true, desc = "update plugins"})
 set("n", "<leader>to", "<cmd>SymbolsOutline<cr>")
 set({"n", "v"}, "<C-K>", "<cmd>ToggleTerm<cr>")
-set("n", "<C-x>", ":ToggleTermSendCurrentLine<cr>")
-set("v", "<C-x>", ":ToggleTermSendVisualSelection<cr>")
+set("n", "<leader>k", ":ToggleTermSendCurrentLine<cr>")
+set("v", "<leader>k", ":ToggleTermSendVisualSelection<cr>")
 
 -- lsp setup
 set('n', 'gs', vim.lsp.buf.declaration, { noremap=true, silent=true, desc="go to declaration" })
@@ -161,14 +165,6 @@ set({"i", "c", "o"}, "<C-V>", "<C-R>", { noremap=true })
 set({"i", "c", "o"}, "<C-V><C-V>", "<C-R>\"", { noremap=true })
 
 
-set({"n", "v"}, "m", "<cmd>lua require(\"harpoon.mark\").add_file()<cr>")
-set({"n", "v"}, "<leader>tm", "<cmd>lua require(\"harpoon.ui\").toggle_quick_menu()<cr>")
-
-for i=1, 6 do
-    set({"n", "v"}, "g"..i, "<cmd>lua require(\"harpoon.ui\").nav_file("..i..")<cr>")
-end
-
-
 vim.cmd([[
 fun! SetKeymaps()
     nnoremap <nowait><buffer> d x
@@ -198,6 +194,11 @@ fun! SetKeymaps()
     nnoremap gs v<Plug>VgSurround
     xnoremap S <Plug>VSurround
     xnoremap gs <Plug>VgSurround
+
+    nmap <leader>j <Plug>Lightspeed_s
+    nmap <leader>J <Plug>Lightspeed_S
+    vmap <leader>j <Plug>Lightspeed_s
+    vmap <leader>J <Plug>Lightspeed_S
 endfun
 
 augroup set_keymaps

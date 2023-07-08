@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
 vim.g.python3_host_prog = 'python3'
+vim.g.lightspeed_no_default_keymaps = true
 
 vim.opt.guicursor="sm-n:block-blinkwait100-blinkoff100-blinkon100,c-ci-i:ver100,cr-r:hor100,v-ve:block"
 

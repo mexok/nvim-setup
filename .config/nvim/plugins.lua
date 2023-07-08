@@ -1,4 +1,4 @@
-        require('packer').startup(function(use)
+require('packer').startup(function(use)
     -- package manager
     use 'wbthomason/packer.nvim'
 
@@ -17,6 +17,9 @@
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/nvim-cmp'
+
+    use 'williamboman/mason.nvim'
+    use 'williamboman/mason-lspconfig.nvim'
 
     -- Code formatting
     use 'jose-elias-alvarez/null-ls.nvim'
@@ -43,9 +46,6 @@
     -- Terminal
     use {"akinsho/toggleterm.nvim", tag = '*'}
 
-    -- harpoon
-    use 'ThePrimeagen/harpoon'
-
     -- Editor smoothness
     use 'tpope/vim-surround'
     use 'tpope/vim-commentary'
@@ -54,31 +54,23 @@
     use 'AndrewRadev/splitjoin.vim'
     use 'mbbill/undotree'
     use 'karb94/neoscroll.nvim'
-
-    use {
-        "williamboman/mason.nvim",
-        run = ":MasonUpdate" -- :MasonUpdate updates registry contents
-    }
-
-    use {
-        "williamboman/mason-lspconfig.nvim",
-        "neovim/nvim-lspconfig",
-    }
+    use 'ggandor/lightspeed.nvim'
 
     -- Git
     use 'tpope/vim-fugitive'  -- only for git blame
     use 'airblade/vim-gitgutter'
 
-    use '/home/yumyum/Repos/voice-command.nvim'
-    --use 'mexok/voice-command.nvim'
+    use 'mexok/voice-command.nvim'
 
 end)
 
 require('voice-command').setup()
 
-require('nvim-tree').setup()
+require('nvim-tree').setup({
+    update_focused_file = { enable = true }
+})
 
-require("telescope").setup({
+require("telescope").setup {
     defaults = {
         layout_strategy = "horizontal",
         hidden = true,
@@ -109,12 +101,24 @@ require("telescope").setup({
             theme = "ivy"
         },
     }
-})
+}
 
 require("mason").setup()
 require("mason-lspconfig").setup()
 
 require('neoscroll').setup()
+
+local labels = {
+    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "l", "k", "m", "n", "o", "p", "q", "r", "s", "t", "u",
+    "v", "w", "x", "y", "z",
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "L", "K", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+    "V", "W", "X", "Y", "Z"
+}
+require'lightspeed'.setup {
+    --jump_to_unique_chars = true,
+    labels = labels,
+    safe_labels = labels,
+}
 
 local t = {}
 t['<PageUp>'] = {'scroll', {'-vim.wo.scroll', 'true', '250'}}
@@ -129,6 +133,6 @@ null_ls.setup({
     },
 })
 
-require("toggleterm").setup({
+require("toggleterm").setup {
     start_in_insert = false,
-})
+}
