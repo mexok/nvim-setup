@@ -28,10 +28,52 @@ end
 set("v", "/", "<esc><cmd>lua vim.g.SEARCH('/')<cr>", { noremap = true })
 set("v", "?", "<esc><cmd>lua vim.g.SEARCH('?')<cr>n", { noremap = true })
 
-set("n", "mn", require('nvim-tree.api').marks.navigate.next)
-set("n", "mp", require('nvim-tree.api').marks.navigate.prev)
-set("n", "ms", require('nvim-tree.api').marks.navigate.select)
-set("n", "mf", require("nvim-tree.api").marks.toggle)
+local nvim_tree_open_file = require "nvim-tree.actions.node.open-file"
+local nvim_tree_utils = require "nvim-tree.utils"
+function vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
+    if node then
+        if not node.nodes and not nvim_tree_utils.get_win_buf_from_path(node.absolute_path) then
+            nvim_tree_open_file.fn("edit", node.absolute_path)
+        else
+            nvim_tree_utils.focus_file(node.absolute_path)
+        end
+    end
+end
+
+function vim.g.NVIM_TREE_SELECT(i)
+    local paths = vim.tbl_map(function(n)
+        return n.absolute_path
+    end, require("nvim-tree.marks").get_marks())
+
+    table.sort(paths)
+
+    local node = require("nvim-tree.marks").get_mark { absolute_path = paths[i] }
+    vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
+end
+
+function vim.g.NVIM_TREE_SELECT_UI()
+    local paths = vim.tbl_map(function(n)
+        return n.absolute_path
+    end, require("nvim-tree.marks").get_marks())
+
+    table.sort(paths)
+
+    vim.ui.select(paths, {
+        prompt = "Select mark",
+    }, function(path)
+        local node = require("nvim-tree.marks").get_mark { absolute_path = path }
+        vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
+    end)
+end
+
+set("n", "mf", require('nvim-tree.api').marks.navigate.next)
+set("n", "me", require('nvim-tree.api').marks.navigate.prev)
+set("n", "ms", vim.g.NVIM_TREE_SELECT_UI)
+set("n", "mt", require("nvim-tree.api").marks.toggle)
+set("n", "mc", require("nvim-tree.api").marks.clear)
+for i = 1, 9 do
+    set("n", "g"..i, "<cmd>lua vim.g.NVIM_TREE_SELECT("..i..")<cr>")
+end
 
 -- debugging
 local reg_cmd = "<cmd>let $REG_A = @a<cr><cmd>let $REG_S = @s<cr><cmd>let $REG_D = @d<cr><cmd>let $REG_F = @f<cr>"
