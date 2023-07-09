@@ -22,7 +22,7 @@ vim.g.SEARCH = function(key)
     local reg_end = vim.api.nvim_buf_get_mark(0, ">")
     local buff = vim.api.nvim_buf_get_text(0, reg_start[1]-1, reg_start[2], reg_start[1]-1, reg_end[2]+1, {})[1]
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, false, true), 'm', false)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(buff, true, false, true), 'm', false)
+    vim.api.nvim_feedkeys(buff, 'm', false)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<cr>", true, false, true), 'm', false)
 end
 set("v", "/", "<esc><cmd>lua vim.g.SEARCH('/')<cr>", { noremap = true })
@@ -118,6 +118,8 @@ set('n', '[t', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diag
 -- editing
 set("n", "<bs>", "hx")
 set("v", "<bs>", "x")
+set("n", "<cr>", "o<esc>")
+set("v", "<cr>", "<esc>o<esc>")
 
 set("i", "<A-w>", "<right><esc>wi")
 set("i", "<A-W>", "<right><esc>Wi")
@@ -155,17 +157,12 @@ set("v", "<leader>g", ":g/", {noremap = true})
 set("n", "<leader>v", ":%v/", {noremap = true})
 set("v", "<leader>v", ":v/", {noremap = true})
 
-set({"n", "v"}, ".", ";", {noremap = true})
-set({"n", "v"}, ";", ".", {noremap = true})
-
 set("n", "L", ">>", {noremap = true})
 set("n", "H", "<<", {noremap = true})
 set("v", "L", ">gv", {noremap=true})
 set("v", "H", "<gv", {noremap=true})
 set({"n", "v"}, "<C-L>", "L", {noremap = true})
 set({"n", "v"}, "<C-H>", "H", {noremap = true})
-
-set({"n", "v"}, "0", "_", { noremap = true })
 
 set("n", "ä", 'vi"f"oF"o', {noremap = true})
 set("v", "ä", '<esc>vi"f"oF"o', {noremap = true})
@@ -248,5 +245,3 @@ augroup set_keymaps
     autocmd FileType * :call SetKeymaps()
 augroup end
 ]])
-    --nnoremap <nowait><buffer> <PageUp> <C-u>
-    --nnoremap <nowait><buffer> <PageDown> <C-d>
