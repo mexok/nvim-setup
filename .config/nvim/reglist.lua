@@ -44,11 +44,6 @@ vim.g.REGLIST_TRIM_NEWLINE = function(value)
     return value
 end
 
---for i = 1, 9 do
---    local reg = vim.g.GET_REGISTER_NAME(i)
---    set({"n", "v"}, "<leader>r"..reg, "<cmd>lua vim.g.REG_LIST_INDEX = "..i.."<cr>", {desc="Set index to "..i})
---end
-
 vim.g.REGLIST_PUSH = function()
     local value = vim.fn.getreg('\"')
     vim.g.REGLIST_LEN = vim.g.REGLIST_LEN + 1
@@ -93,25 +88,33 @@ vim.g.REGLIST_UNSHIFT = function()
     end
 end
 
-vim.g.REGLIST_IMPORT = function ()
+vim.g.REGLIST_IMPORT = function()
     local vstart = vim.fn.getpos("'<")
     local vend = vim.fn.getpos("'>")
     local line_start = vstart[2]
     local line_end = vend[2]
     for line = line_start, line_end do
         local content = vim.fn.getline(line)
-        vim.g.REGLIST_PUSH(content)
+        vim.fn.setreg('\"', content)
+        vim.g.REGLIST_PUSH()
     end
 end
 
-vim.g.REGLIST_EXPORT = function ()
+vim.g.REGLIST_EXPORT = function()
     local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-    local t = {}
+    local lines = {}
     for i = 1, vim.g.REGLIST_LEN do
-        t[i] = vim.g.REGLIST_SHIFT()
-        t[i] = vim.g.REGLIST_TRIM_NEWLINE(t[i])
+        vim.g.REGLIST_SHIFT()
+        local content = vim.fn.getreg('\"')
+        content = vim.g.REGLIST_TRIM_NEWLINE(content)
+        for line in content:gmatch("[^\r\n]+") do
+            table.insert(lines, line)
+        end
     end
-    vim.api.nvim_buf_set_lines(0, row-1, row-1, 0, t)
+    vim.api.nvim_buf_set_lines(0, row, row, 0, lines)
+    for i = 1, #lines do
+        vim.api.nvim_feedkeys("j", 'm', false)
+    end
 end
 
 vim.g.REGLIST_PRINT = function(i)
@@ -128,9 +131,9 @@ vim.g.REGLIST_GLOB = function()
     end
 end
 
-set({"v"}, "<leader>li", "<esc><cmd>vim.g.REGLIST_IMPORT()<cr>", {desc = 'Import reg list'})
+set({"v"}, "<leader>li", "<esc><cmd>lua vim.g.REGLIST_LEN = 0; vim.g.REGLIST_IMPORT()<cr>", {desc = 'Import reg list'})
+set({"v"}, "<leader>lI", "<esc><cmd>lua vim.g.REGLIST_IMPORT()<cr>", {desc = 'Import reg list (appending)'})
 set({"n"}, "<leader>le", "<cmd>lua vim.g.REGLIST_EXPORT()<cr>", {desc = 'Export reg list'})
-set({"v"}, "<leader>le", "d<cmd>lua vim.g.REGLIST_EXPORT()<cr>", {desc = 'Export reg list'})
 set({"n", "v"}, "<leader>lg", "<cmd>lua vim.g.REGLIST_GLOB()<cr>", {desc = 'Print current registers'})
 set({"n", "v"}, "<leader>lr", "<cmd>lua print(vim.g.REGLIST_LEN)<cr>", {desc = 'Print current reg list size'})
 
