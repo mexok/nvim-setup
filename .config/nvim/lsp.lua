@@ -56,6 +56,7 @@ vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 local cmp = require 'cmp'
 
+
 cmp.setup {
     snippet = {
         expand = function(args)
@@ -65,19 +66,18 @@ cmp.setup {
     mapping = cmp.mapping.preset.insert({
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<Enter>'] = cmp.mapping.confirm {
+        ['<cr>'] = cmp.mapping.confirm{
             behavior = cmp.ConfirmBehavior.Select,
             select = false,
         },
-        ['<Tab>'] = cmp.mapping(function(fallback)
+        ['<tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
             else
                 fallback()
             end
         end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
+        ['<S-tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
             else

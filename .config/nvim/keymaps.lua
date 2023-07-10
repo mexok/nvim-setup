@@ -75,6 +75,19 @@ for i = 1, 9 do
     set("n", "g"..i, "<cmd>lua vim.g.NVIM_TREE_SELECT("..i..")<cr>")
 end
 
+function vim.g.CMP_SELECT(value)
+    local cmp = require 'cmp'
+    if cmp.visible() then
+        for i = 1, value do
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<tab>", true, false, true), 'm', false)
+        end
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<cr>", true, false, true), 'm', false)
+    end
+end
+for i = 0, 9 do
+    set("i", "<C-Space>"..i, "<cmd>lua vim.g.CMP_SELECT("..i..")<cr>")
+end
+
 -- debugging
 local reg_cmd = "<cmd>let $REG_A = @a<cr><cmd>let $REG_S = @s<cr><cmd>let $REG_D = @d<cr><cmd>let $REG_F = @f<cr>"
 set("n", "<F3>", reg_cmd .. "<cmd>lua require'dap'.run_last()<cr>", { silent = true, desc = "run last" })
@@ -146,6 +159,7 @@ set("n", "J", "v:m '>+1<cr>gv=")
 set("n", "K", "v:m '<-2<cr>gv=")
 set("v", "J", ":m '>+1<cr>gv=gv")
 set("v", "K", ":m '<-2<cr>gv=gv")
+
 set("n", "<C-p>", "vp", {noremap = true})
 set("v", "<C-p>", "p", {noremap = true})
 set("v", "p", "P", {noremap = true})
@@ -224,6 +238,11 @@ fun! SetKeymaps()
     nnoremap <nowait><buffer> z yl
     nnoremap <nowait><buffer> Z v$<left>y
     vnoremap <nowait><buffer> z y
+
+    nnoremap <nowait><buffer> > vloho
+    vnoremap <nowait><buffer> > loho
+    nnoremap <nowait><buffer> < vholo
+    vnoremap <nowait><buffer> < holo
 
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround
