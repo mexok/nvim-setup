@@ -26,4 +26,4 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.incsearch = true
 
-vim.opt.colorcolumn = "120"
+vim.opt.colorcolumn = "80"

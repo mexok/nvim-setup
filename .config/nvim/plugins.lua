@@ -21,9 +21,6 @@ require('packer').startup(function(use)
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
 
-    -- Code formatting
-    use 'jose-elias-alvarez/null-ls.nvim'
-
     -- Treesitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-textobjects'
@@ -104,7 +101,9 @@ require("telescope").setup {
 }
 
 require("mason").setup()
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup {
+    ensure_installed = { "lua_ls", "perlnavigator" },
+}
 
 require('neoscroll').setup()
 
@@ -125,13 +124,6 @@ t['<PageUp>'] = {'scroll', {'-vim.wo.scroll', 'true', '250'}}
 t['<PageDown>'] = {'scroll', {'vim.wo.scroll', 'true', '250'}}
 
 require('neoscroll.config').set_mappings(t)
-
-
-local null_ls = require("null-ls")
-null_ls.setup({
-    sources = {
-    },
-})
 
 require("toggleterm").setup {
     start_in_insert = false,

@@ -4,48 +4,48 @@ nvim-setup mexok
 This repo fullfills two purposes:
 
 1) Keep track of my config setup across multiple computers
-2) Feel free to look around and copy setup if you see fit. But please notice, that this is a tailored setup which works for me and my thought processes. You propably think differently and therefore different customizations would be appropriate. This is intended as a source of inspiration as I also got inspired from other programmers.
+2) Be a source of inspiration for others as I also was inspired by the work of others
 
 
 Goals of my setup
 =================
 
 * Have an environment optimized for doing programming
-* Don't move hand to mouse because it's annoying
-* Don't use Ctrl so often because its kinda hard to reach if you have to do it often
+* Don't move hand to mouse because misclicking is annoying and interrupts the workflow
+* Don't use pinky fingers too often as they are not so strong and hurt if used too often during long sessions
 
 To solve these goals, I've taken following steps:
 
-* Utilize customized setup using tmux, nvim, zsh with oh-my-zsh
-* Having shortbindings using Alt-Key quite often because I find it easy to reach with left-thumb
+* Utilize a customized setup using nvim, tmux, zsh with oh-my-zsh
+* Have a Kinesis Advantage 360 keyboard with custom keybindings, so that e.g. Ctrl + Shift are reachable with ring and middle fingers as they are stronger then pinky.
 
 
 Things to notice
 ================
 
-* I usually work with German keyboard, therefore I will have some keyboard bindings on keys like 'ö' because they are quite easy to reach or remappings of 'y' and 'z' because on a German keyboard they are switched and 'z' is easier to reach on a German keyboard than 'y'.
-* I do 10 finger writing and don't look at my keyboard at all. If you do, I recommend learning 10 finger writing - starting yesterday.
+* I am from Germany and have adjusted the US-Layout coming with the 360 keyboard to fit in German special chars. I also applied mappings to them in NeoVIM, therefore I will have some keyboard bindings on keys like 'ö' or remappings of 'y' and 'z' because on my keyboard they are switched.
+* I was also inspired by the idea of Helix using a selection -> action pattern instead of vim's default action -> selection pattern. Therefore, I have bindings to jump right into selection, e.g. 'c' -> 'viw'
 
 
 How to setup
 ============
 
-Because installation instructions may alter quickly, I've chosen to just put a list of things to install:
+Please install:
 
-* OS: Ubuntu 22.04
+* OS: Debian 12 (or similar)
 * zsh and oh-my-zsh
 * tmux
-* nvim and vim-plug
+* nvim (0.9 from official tar.gz package) and packer
+* I have included an install.sh which includes some of the above plus some more CLI-Tools I use
 
 Then copy the config files to their approriate locations:
 
 * .config/ and .tmux.conf -> just copy paste to home dir
 * .zshrc -> append to home dir .zshrc
-* Install debugpy and pytest if needed
 * Install nerdfont (I use DejaVu Sans Mono)
 
 You can also use the setup.sh script, but it overrides some of your local configs, e.g. for tmux and neovim, so use with care.
 
-...and you should be ready to go.
+Install programming specific language tools. I have not 'standardized' them for my setup yet.
 
 Feel free to reach out to me for problems/ issues.

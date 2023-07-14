@@ -66,14 +66,16 @@ function vim.g.NVIM_TREE_SELECT_UI()
     end)
 end
 
-set("n", "mf", require('nvim-tree.api').marks.navigate.next)
-set("n", "me", require('nvim-tree.api').marks.navigate.prev)
+set("n", "mw", require('nvim-tree.api').marks.navigate.prev)
+set("n", "me", require('nvim-tree.api').marks.navigate.next)
 set("n", "ms", vim.g.NVIM_TREE_SELECT_UI)
-set("n", "mt", require("nvim-tree.api").marks.toggle)
+set("n", "mf", require("nvim-tree.api").marks.toggle)
 set("n", "mc", require("nvim-tree.api").marks.clear)
 for i = 1, 9 do
     set("n", "g"..i, "<cmd>lua vim.g.NVIM_TREE_SELECT("..i..")<cr>")
 end
+
+set("n", "mv", ":Gvdiffsplit!<cr>", {desc="Show conflict in vsplit"})
 
 function vim.g.CMP_SELECT(value)
     local cmp = require 'cmp'
@@ -243,6 +245,9 @@ fun! SetKeymaps()
     vnoremap <nowait><buffer> > loho
     nnoremap <nowait><buffer> < vholo
     vnoremap <nowait><buffer> < holo
+
+    nnoremap <nowait><buffer> ' "
+    vnoremap <nowait><buffer> ' "
 
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround

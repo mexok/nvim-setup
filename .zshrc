@@ -9,4 +9,4 @@ bindkey '^[l' forward-word
 bindkey '^[f' accept-line
 
 export LUA_PATH=~/.config/nvim/?.lua
-
+export PATH="$PATH:/opt/nvim-linux64/bin"

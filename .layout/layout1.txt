@@ -36,10 +36,6 @@
 {hk1}>{-ralt}{s}{+ralt}
 {lshf}{hk1}>{-ralt}{5}{+ralt}
 
-{lalt}{j}>{down}
-{lalt}{k}>{up}
-{lalt}{h}>{left}
-{lalt}{l}>{rght}
 
 <keypad>
 
@@ -61,6 +57,18 @@
 {cbrk}>{-lshf}{scol}{+lshf}
 
 <function1>
+
+[j]>[down]
+[k]>[up]
+[h]>[left]
+[l]>[rght]
+
+[lshf]>[hyph]
+[rshf]>[bsls]
+[esc]>[eql]
+
+{del}>{esc}{esc}
+{lshf}{bspc}>{del}
 
 <function2>
 
