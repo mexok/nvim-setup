@@ -1,6 +1,7 @@
 local set = vim.keymap.set
 set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
 set({"v", "n"}, "<leader>q", "<cmd>q<cr>", { noremap = true, desc = "quit" })
+set({"v", "n"}, "<leader>Q", "<cmd>q!<cr>", { noremap = true, desc = "quit" })
 set({"v", "n"}, "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "write" })
 
 set("n", "<leader>f", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
