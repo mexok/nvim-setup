@@ -10,6 +10,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 apt install ripgrep
+apt install rename
 
 # Nodejs
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&\
