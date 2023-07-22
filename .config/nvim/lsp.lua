@@ -24,20 +24,6 @@ end
 require("lspconfig").cmake.setup({})
 require("lspconfig").clangd.setup({})
 
---local perlConfig = {
---    cmd = { 'pls' },
---    settings = {
---        pls = {
---            syntax = {
---                enabled = true,
---                perl = '/usr/bin/perl'
---            },
---            cwd = ".",
---        }
---    }
---}
---require("lspconfig").perlpls.setup(perlConfig)
-
 require'lspconfig'.perlnavigator.setup{
     settings = {
       perlnavigator = {
@@ -56,11 +42,12 @@ vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 local cmp = require 'cmp'
 
-
+require("luasnip.loaders.from_vscode").load {}
+require("luasnip.loaders.from_snipmate").lazy_load()
 cmp.setup {
     snippet = {
         expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
+            require('luasnip').lsp_expand(args.body)
         end,
     },
     mapping = cmp.mapping.preset.insert({
@@ -87,7 +74,7 @@ cmp.setup {
     }),
     sources = {
         { name = 'nvim_lsp' },
-        { name = 'vsnip' },
+        { name = 'luasnip' },
     }, {
         { name = 'buffer' },
     }

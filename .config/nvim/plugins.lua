@@ -27,9 +27,9 @@ require('packer').startup(function(use)
     use 'simrat39/symbols-outline.nvim'
 
     -- snippet support
-    use 'hrsh7th/cmp-vsnip'
-    use 'hrsh7th/vim-vsnip'
-    use 'rafamadriz/friendly-snippets'
+    use 'L3MON4D3/LuaSnip'
+    use 'saadparwaiz1/cmp_luasnip'
+    use 'honza/vim-snippets'
 
     -- File lookup
     use { 'nvim-telescope/telescope.nvim', tag = '0.1.0' }
@@ -41,7 +41,7 @@ require('packer').startup(function(use)
     use 'nvim-tree/nvim-tree.lua'
 
     -- Terminal
-    use {"akinsho/toggleterm.nvim", tag = '*'}
+    use { "akinsho/toggleterm.nvim", tag = '*' }
 
     -- Editor smoothness
     use 'tpope/vim-surround'
@@ -49,9 +49,7 @@ require('packer').startup(function(use)
     use 'tpope/vim-abolish'
     use 'tpope/vim-unimpaired'
     use 'AndrewRadev/splitjoin.vim'
-    use 'mbbill/undotree'
     use 'karb94/neoscroll.nvim'
-    use 'ggandor/lightspeed.nvim'
 
     -- Git
     use 'tpope/vim-fugitive'  -- only for git blame
@@ -64,7 +62,9 @@ end)
 require('voice-command').setup()
 
 require('nvim-tree').setup({
-    update_focused_file = { enable = true }
+    update_focused_file = {
+        enable = true,
+    }
 })
 
 require("telescope").setup {
@@ -102,7 +102,10 @@ require("telescope").setup {
 
 require("mason").setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "lua_ls", "perlnavigator" },
+    ensure_installed = {
+        "lua_ls",
+        "perlnavigator",
+    },
 }
 
 require('neoscroll').setup()
@@ -112,11 +115,6 @@ local labels = {
     "v", "w", "x", "y", "z",
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "L", "K", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
     "V", "W", "X", "Y", "Z"
-}
-require'lightspeed'.setup {
-    --jump_to_unique_chars = true,
-    labels = labels,
-    safe_labels = labels,
 }
 
 local t = {}

@@ -17,7 +17,6 @@ set("n", "<leader>b", "<cmd>Git blame<cr>", { desc = "git blame"})
 set("n", "<leader>a", "gg0vG$", { noremap = true, desc = "select all"})
 set("n", "<leader>tv", "<cmd>cex system('PYTHONPATH=src vulture src/*') | copen<cr>", { desc = "use python vulture for src dir" })
 set("n", "<leader>H", ":h ", { noremap = true, desc = "help" })
-set("n", "<leader>u", "<cmd>UndotreeToggle<cr>", { noremap = true, desc = "toggle undotree" })
 vim.g.SEARCH = function(key)
     local reg_start = vim.api.nvim_buf_get_mark(0, "<")
     local reg_end = vim.api.nvim_buf_get_mark(0, ">")
@@ -88,8 +87,13 @@ function vim.g.CMP_SELECT(value)
     end
 end
 for i = 0, 9 do
-    set("i", "<C-Space>"..i, "<cmd>lua vim.g.CMP_SELECT("..i..")<cr>")
+    set({"i", "s"}, "\\"..i, "<cmd>lua vim.g.CMP_SELECT("..i..")<cr>")
 end
+
+set({"i", "s"}, "<C-s>", function()
+    require('luasnip').jump(1)
+end, {silent = true})
+
 
 -- debugging
 local reg_cmd = "<cmd>let $REG_A = @a<cr><cmd>let $REG_S = @s<cr><cmd>let $REG_D = @d<cr><cmd>let $REG_F = @f<cr>"
@@ -113,9 +117,9 @@ set("n", "<leader>tt", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.
 set("n", "<leader>ts", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').scopes).open()<cr>", { silent = true, desc = "open debug scopes"})
 set("n", "<leader>tp", "<cmd>PackerUpdate<cr>", { noremap = true, desc = "update plugins"})
 set("n", "<leader>to", "<cmd>SymbolsOutline<cr>")
-set({"n", "v"}, "<C-K>", "<cmd>ToggleTerm<cr>")
-set("n", "<leader>k", ":ToggleTermSendCurrentLine<cr>")
-set("v", "<leader>k", ":ToggleTermSendVisualSelection<cr>")
+set({"n", "v"}, "<leader>k", "<cmd>ToggleTerm<cr>")
+set("n", "<leader>K", ":ToggleTermSendCurrentLine<cr>")
+set("v", "<leader>K", ":ToggleTermSendVisualSelection<cr>")
 
 -- lsp setup
 set('n', 'gs', vim.lsp.buf.declaration, { noremap=true, silent=true, desc="go to declaration" })
@@ -132,11 +136,6 @@ set('n', '[t', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diag
 
 
 -- editing
-set("n", "<bs>", "hx")
-set("v", "<bs>", "x")
-set("n", "<cr>", "o<esc>")
-set("v", "<cr>", "<esc>o<esc>")
-
 set("i", "<A-w>", "<right><esc>wi")
 set("i", "<A-W>", "<right><esc>Wi")
 set("i", "<A-e>", "<esc>ea")
@@ -156,12 +155,21 @@ set({"n", "v"}, "<leader>Z", "\"+Y", { noremap=true, desc="Z using global buffer
 set({"n", "v"}, "<leader>d", "\"+x", { noremap=true, desc="d using global buffer" })
 set({"n", "v"}, "<leader>D", "\"+D", { noremap=true, desc="D using global buffer" })
 
-set({"n", "v"}, "<C-J>", "J", {noremap = true})
+set("n", "J", "v:m '>+1<cr>gv=", {noremap=true})
+set("n", "K", "v:m '<-2<cr>gv=", {noremap=true})
+set("v", "J", ":m '>+1<cr>gv=gv", {noremap=true})
+set("v", "K", ":m '<-2<cr>gv=gv", {noremap=true})
+set("n", "L", ">>", {noremap = true})
+set("n", "H", "<<", {noremap = true})
+set("v", "L", ">gv", {noremap=true})
+set("v", "H", "<gv", {noremap=true})
 
-set("n", "J", "v:m '>+1<cr>gv=")
-set("n", "K", "v:m '<-2<cr>gv=")
-set("v", "J", ":m '>+1<cr>gv=gv")
-set("v", "K", ":m '<-2<cr>gv=gv")
+set("i", "<C-l>", "<right>", {noremap=true})
+set("i", "<C-h>", "<left>", {noremap=true})
+set("i", "<C-e>", "<right><esc>ea", {noremap=true})
+
+set("i", "<C-j>", "<right><esc>Ji", {noremap=true})
+set({"n", "v"}, "<C-j>", "J", {noremap=true})
 
 set("n", "<C-p>", "vp", {noremap = true})
 set("v", "<C-p>", "p", {noremap = true})
@@ -173,13 +181,6 @@ set("n", "<leader>g", ":%g/", {noremap = true})
 set("v", "<leader>g", ":g/", {noremap = true})
 set("n", "<leader>v", ":%v/", {noremap = true})
 set("v", "<leader>v", ":v/", {noremap = true})
-
-set("n", "L", ">>", {noremap = true})
-set("n", "H", "<<", {noremap = true})
-set("v", "L", ">gv", {noremap=true})
-set("v", "H", "<gv", {noremap=true})
-set({"n", "v"}, "<C-L>", "L", {noremap = true})
-set({"n", "v"}, "<C-H>", "H", {noremap = true})
 
 set("n", "ä", 'vi"f"oF"o', {noremap = true})
 set("v", "ä", '<esc>vi"f"oF"o', {noremap = true})
@@ -233,7 +234,6 @@ fun! SetKeymaps()
     vnoremap <nowait><buffer> C <esc>viW
     nnoremap <nowait><buffer> x V
     vnoremap <nowait><buffer> x vvV
-    vnoremap <nowait><buffer> v <esc>
     nnoremap <nowait><buffer> yy zz
     vnoremap <nowait><buffer> yy zz
     nnoremap <nowait><buffer> y= z=
@@ -258,11 +258,6 @@ fun! SetKeymaps()
     nnoremap gs v<Plug>VgSurround
     xnoremap S <Plug>VSurround
     xnoremap gs <Plug>VgSurround
-
-    nmap <leader>j <Plug>Lightspeed_s
-    nmap <leader>J <Plug>Lightspeed_S
-    vmap <leader>j <Plug>Lightspeed_s
-    vmap <leader>J <Plug>Lightspeed_S
 endfun
 
 augroup set_keymaps
