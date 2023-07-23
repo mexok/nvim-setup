@@ -25,8 +25,8 @@ vim.g.SEARCH = function(key)
     vim.api.nvim_feedkeys(buff, 'm', false)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<cr>", true, false, true), 'm', false)
 end
-set("v", "/", "<esc><cmd>lua vim.g.SEARCH('/')<cr>", { noremap = true })
-set("v", "?", "<esc><cmd>lua vim.g.SEARCH('?')<cr>n", { noremap = true })
+set("x", "/", "<esc><cmd>lua vim.g.SEARCH('/')<cr>", { noremap = true })
+set("x", "?", "<esc><cmd>lua vim.g.SEARCH('?')<cr>n", { noremap = true })
 
 local nvim_tree_open_file = require "nvim-tree.actions.node.open-file"
 local nvim_tree_utils = require "nvim-tree.utils"
@@ -157,12 +157,12 @@ set({"n", "v"}, "<leader>D", "\"+D", { noremap=true, desc="D using global buffer
 
 set("n", "J", "v:m '>+1<cr>gv=", {noremap=true})
 set("n", "K", "v:m '<-2<cr>gv=", {noremap=true})
-set("v", "J", ":m '>+1<cr>gv=gv", {noremap=true})
-set("v", "K", ":m '<-2<cr>gv=gv", {noremap=true})
+set("x", "J", ":m '>+1<cr>gv=gv", {noremap=true})
+set("x", "K", ":m '<-2<cr>gv=gv", {noremap=true})
 set("n", "L", ">>", {noremap = true})
 set("n", "H", "<<", {noremap = true})
-set("v", "L", ">gv", {noremap=true})
-set("v", "H", "<gv", {noremap=true})
+set("x", "L", ">gv", {noremap=true})
+set("x", "H", "<gv", {noremap=true})
 
 set("i", "<C-l>", "<right>", {noremap=true})
 set("i", "<C-h>", "<left>", {noremap=true})
@@ -173,7 +173,7 @@ set({"n", "v"}, "<C-j>", "J", {noremap=true})
 
 set("n", "<C-p>", "vp", {noremap = true})
 set("v", "<C-p>", "p", {noremap = true})
-set("v", "p", "P", {noremap = true})
+set("x", "p", "P", {noremap = true})
 
 set("n", "<leader>s", ":%s/", {noremap = true})
 set("v", "<leader>s", ":s/", {noremap = true})
@@ -183,24 +183,24 @@ set("n", "<leader>v", ":%v/", {noremap = true})
 set("v", "<leader>v", ":v/", {noremap = true})
 
 set("n", "ä", 'vi"f"oF"o', {noremap = true})
-set("v", "ä", '<esc>vi"f"oF"o', {noremap = true})
+set("x", "ä", '<esc>vi"f"oF"o', {noremap = true})
 set("n", "Ä", 'vi"', {noremap = true})
-set("v", "Ä", '<esc>vi"', {noremap = true})
+set("x", "Ä", '<esc>vi"', {noremap = true})
 
 set("n", "ü", "vi'f'oF'o", {noremap = true})
-set("v", "ü", "<esc>vi'f'oF'o", {noremap = true})
+set("x", "ü", "<esc>vi'f'oF'o", {noremap = true})
 set("n", "Ü", "vi'", {noremap = true})
-set("v", "Ü", "<esc>vi'", {noremap = true})
+set("x", "Ü", "<esc>vi'", {noremap = true})
 
 set("n", "ö", 'vib', {noremap = true})
-set("v", "ö", '<esc>vib', {noremap = true})
+set("x", "ö", '<esc>vib', {noremap = true})
 set("n", "Ö", 'vibf)oF(o', {noremap = true})
-set("v", "Ö", '<esc>vibf)oF(o', {noremap = true})
+set("x", "Ö", '<esc>vibf)oF(o', {noremap = true})
 
 set("n", "ß", 'vi{', {noremap = true})
-set("v", "ß", '<esc>vi{', {noremap = true})
+set("x", "ß", '<esc>vi{', {noremap = true})
 set("n", "€", 'vi{f}oF{o', {noremap = true})
-set("v", "€", '<esc>vi{f}oF{o', {noremap = true})
+set("x", "€", '<esc>vi{f}oF{o', {noremap = true})
 
 set("i", "\"\"", "\"\"<Left>", { noremap=true })
 set("i", "\"<cr>", "\"<cr>\"<ESC>O", { noremap=true })
@@ -225,30 +225,30 @@ set({"i", "c", "o"}, "<C-V><C-V>", "<C-R>\"", { noremap=true })
 vim.cmd([[
 fun! SetKeymaps()
     nnoremap <nowait><buffer> d x
-    vnoremap <nowait><buffer> d x
+    xnoremap <nowait><buffer> d x
     nnoremap <nowait><buffer> s "_s
-    vnoremap <nowait><buffer> s "_s
+    xnoremap <nowait><buffer> s "_s
     nnoremap <nowait><buffer> c viw
-    vnoremap <nowait><buffer> c <esc>viw
+    xnoremap <nowait><buffer> c <esc>viw
     nnoremap <nowait><buffer> C viW
-    vnoremap <nowait><buffer> C <esc>viW
+    xnoremap <nowait><buffer> C <esc>viW
     nnoremap <nowait><buffer> x V
-    vnoremap <nowait><buffer> x vvV
+    xnoremap <nowait><buffer> x vvV
     nnoremap <nowait><buffer> yy zz
-    vnoremap <nowait><buffer> yy zz
+    xnoremap <nowait><buffer> yy zz
     nnoremap <nowait><buffer> y= z=
-    vnoremap <nowait><buffer> y= z=
+    xnoremap <nowait><buffer> y= z=
     nnoremap <nowait><buffer> z yl
     nnoremap <nowait><buffer> Z v$<left>y
-    vnoremap <nowait><buffer> z y
+    xnoremap <nowait><buffer> z y
 
     nnoremap <nowait><buffer> > vloho
-    vnoremap <nowait><buffer> > loho
+    xnoremap <nowait><buffer> > loho
     nnoremap <nowait><buffer> < vholo
-    vnoremap <nowait><buffer> < holo
+    xnoremap <nowait><buffer> < holo
 
     nnoremap <nowait><buffer> ' "
-    vnoremap <nowait><buffer> ' "
+    xnoremap <nowait><buffer> ' "
 
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround
