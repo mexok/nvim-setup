@@ -262,6 +262,8 @@ endfun
 
 augroup set_keymaps
     autocmd!
-    autocmd FileType * :call SetKeymaps()
+    autocmd BufRead,BufNewFile,FilterReadPre,FileReadPre * :call SetKeymaps()
 augroup end
+
+call SetKeymaps()
 ]])

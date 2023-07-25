@@ -67,6 +67,11 @@
 [rshf]>[bsls]
 [esc]>[eql]
 
+[x]>[lctr]
+[c]>[lshf]
+[perd]>[lctr]
+[comm]>[lshf]
+
 {del}>{esc}{esc}
 {lshf}{bspc}>{del}
 
