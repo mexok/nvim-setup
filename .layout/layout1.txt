@@ -72,9 +72,6 @@
 [perd]>[lctr]
 [comm]>[lshf]
 
-{del}>{esc}{esc}
-{lshf}{bspc}>{del}
-
 <function2>
 
 <function3>
