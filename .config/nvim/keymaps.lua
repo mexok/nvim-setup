@@ -229,6 +229,7 @@ vim.cmd([[
 fun! SetKeymaps()
     nnoremap <nowait><buffer> d x
     xnoremap <nowait><buffer> d x
+    xnoremap <nowait><buffer> D "_x
     nnoremap <nowait><buffer> s "_s
     xnoremap <nowait><buffer> s "_s
     nnoremap <nowait><buffer> c viw
