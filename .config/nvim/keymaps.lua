@@ -168,6 +168,7 @@ set("i", "<C-l>", "<right>", {noremap=true})
 set("i", "<C-h>", "<left>", {noremap=true})
 set("i", "<C-e>", "<right><esc>ea", {noremap=true})
 
+set({"n", "v"}, "<C-k>", "K", {noremap=true})
 set("i", "<C-j>", "<right><esc>Ji", {noremap=true})
 set({"n", "v"}, "<C-j>", "J", {noremap=true})
 
