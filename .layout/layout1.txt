@@ -13,7 +13,7 @@
 [left]>[lshf]
 [rght]>[fn1s]
 
-[lfn]>[lctr]
+[lfn]>[fn2s]
 [up]>[fn1s]
 [down]>[lshf]
 [obrk]>[lctr]
@@ -57,7 +57,7 @@
 [comm]>[lshf]
 [perd]>[lctr]
 
-[lfn]>[lctr]
+[lfn]>[null]
 [lctr]>[lalt]
 [rctr]>[lalt]
 [y]>[z]
@@ -67,9 +67,9 @@
 
 [caps]>[lctr]
 [left]>[lshf]
-[rght]>[fn1s]
+[rght]>[caps]
 
-[up]>[fn1s]
+[up]>[caps]
 [down]>[lshf]
 [obrk]>[lctr]
 
@@ -86,4 +86,38 @@
 {e}>{-ralt}{5}{+ralt}
 
 <function2>
+
+[j]>[down]
+[k]>[up]
+[h]>[left]
+[l]>[rght]
+
+[lshf]>[hyph]
+[rshf]>[bsls]
+[esc]>[eql]
+
+[comm]>[lshf]
+[perd]>[lctr]
+
+[lfn]>[null]
+[lctr]>[lalt]
+[rctr]>[lalt]
+[y]>[z]
+[z]>[y]
+
+[spc]>[tab]
+
+[caps]>[lctr]
+[left]>[lshf]
+[rght]>[null]
+
+[up]>[null]
+[down]>[lshf]
+[obrk]>[lctr]
+
+{c}>{-lctr}{c}{+lctr}
+{v}>{-lctr}{v}{+lctr}
+{x}>{-lctr}{x}{+lctr}
+{a}>{-lctr}{a}{+lctr}
+{s}>{-lctr}{s}{+lctr}
 <function3>
