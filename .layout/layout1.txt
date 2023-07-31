@@ -17,7 +17,6 @@
 [v]>[fn1s]
 [m]>[fn1s]
 
-[up]>[m]
 [comm]>[lshf]
 [perd]>[lctr]
 
@@ -60,11 +59,11 @@
 [rshf]>[bsls]
 [esc]>[eql]
 
-[up]>[m]
 [comm]>[lshf]
 [perd]>[lctr]
 [d]>[comm]
 [f]>[perd]
+[up]>[m]
 
 [lctr]>[lalt]
 [rctr]>[lalt]
