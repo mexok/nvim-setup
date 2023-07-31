@@ -9,16 +9,14 @@
 [y]>[z]
 [z]>[y]
 
-[caps]>[x]
-[left]>[c]
-[rght]>[v]
-[x]>[lctr]
-[c]>[lshf]
-[v]>[fn1s]
-[m]>[fn1s]
+[caps]>[lctr]
+[left]>[lshf]
+[rght]>[fn1s]
 
-[comm]>[lshf]
-[perd]>[lctr]
+[lfn]>[lctr]
+[up]>[fn1s]
+[down]>[lshf]
+[obrk]>[lctr]
 
 {del}>{esc}{esc}
 {lshf}{bspc}>{del}
@@ -40,9 +38,6 @@
 [y]>[z]
 [z]>[y]
 
-[x]>[lctr]
-[c]>[lshf]
-
 {del}>{esc}{esc}
 {lshf}{bspc}>{del}
 
@@ -61,18 +56,25 @@
 
 [comm]>[lshf]
 [perd]>[lctr]
-[d]>[comm]
-[f]>[perd]
-[up]>[m]
 
+[lfn]>[lctr]
 [lctr]>[lalt]
 [rctr]>[lalt]
 [y]>[z]
 [z]>[y]
 
-[x]>[lctr]
-[c]>[lshf]
 [spc]>[tab]
+
+[caps]>[lctr]
+[left]>[lshf]
+[rght]>[fn1s]
+
+[up]>[fn1s]
+[down]>[lshf]
+[obrk]>[lctr]
+
+[comm]>[obrk]
+[perd]>[cbrk]
 
 {u}>{-lshf}{apos}{+lshf}{u}
 {lshf}{u}>{-lshf}{apos}{u}{+lshf}
