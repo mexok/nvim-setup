@@ -1,81 +1,100 @@
 <base>
 
-[lshf]>[hyph]
-[rshf]>[bsls]
-[esc]>[eql]
+* keys sides
+[lshf]>[lctr]
+[rshf]>[lctr]
+[tab]>[eql]
+[esc]>[hyph]
 
+* keys thumbs
 [lctr]>[lalt]
 [rctr]>[lalt]
+
+* keys letters
 [y]>[z]
 [z]>[y]
 
-[caps]>[lctr]
+* keys bottom
+[caps]>[fn1s]
 [left]>[lshf]
-[rght]>[fn1s]
-
-[lfn]>[fn2s]
-[up]>[fn1s]
+[rght]>[tab]
+[up]>[caps]
 [down]>[lshf]
-[obrk]>[lctr]
+[obrk]>[fn1s]
 
-{del}>{esc}{esc}
-{lshf}{bspc}>{del}
-
+* General macros for us international layout
 {apos}>{apos}{spc}
 {lshf}{apos}>{-lshf}{apos}{+lshf}{spc}
 {grav}>{grav}{grav}
 {lshf}{grav}>{-lshf}{grav}{grav}{+lshf}
 {lshf}{6}>{-lshf}{6}{6}{+lshf}
 
-<keypad>
-
-[lshf]>[hyph]
-[rshf]>[bsls]
-[esc]>[eql]
-
-[lctr]>[lalt]
-[rctr]>[lalt]
-[y]>[z]
-[z]>[y]
-
+* keys thumbs - mapping
 {del}>{esc}{esc}
 {lshf}{bspc}>{del}
 
-{cbrk}>{-lshf}{scol}{+lshf}
+<keypad>
+* keys sides
+[lshf]>[lctr]
+[rshf]>[lctr]
+[tab]>[eql]
+[esc]>[hyph]
+
+* keys thumbs
+[lctr]>[lalt]
+[rctr]>[lalt]
+
+* keys letters
+[y]>[z]
+[z]>[y]
+
+* keys bottom
+[caps]>[fn1s]
+[left]>[lshf]
+[rght]>[tab]
+[up]>[caps]
+[down]>[lshf]
+[obrk]>[fn1s]
 
 <function1>
+* keys sides - fn modifications
+[lshf]>[lctr]
+[rshf]>[lctr]
+[tab]>[f1]
+[esc]>[f12]
+
+* keys thumbs
+[lctr]>[lalt]
+[rctr]>[lalt]
+
+* keys letters
+[y]>[z]
+[z]>[y]
+
+* keys bottom - fn toggle modifications
+[caps]>[deft]
+[left]>[lshf]
+[rght]>[tab]
+[up]>[caps]
+[down]>[lshf]
+[obrk]>[deft]
+
+* Layer keybindings
+[comm]>[obrk]
+[perd]>[cbrk]
 
 [j]>[down]
 [k]>[up]
 [h]>[left]
 [l]>[rght]
 
-[lshf]>[hyph]
-[rshf]>[bsls]
-[esc]>[eql]
+[m]>[pgdn]
+[i]>[pgup]
 
-[comm]>[lshf]
-[perd]>[lctr]
+[b]>[home]
+[e]>[end]
 
-[lfn]>[null]
-[lctr]>[lalt]
-[rctr]>[lalt]
-[y]>[z]
-[z]>[y]
-
-[spc]>[tab]
-
-[caps]>[lctr]
-[left]>[lshf]
-[rght]>[caps]
-
-[up]>[caps]
-[down]>[lshf]
-[obrk]>[lctr]
-
-[comm]>[obrk]
-[perd]>[cbrk]
-
+* Custom macros for german keys on us international layout
 {u}>{-lshf}{apos}{+lshf}{u}
 {lshf}{u}>{-lshf}{apos}{u}{+lshf}
 {o}>{-lshf}{apos}{+lshf}{o}
@@ -83,41 +102,7 @@
 {a}>{-lshf}{apos}{+lshf}{a}
 {lshf}{a}>{-lshf}{apos}{a}{+lshf}
 {s}>{-ralt}{s}{+ralt}
-{e}>{-ralt}{5}{+ralt}
+{lshf}{s}>{-ralt}{5}{+ralt}
 
 <function2>
-
-[j]>[down]
-[k]>[up]
-[h]>[left]
-[l]>[rght]
-
-[lshf]>[hyph]
-[rshf]>[bsls]
-[esc]>[eql]
-
-[comm]>[lshf]
-[perd]>[lctr]
-
-[lfn]>[null]
-[lctr]>[lalt]
-[rctr]>[lalt]
-[y]>[z]
-[z]>[y]
-
-[spc]>[tab]
-
-[caps]>[lctr]
-[left]>[lshf]
-[rght]>[null]
-
-[up]>[null]
-[down]>[lshf]
-[obrk]>[lctr]
-
-{c}>{-lctr}{c}{+lctr}
-{v}>{-lctr}{v}{+lctr}
-{x}>{-lctr}{x}{+lctr}
-{a}>{-lctr}{a}{+lctr}
-{s}>{-lctr}{s}{+lctr}
 <function3>
