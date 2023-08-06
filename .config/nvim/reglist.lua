@@ -145,9 +145,9 @@ set("n", "<leader>ls", "<cmd>lua vim.g.REGLIST_SHIFT()<cr>p", {desc = 'Shift and
 set("n", "<leader>lS", "<cmd>lua vim.g.REGLIST_SHIFT()<cr>P", {desc = 'Shift and paste'})
 set("v", "<leader>ls", "<cmd>lua vim.g.REGLIST_SHIFT()<cr>P", {desc = 'Shift and paste'})
 
-set("n", "<leader>lz", "yl<cmd>lua vim.g.REGLIST_PUSH()<cr>", {desc = 'Yank and push'})
-set("n", "<leader>lZ", "Y<cmd>lua vim.g.REGLIST_PUSH()<cr>", {desc = 'Yank and push'})
-set("v", "<leader>lz", "y<cmd>lua vim.g.REGLIST_PUSH()<cr>", {desc = 'Yank and push'})
+set("n", "<leader>ly", "yl<cmd>lua vim.g.REGLIST_PUSH()<cr>", {desc = 'Yank and push'})
+set("n", "<leader>lY", "Y<cmd>lua vim.g.REGLIST_PUSH()<cr>", {desc = 'Yank and push'})
+set("v", "<leader>ly", "y<cmd>lua vim.g.REGLIST_PUSH()<cr>", {desc = 'Yank and push'})
 set("n", "<leader>ld", "x<cmd>lua vim.g.REGLIST_PUSH()<cr>", {desc = 'Delete and push'})
 set("n", "<leader>lD", "D<cmd>lua vim.g.REGLIST_PUSH()<cr>", {desc = 'Delete and push'})
 set("v", "<leader>ld", "x<cmd>lua vim.g.REGLIST_PUSH()<cr>", {desc = 'Delete and push'})

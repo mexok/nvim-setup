@@ -10,10 +10,6 @@
 [lctr]>[lalt]
 [rctr]>[lalt]
 
-* keys letters
-[y]>[z]
-[z]>[y]
-
 * keys bottom
 [caps]>[fn1s]
 [left]>[lshf]
@@ -31,7 +27,6 @@
 
 * keys thumbs - mapping
 {del}>{esc}{esc}
-{lshf}{bspc}>{del}
 
 <keypad>
 * keys sides
@@ -44,10 +39,6 @@
 [lctr]>[lalt]
 [rctr]>[lalt]
 
-* keys letters
-[y]>[z]
-[z]>[y]
-
 * keys bottom
 [caps]>[fn1s]
 [left]>[lshf]
@@ -55,6 +46,9 @@
 [up]>[caps]
 [down]>[lshf]
 [obrk]>[fn1s]
+
+* keys thumbs - mapping
+{del}>{esc}{esc}
 
 <function1>
 * keys sides - fn modifications
@@ -66,10 +60,6 @@
 * keys thumbs
 [lctr]>[lalt]
 [rctr]>[lalt]
-
-* keys letters
-[y]>[z]
-[z]>[y]
 
 * keys bottom - fn toggle modifications
 [caps]>[deft]

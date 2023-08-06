@@ -150,8 +150,8 @@ set("i", "<A-i>", "<esc>", { noremap=true })
 
 set({"n", "v"}, "<leader>p", "\"+p", { noremap=true, desc="p using global buffer" })
 set({"n", "v"}, "<leader>P", "\"+P", { noremap=true, desc="P using global buffer" })
-set({"n", "v"}, "<leader>z", "\"+yl", { noremap=true, desc="z using global buffer" })
-set({"n", "v"}, "<leader>Z", "\"+Y", { noremap=true, desc="Z using global buffer" })
+set({"n", "v"}, "<leader>y", "\"+yl", { noremap=true, desc="y using global buffer" })
+set({"n", "v"}, "<leader>Y", "\"+Y", { noremap=true, desc="Y using global buffer" })
 set({"n", "v"}, "<leader>d", "\"+x", { noremap=true, desc="d using global buffer" })
 set({"n", "v"}, "<leader>D", "\"+D", { noremap=true, desc="D using global buffer" })
 
@@ -240,13 +240,9 @@ fun! SetKeymaps()
     xnoremap <nowait><buffer> C <esc>viW
     nnoremap <nowait><buffer> x V
     xnoremap <nowait><buffer> x vvV
-    nnoremap <nowait><buffer> yy zz
-    xnoremap <nowait><buffer> yy zz
-    nnoremap <nowait><buffer> y= z=
-    xnoremap <nowait><buffer> y= z=
-    nnoremap <nowait><buffer> z yl
-    nnoremap <nowait><buffer> Z v$<left>y
-    xnoremap <nowait><buffer> z y
+    nnoremap <nowait><buffer> y yl
+    nnoremap <nowait><buffer> Y v$<left>y
+    xnoremap <nowait><buffer> y y
 
     nnoremap <nowait><buffer> > vloho
     xnoremap <nowait><buffer> > loho
