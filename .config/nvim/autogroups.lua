@@ -15,6 +15,11 @@ augroup trim_whitespaces
     autocmd BufWritePre * :call TrimWhitespaces()
     autocmd BufWritePost * :call RefreshGitGutter()
 augroup end
+
+augroup gofmt
+    autocmd!
+    autocmd BufWritePost *.go !gofmt -w %
+augroup end
 ]]
 
 function _G.set_terminal_keymaps()

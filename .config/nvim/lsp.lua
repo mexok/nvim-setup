@@ -21,10 +21,20 @@ for _, lsp in ipairs(servers) do
     }
 end
 
-require("lspconfig").cmake.setup({})
-require("lspconfig").clangd.setup({})
+lspconfig.gopls.setup({})
+lspconfig.lua_ls.setup {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    }
+}
 
-require'lspconfig'.perlnavigator.setup{
+lspconfig.cmake.setup({})
+lspconfig.clangd.setup({})
+lspconfig.perlnavigator.setup{
     settings = {
       perlnavigator = {
           perlPath = 'perl',

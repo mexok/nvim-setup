@@ -9,7 +9,7 @@ vim.opt.iskeyword:append({"$", "@-@", "%"})
 vim.opt.exrc = true
 vim.opt.foldmethod = "indent"
 vim.opt.foldlevel = 99
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.hidden = true
 
 vim.opt.number = true

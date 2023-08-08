@@ -9,4 +9,5 @@ bindkey '^[l' forward-word
 bindkey '^[f' accept-line
 
 export LUA_PATH=~/.config/nvim/?.lua
-export PATH="$PATH:/opt/nvim-linux64/bin"
+export GOPATH="$HOME/go"
+export PATH="$PATH:/opt/nvim-linux64/bin:$GOPATH/bin"

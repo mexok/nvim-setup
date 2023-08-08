@@ -1,7 +1,9 @@
 local set = vim.keymap.set
 set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
+set({"v", "n"}, "<C-q>", "<cmd>q<cr>", { noremap = true, desc = "quit" })
 set({"v", "n"}, "<leader>q", "<cmd>q<cr>", { noremap = true, desc = "quit" })
-set({"v", "n"}, "<leader>Q", "<cmd>q!<cr>", { noremap = true, desc = "quit" })
+set({"v", "n"}, "<leader>Q", "<cmd>q!<cr>", { noremap = true, desc = "Quit" })
+set({"v", "n"}, "<C-s>", "<cmd>w<cr>", { noremap = true, desc = "write" })
 set({"v", "n"}, "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "write" })
 
 set("n", "<leader>f", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
@@ -14,7 +16,7 @@ set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*
 set("n", "<leader>e", "<cmd>NvimTreeFocus<cr>", { desc = "explorer"})
 set("n", "<leader>te", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
 set("n", "<leader>b", "<cmd>Git blame<cr>", { desc = "git blame"})
-set("n", "<leader>a", "gg0vG$", { noremap = true, desc = "select all"})
+set("n", "<C-a>", "gg0vG$", { noremap = true, desc = "select all"})
 set("n", "<leader>tv", "<cmd>cex system('PYTHONPATH=src vulture src/*') | copen<cr>", { desc = "use python vulture for src dir" })
 set("n", "<leader>H", ":h ", { noremap = true, desc = "help" })
 vim.g.SEARCH = function(key)
@@ -45,7 +47,7 @@ function vim.g.NVIM_TREE_SELECT(i)
         return n.absolute_path
     end, require("nvim-tree.marks").get_marks())
 
-    table.sort(paths)
+    table.sort(paths, function (a, b) return string.lower(a) < string.lower(b) end)
 
     local node = require("nvim-tree.marks").get_mark { absolute_path = paths[i] }
     vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
@@ -56,7 +58,7 @@ function vim.g.NVIM_TREE_SELECT_UI()
         return n.absolute_path
     end, require("nvim-tree.marks").get_marks())
 
-    table.sort(paths)
+    table.sort(paths, function (a, b) return string.lower(a) < string.lower(b) end)
 
     vim.ui.select(paths, {
         prompt = "Select mark",
@@ -66,16 +68,16 @@ function vim.g.NVIM_TREE_SELECT_UI()
     end)
 end
 
-set("n", "mw", require('nvim-tree.api').marks.navigate.prev)
-set("n", "me", require('nvim-tree.api').marks.navigate.next)
-set("n", "ms", vim.g.NVIM_TREE_SELECT_UI)
-set("n", "mf", require("nvim-tree.api").marks.toggle)
-set("n", "mc", require("nvim-tree.api").marks.clear)
+set({"n", "x"}, "mw", require('nvim-tree.api').marks.navigate.prev)
+set({"n", "x"}, "me", require('nvim-tree.api').marks.navigate.next)
+set({"n", "x"}, "ms", vim.g.NVIM_TREE_SELECT_UI)
+set({"n", "x"}, "mf", require("nvim-tree.api").marks.toggle)
+set({"n", "x"}, "mc", require("nvim-tree.api").marks.clear)
 for i = 1, 9 do
-    set("n", "g"..i, "<cmd>lua vim.g.NVIM_TREE_SELECT("..i..")<cr>")
+    set({"n", "x"}, "g"..i, "<cmd>lua vim.g.NVIM_TREE_SELECT("..i..")<cr>")
 end
 
-set("n", "mv", ":Gvdiffsplit!<cr>", {desc="Show conflict in vsplit"})
+set({"n", "x"}, "mv", ":Gvdiffsplit!<cr>", {desc="Show conflict in vsplit"})
 
 function vim.g.CMP_SELECT(value)
     local cmp = require 'cmp'

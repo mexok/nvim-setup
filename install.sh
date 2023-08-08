@@ -17,3 +17,7 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&\
 apt install -y nodejs
 
 npm install -g typescript-language-server typescript
+
+# go
+apt install -y golang
+go install github.com/go-delve/delve/cmd/dlv@latest

@@ -164,3 +164,22 @@ dap.configurations.vue = {
         }
     }
 }
+
+-- go
+dap.adapters.delve = {
+    type = 'server',
+    port = '12444',
+    executable = {
+        command = 'dlv',
+        args = {'dap', '-l', '127.0.0.1:12444'},
+    }
+}
+
+dap.configurations.go = {
+    {
+        type = "delve",
+        name = "Debug",
+        request = "launch",
+        program = "${file}"
+    }
+}
