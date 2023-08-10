@@ -16,19 +16,9 @@ set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*
 set("n", "<leader>e", "<cmd>NvimTreeFocus<cr>", { desc = "explorer"})
 set("n", "<leader>te", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
 set("n", "<leader>b", "<cmd>Git blame<cr>", { desc = "git blame"})
-set("n", "<C-a>", "gg0vG$", { noremap = true, desc = "select all"})
+set("n", "<leader>a", "gg0vG$", { noremap = true, desc = "select all"})
 set("n", "<leader>tv", "<cmd>cex system('PYTHONPATH=src vulture src/*') | copen<cr>", { desc = "use python vulture for src dir" })
 set("n", "<leader>H", ":h ", { noremap = true, desc = "help" })
-vim.g.SEARCH = function(key)
-    local reg_start = vim.api.nvim_buf_get_mark(0, "<")
-    local reg_end = vim.api.nvim_buf_get_mark(0, ">")
-    local buff = vim.api.nvim_buf_get_text(0, reg_start[1]-1, reg_start[2], reg_start[1]-1, reg_end[2]+1, {})[1]
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, false, true), 'm', false)
-    vim.api.nvim_feedkeys(buff, 'm', false)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<cr>", true, false, true), 'm', false)
-end
-set("x", "/", "<esc><cmd>lua vim.g.SEARCH('/')<cr>", { noremap = true })
-set("x", "?", "<esc><cmd>lua vim.g.SEARCH('?')<cr>n", { noremap = true })
 
 local nvim_tree_open_file = require "nvim-tree.actions.node.open-file"
 local nvim_tree_utils = require "nvim-tree.utils"

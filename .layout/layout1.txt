@@ -11,12 +11,12 @@
 [rctr]>[lalt]
 
 * keys bottom
-[caps]>[fn1s]
+[caps]>[fn2s]
 [left]>[lshf]
 [rght]>[tab]
 [up]>[caps]
 [down]>[lshf]
-[obrk]>[fn1s]
+[obrk]>[fn2s]
 
 * General macros for us international layout
 {apos}>{apos}{spc}
@@ -40,12 +40,12 @@
 [rctr]>[lalt]
 
 * keys bottom
-[caps]>[fn1s]
+[caps]>[fn2s]
 [left]>[lshf]
 [rght]>[tab]
 [up]>[caps]
 [down]>[lshf]
-[obrk]>[fn1s]
+[obrk]>[fn2s]
 
 * keys thumbs - mapping
 {del}>{esc}{esc}
@@ -61,13 +61,35 @@
 [lctr]>[lalt]
 [rctr]>[lalt]
 
-* keys bottom - fn toggle modifications
-[caps]>[deft]
+* keys bottom
+[caps]>[fn2s]
 [left]>[lshf]
 [rght]>[tab]
 [up]>[caps]
 [down]>[lshf]
-[obrk]>[deft]
+[obrk]>[fn2s]
+
+* keys thumbs - mapping
+{del}>{esc}{esc}
+
+<function2>
+* keys sides
+[lshf]>[lctr]
+[rshf]>[lctr]
+[tab]>[eql]
+[esc]>[hyph]
+
+* keys thumbs
+[lctr]>[lalt]
+[rctr]>[lalt]
+
+* keys bottom - fn toggle modifications
+[caps]>[defs]
+[left]>[lshf]
+[rght]>[tab]
+[up]>[caps]
+[down]>[lshf]
+[obrk]>[defs]
 
 * Layer keybindings
 [comm]>[obrk]
@@ -83,6 +105,19 @@
 
 [b]>[home]
 [e]>[end]
+[d]>[del]
+
+*numbers
+[1]>[1]
+[2]>[2]
+[3]>[3]
+[4]>[4]
+[5]>[5]
+[6]>[6]
+[7]>[7]
+[8]>[8]
+[9]>[9]
+[0]>[0]
 
 * Custom macros for german keys on us international layout
 {u}>{-lshf}{apos}{+lshf}{u}
@@ -94,5 +129,8 @@
 {s}>{-ralt}{s}{+ralt}
 {lshf}{s}>{-ralt}{5}{+ralt}
 
-<function2>
+* keys thumbs - mapping with adjustments for d del
+[del]>[esc]
+{esc}>{esc}{esc}
+
 <function3>
