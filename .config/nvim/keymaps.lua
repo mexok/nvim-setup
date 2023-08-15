@@ -68,6 +68,7 @@ for i = 1, 9 do
 end
 
 set({"n", "x"}, "mv", ":Gvdiffsplit!<cr>", {desc="Show conflict in vsplit"})
+set({"n", "x"}, "m/", ":let @/ = ''<cr>", {desc="Show conflict in vsplit"})
 
 function vim.g.CMP_SELECT(value)
     local cmp = require 'cmp'
@@ -179,15 +180,15 @@ set("x", "<leader>r", ":! perl -e", {noremap = true})
 set("n", "<leader>R", ":%! perl -e 'while(<>){print;}'", {noremap = true})
 set("x", "<leader>R", ":! perl -e 'while(<>){print;}'", {noremap = true})
 
-set("n", "ä", 'vi"f"oF"o', {noremap = true})
-set("x", "ä", '<esc>vi"f"oF"o', {noremap = true})
-set("n", "Ä", 'vi"', {noremap = true})
-set("x", "Ä", '<esc>vi"', {noremap = true})
+set("n", "ä", 'vi"', {noremap = true})
+set("x", "ä", '<esc>vi"', {noremap = true})
+set("n", "Ä", 'vi"f"oF"o', {noremap = true})
+set("x", "Ä", '<esc>vi"f"oF"o', {noremap = true})
 
-set("n", "ü", "vi'f'oF'o", {noremap = true})
-set("x", "ü", "<esc>vi'f'oF'o", {noremap = true})
-set("n", "Ü", "vi'", {noremap = true})
-set("x", "Ü", "<esc>vi'", {noremap = true})
+set("n", "ü", "vi'", {noremap = true})
+set("x", "ü", "<esc>vi'", {noremap = true})
+set("n", "Ü", "vi'f'oF'o", {noremap = true})
+set("x", "Ü", "<esc>vi'f'oF'o", {noremap = true})
 
 set("n", "ö", 'vib', {noremap = true})
 set("x", "ö", '<esc>vib', {noremap = true})
