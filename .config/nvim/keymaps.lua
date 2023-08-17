@@ -1,10 +1,7 @@
 local set = vim.keymap.set
 set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
-set({"v", "n"}, "<C-q>", "<cmd>q<cr>", { noremap = true, desc = "quit" })
 set({"v", "n"}, "<leader>q", "<cmd>q<cr>", { noremap = true, desc = "quit" })
 set({"v", "n"}, "<leader>Q", "<cmd>q!<cr>", { noremap = true, desc = "Quit" })
-set({"v", "n"}, "<C-s>", "<cmd>w<cr>", { noremap = true, desc = "write" })
-set({"v", "n"}, "<leader>w", "<cmd>w<cr>", { noremap = true, desc = "write" })
 
 set("n", "<leader>f", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
     { noremap = true, desc = "search text in project" })
@@ -222,6 +219,11 @@ set({"i", "c", "o"}, "<C-V><C-V>", "<C-R>\"", { noremap=true })
 
 vim.cmd([[
 fun! SetKeymaps()
+    nnoremap <nowait><buffer> w <cmd>w<cr>
+    xnoremap <nowait><buffer> w <cmd>w<cr>
+    nnoremap <nowait><buffer> W <cmd>wq<cr>
+    xnoremap <nowait><buffer> W <cmd>wq<cr>
+
     nnoremap <nowait><buffer> d x
     xnoremap <nowait><buffer> d x
     xnoremap <nowait><buffer> D "_x
