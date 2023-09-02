@@ -100,8 +100,8 @@
 [h]>[left]
 [l]>[rght]
 
-[m]>[pgdn]
-[i]>[pgup]
+[n]>[pgdn]
+[m]>[pgup]
 
 [b]>[home]
 [e]>[end]

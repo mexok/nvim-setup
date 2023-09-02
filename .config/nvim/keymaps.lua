@@ -53,7 +53,7 @@ function vim.g.NVIM_TREE_SELECT_UI()
     end)
 end
 
-set({"n", "x"}, "mw", require('nvim-tree.api').marks.navigate.prev)
+set({"n", "x"}, "mb", require('nvim-tree.api').marks.navigate.prev)
 set({"n", "x"}, "me", require('nvim-tree.api').marks.navigate.next)
 set({"n", "x"}, "ms", vim.g.NVIM_TREE_SELECT_UI)
 set({"n", "x"}, "mf", require("nvim-tree.api").marks.toggle)
@@ -222,6 +222,7 @@ set({"n", "x"}, "wk", "<c-w>k", { noremap=true })
 set({"n", "x"}, "wl", "<c-w>l", { noremap=true })
 set({"n", "x"}, "wf", "<cmd>w<cr>", { noremap=true })
 set({"n", "x"}, "we", "<cmd>q<cr>", { noremap=true })
+set({"n", "x"}, "wr", "<cmd>set wrap!<cr>", { noremap=true, desc = 'Toggle wrap' })
 set({"n", "x"}, "wt", "<cmd>q!<cr>", { noremap=true })
 
 vim.cmd([[
