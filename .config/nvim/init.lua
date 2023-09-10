@@ -1,7 +1,6 @@
 require("settings")
 require("plugins")
 require("keymaps")
-require("reglist")
 require("treesitter")
 require("dapconf")
 require("lsp")
