@@ -40,20 +40,42 @@ end
 
 function vim.g.NVIM_TREE_SELECT_UI()
     local paths = vim.tbl_map(function(n)
-        return n.absolute_path
+        local cwd = vim.fn.getcwd()
+        local path = n.absolute_path
+        if string.find(path, cwd, nil, true) ~= nil then
+            path = string.sub(path, string.len(cwd)+2)
+        end
+        return path
     end, require("nvim-tree.marks").get_marks())
 
-    table.sort(paths, function (a, b) return string.lower(a) < string.lower(b) end)
+    table.sort(paths, function (a, b)
+        -- dictionaries should be displayed before files
+        local slash_cnt_a, slash_cnt_b
+        _, slash_cnt_a = string.gsub(a, "/", "")
+        _, slash_cnt_b = string.gsub(b, "/", "")
+        if slash_cnt_a < slash_cnt_b then
+            return false
+        elseif slash_cnt_a > slash_cnt_b then
+            return true
+        else
+            return string.lower(a) < string.lower(b)
+        end
+    end)
 
     vim.ui.select(paths, {
         prompt = "Select mark",
     }, function(path)
+        local cwd = vim.fn.getcwd()
+        if string.find(path, cwd, nil, true) == nil then
+            path = cwd .. '/' .. path
+        end
         local node = require("nvim-tree.marks").get_mark { absolute_path = path }
         vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
     end)
 end
 
-set({"n", "x"}, "mb", require('nvim-tree.api').marks.navigate.prev)
+set({"n", "x"}, "mt", "<cmd>set wrap!<cr>", { noremap=true, desc = 'Toggle wrap' })
+set({"n", "x"}, "mw", require('nvim-tree.api').marks.navigate.prev)
 set({"n", "x"}, "me", require('nvim-tree.api').marks.navigate.next)
 set({"n", "x"}, "ms", vim.g.NVIM_TREE_SELECT_UI)
 set({"n", "x"}, "mf", require("nvim-tree.api").marks.toggle)
@@ -222,7 +244,6 @@ set({"n", "x"}, "wk", "<c-w>k", { noremap=true })
 set({"n", "x"}, "wl", "<c-w>l", { noremap=true })
 set({"n", "x"}, "wf", "<cmd>w<cr>", { noremap=true })
 set({"n", "x"}, "we", "<cmd>q<cr>", { noremap=true })
-set({"n", "x"}, "wr", "<cmd>set wrap!<cr>", { noremap=true, desc = 'Toggle wrap' })
 set({"n", "x"}, "wt", "<cmd>q!<cr>", { noremap=true })
 
 vim.cmd([[
