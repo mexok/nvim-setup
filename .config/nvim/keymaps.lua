@@ -27,18 +27,7 @@ function vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
     end
 end
 
-function vim.g.NVIM_TREE_SELECT(i)
-    local paths = vim.tbl_map(function(n)
-        return n.absolute_path
-    end, require("nvim-tree.marks").get_marks())
-
-    table.sort(paths, function (a, b) return string.lower(a) < string.lower(b) end)
-
-    local node = require("nvim-tree.marks").get_mark { absolute_path = paths[i] }
-    vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
-end
-
-function vim.g.NVIM_TREE_SELECT_UI()
+function vim.g.NVIM_TREE_GET_ORDERED_REL_PATHS()
     local paths = vim.tbl_map(function(n)
         local cwd = vim.fn.getcwd()
         local path = n.absolute_path
@@ -61,16 +50,34 @@ function vim.g.NVIM_TREE_SELECT_UI()
             return string.lower(a) < string.lower(b)
         end
     end)
+    return paths
+end
 
+function vim.g.NVIM_TREE_REL_PATH_TO_ABS_PATH(path)
+    local cwd = vim.fn.getcwd()
+    if string.find(path, cwd, nil, true) == nil then
+        path = cwd .. '/' .. path
+    end
+    return path
+end
+
+function vim.g.NVIM_TREE_SELECT(i)
+    local paths = vim.g.NVIM_TREE_GET_ORDERED_REL_PATHS()
+    local path = vim.g.NVIM_TREE_REL_PATH_TO_ABS_PATH(paths[i])
+    local node = require("nvim-tree.marks").get_mark { absolute_path = path }
+    vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
+end
+
+function vim.g.NVIM_TREE_SELECT_UI()
+    local paths = vim.g.NVIM_TREE_GET_ORDERED_REL_PATHS()
     vim.ui.select(paths, {
         prompt = "Select mark",
     }, function(path)
-        local cwd = vim.fn.getcwd()
-        if string.find(path, cwd, nil, true) == nil then
-            path = cwd .. '/' .. path
+        if path ~= nil then
+            path = vim.g.NVIM_TREE_REL_PATH_TO_ABS_PATH(path)
+            local node = require("nvim-tree.marks").get_mark { absolute_path = path }
+            vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
         end
-        local node = require("nvim-tree.marks").get_mark { absolute_path = path }
-        vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
     end)
 end
 

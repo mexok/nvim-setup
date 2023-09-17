@@ -21,3 +21,12 @@ npm install -g typescript-language-server typescript
 # go
 apt install -y golang
 go install github.com/go-delve/delve/cmd/dlv@latest
+
+# Python
+apt install -y python3-dev
+apt install -y python3-venv
+
+# C/C++
+apt install -y clangd
+apt install -y llvm
+apt install -y llvm-lldb

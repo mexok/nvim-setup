@@ -26,7 +26,7 @@
 {lshf}{6}>{-lshf}{6}{6}{+lshf}
 
 * keys thumbs - mapping
-{del}>{esc}{esc}
+[del]>[esc]
 
 <keypad>
 * keys sides
@@ -48,7 +48,7 @@
 [obrk]>[fn2s]
 
 * keys thumbs - mapping
-{del}>{esc}{esc}
+[del]>[esc]
 
 <function1>
 * keys sides - fn modifications
@@ -70,7 +70,7 @@
 [obrk]>[fn2s]
 
 * keys thumbs - mapping
-{del}>{esc}{esc}
+[del]>[esc]
 
 <function2>
 * keys sides
@@ -107,18 +107,6 @@
 [e]>[end]
 [d]>[del]
 
-*numbers
-[1]>[1]
-[2]>[2]
-[3]>[3]
-[4]>[4]
-[5]>[5]
-[6]>[6]
-[7]>[7]
-[8]>[8]
-[9]>[9]
-[0]>[0]
-
 * Custom macros for german keys on us international layout
 {u}>{-lshf}{apos}{+lshf}{u}
 {lshf}{u}>{-lshf}{apos}{u}{+lshf}
@@ -129,8 +117,7 @@
 {s}>{-ralt}{s}{+ralt}
 {lshf}{s}>{-ralt}{5}{+ralt}
 
-* keys thumbs - mapping with adjustments for d del
+* keys thumbs - mapping
 [del]>[esc]
-{esc}>{esc}{esc}
 
 <function3>
