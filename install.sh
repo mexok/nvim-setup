@@ -24,9 +24,18 @@ go install github.com/go-delve/delve/cmd/dlv@latest
 
 # Python
 apt install -y python3-dev
+apt install -y python3-pip
 apt install -y python3-venv
 
 # C/C++
 apt install -y clangd
 apt install -y llvm
 apt install -y llvm-lldb
+
+# Docker
+# see: https://docs.docker.com/engine/install/debian/
+sudo groupadd docker
+sudo usermod -aG docker $USER
+# for refresh - or relog
+newgrp docker
+apt install docker-compose-plugin
