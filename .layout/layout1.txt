@@ -106,6 +106,7 @@
 [b]>[home]
 [e]>[end]
 [d]>[del]
+{t}>{-lshf}{grav}{grav}{+lshf}
 
 * Custom macros for german keys on us international layout
 {u}>{-lshf}{apos}{+lshf}{u}

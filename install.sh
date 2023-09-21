@@ -26,6 +26,8 @@ go install github.com/go-delve/delve/cmd/dlv@latest
 apt install -y python3-dev
 apt install -y python3-pip
 apt install -y python3-venv
+apt install -y python3-debugpy
+apt install -y python3-pytest
 
 # C/C++
 apt install -y clangd
