@@ -1,4 +1,5 @@
 local set = vim.keymap.set
+
 set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
 
 set("n", "<leader>f", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
@@ -81,6 +82,18 @@ function vim.g.NVIM_TREE_SELECT_UI()
     end)
 end
 
+local function sibling_next()
+    require('nvim-tree.api').node.navigate.sibling.next()
+    require('nvim-tree.api').node.open.edit()
+end
+
+local function sibling_previous()
+    require('nvim-tree.api').node.navigate.sibling.prev()
+    require('nvim-tree.api').node.open.edit()
+end
+
+set({"n", "x"}, "ma", sibling_next)
+set({"n", "x"}, "mx", sibling_previous)
 set({"n", "x"}, "mt", "<cmd>set wrap!<cr>", { noremap=true, desc = 'Toggle wrap' })
 set({"n", "x"}, "mw", require('nvim-tree.api').marks.navigate.prev)
 set({"n", "x"}, "me", require('nvim-tree.api').marks.navigate.next)
@@ -153,11 +166,21 @@ set('n', '[t', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diag
 
 
 -- editing
-set("i", "<A-w>", "<right><esc>wi")
-set("i", "<A-W>", "<right><esc>Wi")
-set("i", "<A-e>", "<esc>ea")
+
+local kwords = "A-Za-z0-9_"
+
+local search_word_forward_begin = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("\\\\(\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)['..kwords..']", "e", vim.fn.line("w$")) end<cr>'
+local search_word_forward_end = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("['..kwords..']\\\\(\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)", "", vim.fn.line("w$")) end<cr>'
+local search_word_backward = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("\\\\(^\\\\|\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)['..kwords..']", "be", vim.fn.line("w0")) end<cr>'
+set({"n", "x"}, "e", search_word_forward_end)
+set("i", "<A-e>", "<esc>"..search_word_forward_end.."a")
+set({"n", "x"}, "b", search_word_backward)
+set("i", "<A-b>", "<right><esc>"..search_word_backward.."i")
+
+--set("i", "<A-w>", "<right><esc>wi")
+--set("i", "<A-e>", "<esc>ea")
 set("i", "<A-E>", "<esc>Ea")
-set("i", "<A-b>", "<right><esc>bi")
+--set("i", "<A-b>", "<right><esc>bi")
 set("i", "<A-B>", "<right><esc>Bi")
 set("i", "<A-L>", "<esc>Ea")
 set("i", "<A-H>", "<right><esc>Bi")
@@ -165,6 +188,8 @@ set("i", "<A-H>", "<right><esc>Bi")
 set("i", "<A-a>", "<right><esc>", { noremap=true })
 set("i", "<A-i>", "<esc>", { noremap=true })
 
+set("n", "gp", "`[v`]", { desc="select pasted text in visual mode" })
+set("x", "gp", "<esc>`[v`]", { desc="select pasted text in visual mode" })
 set({"n", "v"}, "<leader>p", "\"+p", { noremap=true, desc="p using global buffer" })
 set({"n", "v"}, "<leader>P", "\"+P", { noremap=true, desc="P using global buffer" })
 set({"n", "v"}, "<leader>y", "\"+yl", { noremap=true, desc="y using global buffer" })
@@ -259,9 +284,6 @@ fun! SetKeymaps()
     xnoremap <nowait><buffer> > loho
     nnoremap <nowait><buffer> < vholo
     xnoremap <nowait><buffer> < holo
-
-    nnoremap <nowait><buffer> ' "
-    xnoremap <nowait><buffer> ' "
 
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround

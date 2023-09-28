@@ -1,10 +1,27 @@
 <base>
 
+* nums top
+[7]>[8]
+[8]>[9]
+[9]>[0]
+[0]>[7]
+
+{1}>{9}
+{2}>{1}
+{3}>{2}
+{4}>{3}
+{5}>{4}
+{6}>{5}
+{8}>{6}
+{9}>{0}
+{0}>{7}
+{7}>{8}
+
 * keys sides
 [lshf]>[lctr]
 [rshf]>[lctr]
-[tab]>[eql]
-[esc]>[hyph]
+[esc]>[eql]
+[apos]>[hyph]
 
 * keys thumbs
 [lctr]>[lalt]
@@ -18,22 +35,19 @@
 [down]>[lshf]
 [obrk]>[fn2s]
 
-* General macros for us international layout
-{apos}>{apos}{spc}
-{lshf}{apos}>{-lshf}{apos}{+lshf}{spc}
-{grav}>{grav}{grav}
-{lshf}{grav}>{-lshf}{grav}{grav}{+lshf}
-{lshf}{6}>{-lshf}{6}{6}{+lshf}
-
 * keys thumbs - mapping
 [del]>[esc]
 
+* macros
+{lshf}{6}>{-lshf}{6}{6}{+lshf}
+
 <keypad>
+
 * keys sides
 [lshf]>[lctr]
 [rshf]>[lctr]
-[tab]>[eql]
-[esc]>[hyph]
+[esc]>[eql]
+[apos]>[hyph]
 
 * keys thumbs
 [lctr]>[lalt]
@@ -51,11 +65,12 @@
 [del]>[esc]
 
 <function1>
+
 * keys sides - fn modifications
 [lshf]>[lctr]
 [rshf]>[lctr]
-[tab]>[f1]
-[esc]>[f12]
+[esc]>[f1]
+[apos]>[f12]
 
 * keys thumbs
 [lctr]>[lalt]
@@ -73,11 +88,25 @@
 [del]>[esc]
 
 <function2>
+
+* nums top
+[1]>[9]
+[2]>[1]
+[3]>[2]
+[4]>[3]
+[5]>[4]
+
+[6]>[5]
+[7]>[6]
+[8]>[0]
+[9]>[7]
+[0]>[8]
+
 * keys sides
 [lshf]>[lctr]
 [rshf]>[lctr]
-[tab]>[eql]
-[esc]>[hyph]
+[esc]>[eql]
+[apos]>[hyph]
 
 * keys thumbs
 [lctr]>[lalt]
@@ -107,6 +136,14 @@
 [e]>[end]
 [d]>[del]
 {t}>{-lshf}{grav}{grav}{+lshf}
+{w}>{-lshf}{bsls}{+lshf}
+[r]>[bsls]
+{f}>{apos}{spc}
+{g}>{-lshf}{apos}{+lshf}{spc}
+{scol}>{-lshf}{7}{+lshf}
+
+* keys thumbs - mapping
+[del]>[esc]
 
 * Custom macros for german keys on us international layout
 {u}>{-lshf}{apos}{+lshf}{u}
@@ -117,8 +154,5 @@
 {lshf}{a}>{-lshf}{apos}{a}{+lshf}
 {s}>{-ralt}{s}{+ralt}
 {lshf}{s}>{-ralt}{5}{+ralt}
-
-* keys thumbs - mapping
-[del]>[esc]
 
 <function3>
