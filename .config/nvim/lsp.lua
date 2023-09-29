@@ -63,19 +63,14 @@ cmp.setup {
     mapping = cmp.mapping.preset.insert({
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<cr>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                if (cmp.get_selected_entry() == nil) then
-                    cmp.select_next_item()
-                end
-                cmp.mapping.confirm{
-                    behavior = cmp.ConfirmBehavior.Select,
-                    select = false,
-                }()
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
+        ['<cr>'] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = false,
+        },
+        ['\\\\'] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+        },
         ['<tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()

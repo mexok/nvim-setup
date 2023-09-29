@@ -167,7 +167,7 @@ set('n', '[t', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diag
 
 -- editing
 
-local kwords = "A-Za-z0-9_"
+local kwords = "A-Za-z0-9_$%@"
 
 local search_word_forward_begin = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("\\\\(\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)['..kwords..']", "e", vim.fn.line("w$")) end<cr>'
 local search_word_forward_end = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("['..kwords..']\\\\(\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)", "", vim.fn.line("w$")) end<cr>'
