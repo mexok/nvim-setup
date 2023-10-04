@@ -7,7 +7,7 @@ lsp_defaults.capabilities = vim.tbl_deep_extend(
     require('cmp_nvim_lsp').default_capabilities()
 )
 
-local servers = { 'pyright', 'tsserver', 'vuels'}
+local servers = { 'pyright', 'tsserver'}
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
         root_dir = function () return vim.fn.getcwd() end,
@@ -45,6 +45,7 @@ lspconfig.perlnavigator.setup{
       }
     }
 }
+lspconfig.volar.setup{}
 
 -- cmp
 

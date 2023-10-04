@@ -18,6 +18,7 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&\
 apt install -y nodejs
 
 npm install -g typescript-language-server typescript
+npm install vls -g
 
 # go
 apt install -y golang
