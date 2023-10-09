@@ -22,18 +22,22 @@
 [rctr]>[lalt]
 
 * keys bottom
+[grav]>[bsls]
 [caps]>[fn2s]
 [left]>[lshf]
 [rght]>[tab]
 [up]>[caps]
 [down]>[lshf]
 [obrk]>[fn2s]
+[cbrk]>[apos]
 
 * keys thumbs - mapping
 [del]>[esc]
 
 * macros
-{lshf}{6}>{-lshf}{6}{6}{+lshf}
+{lshf}{6}>{-lshf}{6}{6}
+{apos}>{apos}{spc}
+{lshf}{apos}>{-lshf}{apos}{spc}
 
 <keypad>
 
@@ -48,12 +52,14 @@
 [rctr]>[lalt]
 
 * keys bottom
+[grav]>[bsls]
 [caps]>[fn2s]
 [left]>[lshf]
 [rght]>[tab]
 [up]>[caps]
 [down]>[lshf]
 [obrk]>[fn2s]
+[cbrk]>[apos]
 
 * keys thumbs - mapping
 [del]>[esc]
@@ -71,12 +77,14 @@
 [rctr]>[lalt]
 
 * keys bottom
+[grav]>[bsls]
 [caps]>[fn2s]
 [left]>[lshf]
 [rght]>[tab]
 [up]>[caps]
 [down]>[lshf]
 [obrk]>[fn2s]
+[cbrk]>[apos]
 
 * keys thumbs - mapping
 [del]>[esc]
@@ -112,12 +120,14 @@
 [rctr]>[lalt]
 
 * keys bottom - fn toggle modifications
+[grav]>[bsls]
 [caps]>[defs]
 [left]>[lshf]
 [rght]>[tab]
 [up]>[caps]
 [down]>[lshf]
 [obrk]>[defs]
+[cbrk]>[apos]
 
 * Layer keybindings
 [comm]>[obrk]
@@ -136,9 +146,11 @@
 [d]>[del]
 {t}>{-lshf}{grav}{grav}{+lshf}
 [r]>[bsls]
-{f}>{apos}{spc}
-{lshf}{f}>{-lshf}{apos}{+lshf}{spc}
 {scol}>{-lshf}{7}{+lshf}
+
+{lshf}{6}>{-lshf}{6}{6}
+{apos}>{apos}{spc}
+{lshf}{apos}>{-lshf}{apos}{spc}
 
 * keys thumbs - mapping
 [del]>[esc]

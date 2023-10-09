@@ -6,7 +6,7 @@ require'nvim-treesitter.configs'.setup {
     enable = true,
     additional_vim_regex_highlighting = false,
   },
-  indent = true,
+  indent = {enable = true},
   textobjects = {
     select = {
       enable = true,
@@ -27,10 +27,10 @@ require'nvim-treesitter.configs'.setup {
     swap = {
       enable = true,
       swap_next = {
-          ['<leader>cn'] = '@parameter.inner',
+          ['<leader>l'] = '@parameter.inner',
       },
       swap_previous = {
-          ['<leader>cp'] = '@parameter.inner',
+          ['<leader>h'] = '@parameter.inner',
       }
     }
   }

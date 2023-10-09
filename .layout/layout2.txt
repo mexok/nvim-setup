@@ -1,0 +1,17 @@
+<base>
+[x]>[1]
+[c]>[2]
+[v]>[3]
+[s]>[4]
+[d]>[5]
+[f]>[6]
+[w]>[7]
+[e]>[8]
+[r]>[9]
+[del]>[0]
+[a]>[tab]
+
+<keypad>
+<function1>
+<function2>
+<function3>

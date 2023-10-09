@@ -39,17 +39,15 @@ function vim.g.NVIM_TREE_GET_ORDERED_REL_PATHS()
     end, require("nvim-tree.marks").get_marks())
 
     table.sort(paths, function (a, b)
-        -- dictionaries should be displayed before files
-        local slash_cnt_a, slash_cnt_b
-        _, slash_cnt_a = string.gsub(a, "/", "")
-        _, slash_cnt_b = string.gsub(b, "/", "")
-        if slash_cnt_a < slash_cnt_b then
-            return false
-        elseif slash_cnt_a > slash_cnt_b then
-            return true
-        else
-            return string.lower(a) < string.lower(b)
-        end
+        -- files in subdictionaries should be displayed before files
+        -- thats why we modify the paths a bit to have a '/1' before
+        -- subdictionaries and a '/2' before files
+        local slash_cnt
+        a, slash_cnt = string.gsub("/"..a, "/", "/2")
+        a = string.gsub(a, "/2", "/1", slash_cnt - 1)
+        b, slash_cnt = string.gsub("/"..b, "/", "/2")
+        b = string.gsub(b, "/2", "/1", slash_cnt - 1)
+        return string.lower(a) < string.lower(b)
     end)
     return paths
 end
@@ -137,7 +135,7 @@ set("n", "<leader>i", "<cmd>lua require'dap'.down()<cr>", { silent = true, desc 
 set("n", "<leader>o", "<cmd>lua require'dap'.up()<cr>", { silent = true, desc = "debugger up" })
 set("n", "<leader>m", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { silent = true, desc = "toggle breakpoint"})
 set("n", "<leader>M", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", { silent = true, desc = "ste breakpoint condition"})
-set("n", "<leader>h", ":lua require'dap.ui.widgets'.hover()<cr>", { silent = true, desc = "debugger hover word"})
+set("n", "<leader>j", ":lua require'dap.ui.widgets'.hover()<cr>", { silent = true, desc = "debugger hover word"})
 
 set("n", "<leader>tr", "<cmd>lua require'dap'.repl.toggle()<cr>", { noremap=true, desc = "toggle repl" })
 set("n", "<leader>tb", "<cmd>lua require'dap'.list_breakpoints()<cr>", { noremap=true, desc = "list breakpoints"})
