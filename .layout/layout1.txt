@@ -157,11 +157,11 @@
 
 * Custom macros for german keys on us international layout
 {u}>{-lshf}{apos}{+lshf}{u}
-{lshf}{u}>{-lshf}{apos}{u}{+lshf}
+{lshf}{u}>{-lshf}{apos}{u}
 {o}>{-lshf}{apos}{+lshf}{o}
-{lshf}{o}>{-lshf}{apos}{o}{+lshf}
+{lshf}{o}>{-lshf}{apos}{o}
 {a}>{-lshf}{apos}{+lshf}{a}
-{lshf}{a}>{-lshf}{apos}{a}{+lshf}
+{lshf}{a}>{-lshf}{apos}{a}
 {s}>{-ralt}{s}{+ralt}
 {lshf}{s}>{-ralt}{5}{+ralt}
 
