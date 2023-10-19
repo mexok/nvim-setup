@@ -1,65 +1,81 @@
-require('packer').startup(function(use)
-    -- package manager
-    use 'wbthomason/packer.nvim'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
+end
+vim.opt.rtp:prepend(lazypath)
 
+
+require("lazy").setup {
     -- Theme
-    use 'navarasu/onedark.nvim'
-    use 'nvim-lualine/lualine.nvim'
-    use 'folke/which-key.nvim'
+    'navarasu/onedark.nvim',
+    'nvim-lualine/lualine.nvim',
+    'folke/which-key.nvim',
 
     -- Debugging
-    use 'mfussenegger/nvim-dap'
+    'mfussenegger/nvim-dap',
 
     -- Code completion
-    use 'neovim/nvim-lspconfig'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/nvim-cmp'
+    'neovim/nvim-lspconfig',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'hrsh7th/nvim-cmp',
 
-    use 'williamboman/mason.nvim'
-    use 'williamboman/mason-lspconfig.nvim'
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
 
     -- Treesitter
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use 'nvim-treesitter/nvim-treesitter-textobjects'
-    use 'simrat39/symbols-outline.nvim'
+    {
+        "nvim-treesitter/nvim-treesitter",
+        version = false,
+        build = ":TSUpdate",
+        cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
+    },
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'windwp/nvim-ts-autotag',
+    'simrat39/symbols-outline.nvim',
 
     -- snippet support
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
-    use 'honza/vim-snippets'
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
+    'honza/vim-snippets',
 
     -- File lookup
-    use { 'nvim-telescope/telescope.nvim', tag = '0.1.0' }
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-telescope/telescope-live-grep-args.nvim'
+    { 'nvim-telescope/telescope.nvim', tag = '0.1.0' },
+    'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope-live-grep-args.nvim',
 
     -- File explorer
-    use 'nvim-tree/nvim-web-devicons'
-    use 'nvim-tree/nvim-tree.lua'
+    'nvim-tree/nvim-web-devicons',
+    'nvim-tree/nvim-tree.lua',
 
     -- Terminal
-    use { "akinsho/toggleterm.nvim", tag = '*' }
+    {'akinsho/toggleterm.nvim', version = "*", config = true},
 
     -- Editor smoothness
-    use 'tpope/vim-surround'
-    use 'tpope/vim-commentary'
-    use 'tpope/vim-abolish'
-    use 'tpope/vim-unimpaired'
-    use 'AndrewRadev/splitjoin.vim'
-    use 'karb94/neoscroll.nvim'
+    'tpope/vim-surround',
+    'tpope/vim-commentary',
+    'tpope/vim-abolish',
+    'tpope/vim-unimpaired',
+    'AndrewRadev/splitjoin.vim',
+    'karb94/neoscroll.nvim',
 
     -- Git
-    use 'tpope/vim-fugitive'  -- only for git blame
-    use 'airblade/vim-gitgutter'
+    'tpope/vim-fugitive',
+    'airblade/vim-gitgutter',
 
-    use 'mexok/voice-command.nvim'
-    use 'mexok/motions.nvim'
-    use 'mexok/reglist.nvim'
-
-end)
+    'mexok/voice-command.nvim',
+    'mexok/motions.nvim',
+    'mexok/reglist.nvim'
+}
 
 require('reglist').setup {
     default_mappings = '<leader>l',

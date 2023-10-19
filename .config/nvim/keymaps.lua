@@ -193,7 +193,6 @@ set({"n", "v"}, "<leader>P", "\"+P", { noremap=true, desc="P using global buffer
 set({"n", "v"}, "<leader>y", "\"+yl", { noremap=true, desc="y using global buffer" })
 set({"n", "v"}, "<leader>Y", "\"+Y", { noremap=true, desc="Y using global buffer" })
 set({"n", "v"}, "<leader>d", "\"+x", { noremap=true, desc="d using global buffer" })
-set({"n", "v"}, "<leader>D", "\"+D", { noremap=true, desc="D using global buffer" })
 
 set("n", "J", "v:m '>+1<cr>gv=", {noremap=true})
 set("n", "K", "v:m '<-2<cr>gv=", {noremap=true})
