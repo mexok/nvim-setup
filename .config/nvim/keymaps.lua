@@ -10,6 +10,7 @@ set("v", "<leader>f", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*
 set("n", "<leader>F", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true, desc = "search files in project" })
 set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp })<cr>", { noremap = true, desc = "search files in project with marked text"})
 set("n", "<leader>e", "<cmd>NvimTreeFocus<cr>", { desc = "explorer"})
+set("n", "<leader>E", "<cmd>Oil<cr>", { desc = "nvim oil"})
 set("n", "<leader>te", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
 set("n", "<leader>b", "<cmd>Git blame<cr>", { desc = "git blame"})
 set("n", "<leader>a", "gg0vG$", { noremap = true, desc = "select all"})
@@ -96,7 +97,7 @@ set({"n", "x"}, "mt", "<cmd>set wrap!<cr>", { noremap=true, desc = 'Toggle wrap'
 set({"n", "x"}, "mw", require('nvim-tree.api').marks.navigate.prev)
 set({"n", "x"}, "me", require('nvim-tree.api').marks.navigate.next)
 set({"n", "x"}, "ms", vim.g.NVIM_TREE_SELECT_UI)
-set({"n", "x"}, "mf", require("nvim-tree.api").marks.toggle)
+set({"n", "x"}, ".", require("nvim-tree.api").marks.toggle)
 set({"n", "x"}, "mc", require("nvim-tree.api").marks.clear)
 for i = 1, 9 do
     set({"n", "x"}, "g"..i, "<cmd>lua vim.g.NVIM_TREE_SELECT("..i..")<cr>")
@@ -145,9 +146,11 @@ set("n", "<leader>tt", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.
 set("n", "<leader>ts", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.ui.widgets').scopes).open()<cr>", { silent = true, desc = "open debug scopes"})
 set("n", "<leader>tp", "<cmd>PackerUpdate<cr>", { noremap = true, desc = "update plugins"})
 set("n", "<leader>to", "<cmd>SymbolsOutline<cr>")
-set({"n", "v"}, "<leader>k", "<cmd>ToggleTerm<cr>")
+set({"n", "x"}, "<leader>k", "<cmd>ToggleTerm<cr>")
 set("n", "<leader>K", ":ToggleTermSendCurrentLine<cr>")
-set("v", "<leader>K", ":ToggleTermSendVisualSelection<cr>")
+set("x", "<leader>K", ":ToggleTermSendVisualSelection<cr>")
+set({"n", "x"}, "/", "/\\M")
+set({"n", "x"}, "?", "?\\M")
 
 -- lsp setup
 set('n', 'gs', vim.lsp.buf.declaration, { noremap=true, silent=true, desc="go to declaration" })
@@ -162,6 +165,9 @@ set('n', '<leader>tl', vim.diagnostic.setloclist, { noremap=true, silent=true, d
 set('n', ']t', vim.diagnostic.goto_next, { noremap=true, silent=true, desc="diagnostics next"})
 set('n', '[t', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diagnostics previous"})
 
+-- git gutter
+set('n', ']h', '<Plug>(GitGutterNextHunk)', { noremap=true, desc="git next"})
+set('n', '[h', '<Plug>(GitGutterPrevHunk)', { noremap=true, desc="git prev"})
 
 -- editing
 
@@ -241,8 +247,8 @@ set("x", "ö", '<esc>vib', {noremap = true})
 set("n", "Ö", 'vibf)oF(o', {noremap = true})
 set("x", "Ö", '<esc>vibf)oF(o', {noremap = true})
 
-set("n", "ä", 'vi{', {noremap = true})
-set("x", "ä", '<esc>vi{', {noremap = true})
+set("n", "ä", '<cmd>try|f{f}|catch||endtry<cr>vi{', {noremap = true})
+set("x", "ä", '<esc><cmd>try|f{f}|catch||endtry<cr>vi{', {noremap = true})
 set("n", "Ä", 'vi{f}oF{o', {noremap = true})
 set("x", "Ä", '<esc>vi{f}oF{o', {noremap = true})
 
@@ -287,9 +293,14 @@ fun! SetKeymaps()
     nnoremap <leader>cs <Plug>Csurround
     nnoremap <leader>cS <Plug>CSurround
     nnoremap S v<Plug>VSurround
-    nnoremap gs v<Plug>VgSurround
     xnoremap S <Plug>VSurround
+    nnoremap gs v<Plug>VgSurround
     xnoremap gs <Plug>VgSurround
+    nnoremap <nowait><buffer> <leader>ds<space> <Plug>Dsurround<space><space>
+    nnoremap <nowait><buffer> S<space> v<Plug>VSurround<space><space>
+    xnoremap <nowait><buffer> S<space> <Plug>VSurround<space><space>
+    nnoremap <nowait><buffer> gs<space> v<Plug>VgSurround<space><space>
+    xnoremap <nowait><buffer> gs<space> <Plug>VgSurround<space><space>
 endfun
 
 augroup set_keymaps
