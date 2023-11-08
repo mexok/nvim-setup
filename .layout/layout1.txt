@@ -6,10 +6,10 @@
 [9]>[0]
 [0]>[7]
 
-{8}>{7}
-{9}>{8}
-{0}>{9}
-{7}>{0}
+{8}>{s9}{7}
+{9}>{s9}{8}
+{0}>{s9}{9}
+{7}>{s9}{0}
 
 * keys sides
 [lshf]>[lctr]
@@ -35,9 +35,9 @@
 [del]>[esc]
 
 * macros
-{lshf}{6}>{-lshf}{6}{6}
-{apos}>{apos}{spc}
-{lshf}{apos}>{-lshf}{apos}{spc}
+{lshf}{6}>{s9}{-lshf}{6}{6}
+{apos}>{s9}{apos}{spc}
+{lshf}{apos}>{s9}{-lshf}{apos}{spc}
 
 <keypad>
 
@@ -104,10 +104,10 @@
 [9]>[0]
 [0]>[7]
 
-{8}>{7}
-{9}>{8}
-{0}>{9}
-{7}>{0}
+{8}>{s9}{7}
+{9}>{s9}{8}
+{0}>{s9}{9}
+{7}>{s9}{0}
 
 * keys sides
 [lshf]>[lctr]
@@ -144,25 +144,25 @@
 [b]>[home]
 [e]>[end]
 [d]>[del]
-{t}>{-lshf}{grav}{grav}{+lshf}
+{t}>{s9}{-lshf}{grav}{grav}{+lshf}
 [r]>[bsls]
-{scol}>{-lshf}{7}{+lshf}
+{scol}>{s9}{-lshf}{7}{+lshf}
 
-{lshf}{6}>{-lshf}{6}{6}
-{apos}>{apos}{spc}
-{lshf}{apos}>{-lshf}{apos}{spc}
+{lshf}{6}>{s9}{-lshf}{6}{6}
+{apos}>{s9}{apos}{spc}
+{lshf}{apos}>{s9}{-lshf}{apos}{spc}
 
 * keys thumbs - mapping
 [del]>[esc]
 
 * Custom macros for german keys on us international layout
-{u}>{-lshf}{apos}{+lshf}{u}
-{lshf}{u}>{-lshf}{apos}{u}
-{o}>{-lshf}{apos}{+lshf}{o}
-{lshf}{o}>{-lshf}{apos}{o}
-{a}>{-lshf}{apos}{+lshf}{a}
-{lshf}{a}>{-lshf}{apos}{a}
-{s}>{-ralt}{s}{+ralt}
-{lshf}{s}>{-ralt}{5}{+ralt}
+{u}>{s9}{-lshf}{apos}{+lshf}{u}
+{lshf}{u}>{s9}{-lshf}{apos}{u}
+{o}>{s9}{-lshf}{apos}{+lshf}{o}
+{lshf}{o}>{s9}{-lshf}{apos}{o}
+{a}>{s9}{-lshf}{apos}{+lshf}{a}
+{lshf}{a}>{s9}{-lshf}{apos}{a}
+{s}>{s9}{-ralt}{s}{+ralt}
+{lshf}{s}>{s9}{-ralt}{5}{+ralt}
 
 <function3>
