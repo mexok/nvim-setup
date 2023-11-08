@@ -59,5 +59,8 @@ sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt update
 sudo apt install terraform
 
+touch ~/.zshrc
+terraform -install-autocomplete
+
 # upgrade all packages
 sudo apt upgrade
