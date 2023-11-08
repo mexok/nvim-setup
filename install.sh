@@ -1,4 +1,5 @@
 #ssh-keygen -t ed25519 -C "konstantin@semerker.de"
+apt update
 apt install git
 git config --global core.editor "nvim"
 apt install tmux
@@ -43,3 +44,20 @@ sudo usermod -aG docker $USER
 # for refresh - or relog
 newgrp docker
 apt install docker-compose-plugin
+
+# Terraform
+sudo apt install gnupg software-properties-common
+
+wget -O- https://apt.releases.hashicorp.com/gpg | \
+gpg --dearmor | \
+sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+sudo tee /etc/apt/sources.list.d/hashicorp.list
+
+sudo apt update
+sudo apt install terraform
+
+# upgrade all packages
+sudo apt upgrade
