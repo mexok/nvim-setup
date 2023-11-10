@@ -1,6 +1,7 @@
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
+source <(kubectl completion zsh)
 
 bindkey '^[k' history-beginning-search-backward
 bindkey '^[j' history-beginning-search-forward
