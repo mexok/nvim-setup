@@ -46,6 +46,7 @@ lspconfig.perlnavigator.setup{
     }
 }
 lspconfig.volar.setup{}
+lspconfig.terraformls.setup{}
 
 -- cmp
 
