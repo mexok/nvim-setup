@@ -223,6 +223,8 @@ set("x", "p", "P", {noremap = true})
 
 set("n", "<leader>s", ":%s/", {noremap = true})
 set("x", "<leader>s", ":s/", {noremap = true})
+set("n", "<leader>S", ":%norm ", {noremap = true})
+set("x", "<leader>S", ":norm ", {noremap = true})
 set("n", "<leader>g", ":%g/", {noremap = true})
 set("x", "<leader>g", ":g/", {noremap = true})
 set("n", "<leader>v", ":%v/", {noremap = true})
