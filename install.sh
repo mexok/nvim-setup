@@ -1,5 +1,5 @@
 #ssh-keygen -t ed25519 -C "konstantin@semerker.de"
-apt update
+sudo apt update
 
 # nvim
 sudo wget -o /opt/nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
