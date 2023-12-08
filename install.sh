@@ -1,22 +1,31 @@
 #ssh-keygen -t ed25519 -C "konstantin@semerker.de"
+
 sudo apt update
 sudo apt install -y wget
 
+# git + repo
+sudo apt install -y git
+git config --global user.name "mexok"
+git config --global user.email "konstantin@semerker.de"
+
+mkdir ~/repos
+cd ~/repos
+git clone git@github.com:mexok/nvim-setup.git
+cd nvim-setup
+
 # nvim
-sudo wget -o /opt/nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-tar -zxf /opt/nvim-linux64.tar.gz
-ln -s /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
+sudo wget -O /opt/nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+sudo tar -zxf /opt/nvim-linux64.tar.gz -C /opt
+sudo ln -s /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
 
 mkdir -p "$HOME/.config/nvim"
 rm $HOME/.config/nvim/*.lua 2>/dev/null
 
 for f in ".config/nvim"/*.lua
 do
-    ln -s "$cwd/$f" "$HOME/$f"
+    ln -s "$PWD/$f" "$HOME/$f"
 done
 
-# git
-sudo apt install -y git
 git config --global core.editor "nvim"
 
 # tmux and zsh
@@ -25,9 +34,11 @@ sudo apt install -y zsh
 chsh -s $(which zsh)
 sudo apt install -y curl
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 rm $HOME/.tmux.conf
-ln -s ./.tmux.conf "$HOME/.tmux.conf"
+ln -s ~/.tmux.conf "$HOME/.tmux.conf"
 
 # Other CLI
 sudo apt install -y ripgrep
@@ -35,13 +46,18 @@ sudo apt install -y xsel
 sudo apt install -y rename
 
 # Nodejs
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&\
+sudo apt install -y ca-certificates curl gnupg
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+sudo apt update
 sudo apt install -y nodejs
 
-npm install -g typescript-language-server typescript
-npm install vls -g
+# Typescript
+sudo npm install -g typescript-language-server typescript
+sudo npm install vls -g
 
-# go
+# Golang
 sudo apt install -y golang
 go install github.com/go-delve/delve/cmd/dlv@latest
 
@@ -55,7 +71,6 @@ sudo apt install -y python3-pytest
 # C/C++
 sudo apt install -y clangd
 sudo apt install -y llvm
-sudo apt install -y llvm-lldb
 
 # Docker
 # see: https://docs.docker.com/engine/install/debian/
