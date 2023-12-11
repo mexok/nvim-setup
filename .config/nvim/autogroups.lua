@@ -20,6 +20,11 @@ augroup gofmt
     autocmd!
     autocmd BufWritePost *.go !gofmt -w %
 augroup end
+
+augroup cursor_shape_on_exit
+    autocmd!
+    autocmd VimLeave * set guicursor=a:ver100-blinkwait100-blinkoff100-blinkon100
+augroup end
 ]]
 
 function _G.set_terminal_keymaps()

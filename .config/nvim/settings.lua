@@ -3,7 +3,7 @@ vim.g.python3_host_prog = 'python3'
 vim.g.lightspeed_no_default_keymaps = true
 vim.g.surround_no_mappings = true
 
-vim.opt.guicursor="sm-n:block-blinkwait100-blinkoff100-blinkon100,c-ci-i:ver100,cr-r:hor100,v-ve:block"
+vim.opt.guicursor="sm-n:block-blinkwait100-blinkoff100-blinkon100,c-ci-i:ver100-blinkwait100-blinkoff100-blinkon100,cr-r:hor100,v-ve:block"
 
 vim.opt.iskeyword:append({"$", "@-@", "%"})
 
