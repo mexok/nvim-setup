@@ -50,9 +50,15 @@ require("lazy").setup {
     'honza/vim-snippets',
 
     -- File lookup
-    { 'nvim-telescope/telescope.nvim', tag = '0.1.0' },
-    'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope-live-grep-args.nvim',
+    {
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.5',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-fzf-native.nvim',
+            'nvim-telescope/telescope-live-grep-args.nvim',
+        }
+    },
 
     -- File explorer
     'nvim-tree/nvim-web-devicons',
