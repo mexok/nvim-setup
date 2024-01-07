@@ -81,18 +81,16 @@ function vim.g.NVIM_TREE_SELECT_UI()
     end)
 end
 
-local function sibling_next()
+function vim.g.SIBLING_NEXT()
     require('nvim-tree.api').node.navigate.sibling.next()
     require('nvim-tree.api').node.open.edit()
 end
 
-local function sibling_previous()
+function vim.g.SIBLING_PREVIOUS()
     require('nvim-tree.api').node.navigate.sibling.prev()
     require('nvim-tree.api').node.open.edit()
 end
 
-set({"n", "x"}, "ma", sibling_next)
-set({"n", "x"}, "mx", sibling_previous)
 set({"n", "x"}, "mt", "<cmd>set wrap!<cr>", { noremap=true, desc = 'Toggle wrap' })
 set({"n", "x"}, "mw", require('nvim-tree.api').marks.navigate.prev)
 set({"n", "x"}, "me", require('nvim-tree.api').marks.navigate.next)
@@ -287,10 +285,10 @@ set({"n", "x"}, "wt", "<cmd>q!<cr>", { noremap=true, desc="Forced close of file"
 
 vim.cmd([[
 fun! SetKeymaps()
-    nnoremap <nowait><buffer> > vloho
-    xnoremap <nowait><buffer> > loho
-    nnoremap <nowait><buffer> < vholo
-    xnoremap <nowait><buffer> < holo
+    nnoremap <nowait><buffer><silent> > :lua vim.g.SIBLING_NEXT()<cr>
+    xnoremap <nowait><buffer><silent> > :lua vim.g.SIBLING_NEXT()<cr>
+    nnoremap <nowait><buffer><silent> < :lua vim.g.SIBLING_PREVIOUS()<cr>
+    xnoremap <nowait><buffer><silent> < :lua vim.g.SIBLING_PREVIOUS()<cr>
 
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround
