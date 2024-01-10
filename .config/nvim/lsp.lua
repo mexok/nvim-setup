@@ -1,61 +1,10 @@
--- lsp
-local lspconfig = require('lspconfig')
-local lsp_defaults = lspconfig.util.default_config
-lsp_defaults.capabilities = vim.tbl_deep_extend(
-    'force',
-    lsp_defaults.capabilities,
-    require('cmp_nvim_lsp').default_capabilities()
-)
-
-local servers = { 'pyright', 'tsserver'}
-for _, lsp in ipairs(servers) do
-    lspconfig[lsp].setup {
-        root_dir = function () return vim.fn.getcwd() end,
-        settings = {
-            python = {
-                autoSearchPaths = true,
-                diagnosticMode = "workspace",
-                useLibraryCodeForTypes = true
-            }
-        }
-    }
-end
-
-lspconfig.gopls.setup({})
-lspconfig.lua_ls.setup {
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'vim' }
-            }
-        }
-    }
-}
-
-lspconfig.cmake.setup({})
-lspconfig.clangd.setup({})
-lspconfig.perlnavigator.setup{
-    settings = {
-      perlnavigator = {
-          perlPath = 'perl',
-          enableWarnings = true,
-          perltidyProfile = '',
-          perlcriticProfile = '',
-          perlcriticEnabled = false,
-      }
-    }
-}
-lspconfig.volar.setup{}
-lspconfig.terraformls.setup{}
-
 -- cmp
-
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+vim.opt.completeopt = {'menu', 'menuone'} --, 'noselect'
 
 local cmp = require 'cmp'
 
 require("luasnip.loaders.from_vscode").load {}
-require("luasnip.loaders.from_snipmate").lazy_load()
+require("luasnip.loaders.from_snipmate").load {}
 cmp.setup {
     snippet = {
         expand = function(args)
@@ -111,6 +60,56 @@ cmp.setup.cmdline(':', {
         { name = 'cmdline' }
     })
 })
+-- lsp
+local lspconfig = require('lspconfig')
+-- local lsp_defaults = lspconfig.util.default_config
+-- lsp_defaults.capabilities = vim.tbl_deep_extend(
+--     'force',
+--     lsp_defaults.capabilities,
+--     require('cmp_nvim_lsp').default_capabilities()
+-- )
+-- lsp_defaults.capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local servers = { 'pyright', 'tsserver'}
+for _, lsp in ipairs(servers) do
+    lspconfig[lsp].setup {
+        root_dir = function () return vim.fn.getcwd() end,
+        settings = {
+            python = {
+                autoSearchPaths = true,
+                diagnosticMode = "workspace",
+                useLibraryCodeForTypes = true
+            }
+        }
+    }
+end
+
+lspconfig.gopls.setup {}
+lspconfig.lua_ls.setup {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    }
+}
+
+lspconfig.cmake.setup({})
+lspconfig.clangd.setup({})
+lspconfig.perlnavigator.setup{
+    settings = {
+      perlnavigator = {
+          perlPath = 'perl',
+          enableWarnings = true,
+          perltidyProfile = '',
+          perlcriticProfile = '',
+          perlcriticEnabled = false,
+      }
+    }
+}
+lspconfig.volar.setup{}
+lspconfig.terraformls.setup{}
 
 -- to disable weired behavior when entering insert mode
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
