@@ -94,7 +94,10 @@ end
 set({"n", "x"}, "mt", "<cmd>set wrap!<cr>", { noremap=true, desc = 'Toggle wrap' })
 set({"n", "x"}, "mw", require('nvim-tree.api').marks.navigate.prev)
 set({"n", "x"}, "me", require('nvim-tree.api').marks.navigate.next)
+set({"n", "x"}, "mc", require("nvim-tree.api").marks.clear)
 set({"n", "x"}, "ms", vim.g.NVIM_TREE_SELECT_UI)
+set({"n", "x"}, "ma", vim.g.SIBLING_NEXT)
+set({"n", "x"}, "mx", vim.g.SIBLING_PREVIOUS)
 set({"n", "x"}, ".", require("nvim-tree.api").marks.toggle)
 set({"n", "x"}, "mc", require("nvim-tree.api").marks.clear)
 for i = 1, 9 do
@@ -285,10 +288,10 @@ set({"n", "x"}, "wt", "<cmd>q!<cr>", { noremap=true, desc="Forced close of file"
 
 vim.cmd([[
 fun! SetKeymaps()
-    nnoremap <nowait><buffer><silent> > :lua vim.g.SIBLING_NEXT()<cr>
-    xnoremap <nowait><buffer><silent> > :lua vim.g.SIBLING_NEXT()<cr>
-    nnoremap <nowait><buffer><silent> < :lua vim.g.SIBLING_PREVIOUS()<cr>
-    xnoremap <nowait><buffer><silent> < :lua vim.g.SIBLING_PREVIOUS()<cr>
+    nnoremap <nowait><buffer><silent> > :bnext<cr>
+    xnoremap <nowait><buffer><silent> > :bnext<cr>
+    nnoremap <nowait><buffer><silent> < :bprev<cr>
+    xnoremap <nowait><buffer><silent> < :bprev<cr>
 
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround
