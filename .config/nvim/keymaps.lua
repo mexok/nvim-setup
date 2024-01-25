@@ -176,11 +176,16 @@ local kwords = "A-Za-z0-9_$%@"
 
 local search_word_forward_begin = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("\\\\(\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)['..kwords..']", "e", vim.fn.line("w$")) end<cr>'
 local search_word_forward_end = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("['..kwords..']\\\\(\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)", "", vim.fn.line("w$")) end<cr>'
-local search_word_backward = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("\\\\(^\\\\|\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)['..kwords..']", "be", vim.fn.line("w0")) end<cr>'
-set({"n", "x"}, "e", search_word_forward_end)
-set("i", "<A-e>", "<esc>"..search_word_forward_end.."a")
-set({"n", "x"}, "b", search_word_backward)
-set("i", "<A-b>", "<right><esc>"..search_word_backward.."i")
+local search_word_backward_begin = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("\\\\(^\\\\|\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)['..kwords..']", "be", vim.fn.line("w0")) end<cr>'
+local search_word_backward_end = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("['..kwords..']\\\\(\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)", "b", vim.fn.line("w0")) end<cr>'
+
+set({"n", "x"}, "e", search_word_forward_end, { noremap = true })
+set({"n", "x"}, "E", search_word_forward_begin, { noremap = true })
+set("i", "<A-e>", "<esc>"..search_word_forward_end.."a", { noremap = true })
+
+set({"n", "x"}, "b", search_word_backward_begin, { noremap = true })
+set({"n", "x"}, "B", search_word_backward_end, { noremap = true })
+set("i", "<A-b>", "<right><esc>"..search_word_backward_begin.."i", { noremap = true })
 
 --set("i", "<A-w>", "<right><esc>wi")
 --set("i", "<A-e>", "<esc>ea")
