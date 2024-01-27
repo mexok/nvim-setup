@@ -137,7 +137,7 @@ set("n", "<leader>i", "<cmd>lua require'dap'.down()<cr>", { silent = true, desc 
 set("n", "<leader>o", "<cmd>lua require'dap'.up()<cr>", { silent = true, desc = "debugger up" })
 set("n", "<leader>m", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { silent = true, desc = "toggle breakpoint"})
 set("n", "<leader>M", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", { silent = true, desc = "ste breakpoint condition"})
-set("n", "<leader>j", ":lua require'dap.ui.widgets'.hover()<cr>", { silent = true, desc = "debugger hover word"})
+set("n", "<leader>h", ":lua require'dap.ui.widgets'.hover()<cr>", { silent = true, desc = "debugger hover word"})
 
 set("n", "<leader>tr", "<cmd>lua require'dap'.repl.toggle()<cr>", { noremap=true, desc = "toggle repl" })
 set("n", "<leader>tb", "<cmd>lua require'dap'.list_breakpoints()<cr>", { noremap=true, desc = "list breakpoints"})
@@ -293,10 +293,10 @@ set({"n", "x"}, "wt", "<cmd>q!<cr>", { noremap=true, desc="Forced close of file"
 
 vim.cmd([[
 fun! SetKeymaps()
-    nnoremap <nowait><buffer><silent> > :bnext<cr>
-    xnoremap <nowait><buffer><silent> > :bnext<cr>
-    nnoremap <nowait><buffer><silent> < :bprev<cr>
-    xnoremap <nowait><buffer><silent> < :bprev<cr>
+    nmap <nowait><buffer> > <leader>~pn
+    xmap <nowait><buffer> > <leader>~pn
+    nmap <nowait><buffer> < <leader>~pp
+    xmap <nowait><buffer> < <leader>~pp
 
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround
