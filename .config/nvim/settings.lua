@@ -6,7 +6,8 @@ vim.g.surround_no_mappings = true
 vim.opt.iskeyword:append({"$", "@-@", "%"})
 
 vim.opt.exrc = true
-vim.opt.foldmethod = "indent"
+vim.opt.foldmethod="expr"
+vim.opt.foldexpr="nvim_treesitter#foldexpr()"
 vim.opt.foldlevel = 99
 vim.opt.hlsearch = true
 vim.opt.hidden = true
