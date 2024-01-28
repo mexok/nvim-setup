@@ -98,7 +98,6 @@ set({"n", "x"}, "mc", require("nvim-tree.api").marks.clear)
 set({"n", "x"}, "ms", vim.g.NVIM_TREE_SELECT_UI)
 set({"n", "x"}, "ma", vim.g.SIBLING_NEXT)
 set({"n", "x"}, "mx", vim.g.SIBLING_PREVIOUS)
-set({"n", "x"}, ".", require("nvim-tree.api").marks.toggle)
 set({"n", "x"}, "mc", require("nvim-tree.api").marks.clear)
 for i = 1, 9 do
     set({"n", "x"}, "g"..i, "<cmd>lua vim.g.NVIM_TREE_SELECT("..i..")<cr>")
@@ -106,6 +105,23 @@ end
 
 set({"n", "x"}, "mv", ":Gvdiffsplit!<cr>", {desc="Show conflict in vsplit"})
 set({"n", "x"}, "m/", ":let @/ = ''<cr>", {desc="Show conflict in vsplit"})
+
+
+-- windows
+set({"n", "x"}, "w", "", { noremap=true })
+set({"n", "x"}, "wh", "<c-w>h", { noremap=true })
+set({"n", "x"}, "wj", "<c-w>j", { noremap=true })
+set({"n", "x"}, "wk", "<c-w>k", { noremap=true })
+set({"n", "x"}, "wl", "<c-w>l", { noremap=true})
+set({"n", "x"}, "wf", "<cmd>w<cr>", { noremap=true, desc="Save file" })
+set({"n", "x"}, "wr", "<cmd>e<cr>", { noremap=true, desc="Reload from file" })
+set({"n", "x"}, "wR", "<cmd>e!<cr>", { noremap=true, desc="Forced reload from file" })
+set({"n", "x"}, "we", "<cmd>q<cr>", { noremap=true, desc="Close file" })
+set({"n", "x"}, "wt", "<cmd>q!<cr>", { noremap=true, desc="Forced close of file" })
+set({"n", "x"}, "wm", require("nvim-tree.api").marks.toggle)
+
+
+-- autocomplete
 
 function vim.g.CMP_SELECT(value)
     local cmp = require 'cmp'
@@ -166,9 +182,13 @@ set('n', '<leader>tl', vim.diagnostic.setloclist, { noremap=true, silent=true, d
 set('n', ']t', vim.diagnostic.goto_next, { noremap=true, silent=true, desc="diagnostics next"})
 set('n', '[t', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diagnostics previous"})
 
+-- jumping
+set({'n', 'x'}, ']q', ':cnext<cr>', { noremap=true })
+set({'n', 'x'}, '[q', ':cprevious<cr>', { noremap=true })
+
 -- git gutter
-set('n', ']h', '<Plug>(GitGutterNextHunk)', { noremap=true, desc="git next"})
-set('n', '[h', '<Plug>(GitGutterPrevHunk)', { noremap=true, desc="git prev"})
+set('n', ']g', '<Plug>(GitGutterNextHunk)', { noremap=true, desc="git next"})
+set('n', '[g', '<Plug>(GitGutterPrevHunk)', { noremap=true, desc="git prev"})
 
 -- editing
 
@@ -182,16 +202,13 @@ local search_word_backward_end = '<cmd>lua for i=1, math.max(vim.v.count, 1) do 
 set({"n", "x"}, "e", search_word_forward_end, { noremap = true })
 set({"n", "x"}, "E", search_word_forward_begin, { noremap = true })
 set("i", "<A-e>", "<esc>"..search_word_forward_end.."a", { noremap = true })
+set("i", "<A-E>", "<right><esc>"..search_word_forward_begin.."i", { noremap = true })
 
 set({"n", "x"}, "b", search_word_backward_begin, { noremap = true })
 set({"n", "x"}, "B", search_word_backward_end, { noremap = true })
 set("i", "<A-b>", "<right><esc>"..search_word_backward_begin.."i", { noremap = true })
+set("i", "<A-B>", "<esc>"..search_word_backward_end.."a", { noremap = true })
 
---set("i", "<A-w>", "<right><esc>wi")
---set("i", "<A-e>", "<esc>ea")
-set("i", "<A-E>", "<esc>Ea")
---set("i", "<A-b>", "<right><esc>bi")
-set("i", "<A-B>", "<right><esc>Bi")
 set("i", "<A-L>", "<esc>Ea")
 set("i", "<A-H>", "<right><esc>Bi")
 
@@ -279,24 +296,17 @@ set({"i", "c", "o"}, "<>", "<lt>><Left>", { noremap=true })
 set({"i", "c", "o"}, "<C-V>", "<C-R>", { noremap=true })
 set({"i", "c", "o"}, "<C-V><C-V>", "<C-R>\"", { noremap=true })
 
-
-set({"n", "x"}, "w", "", { noremap=true })
-set({"n", "x"}, "wh", "<c-w>h", { noremap=true })
-set({"n", "x"}, "wj", "<c-w>j", { noremap=true })
-set({"n", "x"}, "wk", "<c-w>k", { noremap=true })
-set({"n", "x"}, "wl", "<c-w>l", { noremap=true})
-set({"n", "x"}, "wf", "<cmd>w<cr>", { noremap=true, desc="Save file" })
-set({"n", "x"}, "wr", "<cmd>e<cr>", { noremap=true, desc="Reload from file" })
-set({"n", "x"}, "wR", "<cmd>e!<cr>", { noremap=true, desc="Forced reload from file" })
-set({"n", "x"}, "we", "<cmd>q<cr>", { noremap=true, desc="Close file" })
-set({"n", "x"}, "wt", "<cmd>q!<cr>", { noremap=true, desc="Forced close of file" })
-
 vim.cmd([[
 fun! SetKeymaps()
     nmap <nowait><buffer> > <leader>~pn
     xmap <nowait><buffer> > <leader>~pn
     nmap <nowait><buffer> < <leader>~pp
     xmap <nowait><buffer> < <leader>~pp
+
+    nmap <nowait><buffer> } <leader>~fn
+    xmap <nowait><buffer> } <leader>~fn
+    nmap <nowait><buffer> { <leader>~fp
+    xmap <nowait><buffer> { <leader>~fp
 
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround

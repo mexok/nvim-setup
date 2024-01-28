@@ -72,7 +72,6 @@ require("lazy").setup {
     'tpope/vim-surround',
     'tpope/vim-commentary',
     'tpope/vim-abolish',
-    'tpope/vim-unimpaired',
     'AndrewRadev/splitjoin.vim',
     'karb94/neoscroll.nvim',
 
@@ -110,23 +109,10 @@ require('motions').setup()
 
 require('voice-command').setup()
 
-local function my_on_attach(bufnr)
-    local api = require "nvim-tree.api"
-    local function opts(desc)
-      return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-    end
-
-    -- default mappings
-    api.config.mappings.default_on_attach(bufnr)
-
-    vim.keymap.set('n', '.', require("nvim-tree.api").marks.toggle, opts('Toggle Bookmark'))
-end
-
 require("nvim-tree").setup {
     update_focused_file = {
         enable = true,
-    },
-    on_attach = my_on_attach,
+    }
 }
 
 require("telescope").setup {
