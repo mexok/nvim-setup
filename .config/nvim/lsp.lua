@@ -84,7 +84,15 @@ for _, lsp in ipairs(servers) do
     }
 end
 
-lspconfig.gopls.setup {}
+lspconfig.gopls.setup {
+    settings = {
+        gopls = {
+            analyses = {
+                composites = false
+            }
+        }
+    }
+}
 lspconfig.lua_ls.setup {
     settings = {
         Lua = {
