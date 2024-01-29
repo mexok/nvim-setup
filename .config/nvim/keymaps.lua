@@ -17,15 +17,13 @@ set("n", "<leader>a", "gg0vG$", { noremap = true, desc = "select all"})
 set("n", "<leader>tv", "<cmd>cex system('PYTHONPATH=src vulture src/*') | copen<cr>", { desc = "use python vulture for src dir" })
 set("n", "<leader>H", ":h ", { noremap = true, desc = "help" })
 
+
+-- nvim tree
+
 local nvim_tree_open_file = require "nvim-tree.actions.node.open-file"
-local nvim_tree_utils = require "nvim-tree.utils"
-function vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
-    if node then
-        if not node.nodes and not nvim_tree_utils.get_win_buf_from_path(node.absolute_path) then
-            nvim_tree_open_file.fn("edit", node.absolute_path)
-        else
-            nvim_tree_utils.focus_file(node.absolute_path)
-        end
+function vim.g.NVIM_TREE_OPEN_OR_FOCUS(mark)
+    if mark and not mark.nodes then
+        nvim_tree_open_file.fn("edit_in_place", mark.absolute_path)
     end
 end
 
@@ -64,8 +62,8 @@ end
 function vim.g.NVIM_TREE_SELECT(i)
     local paths = vim.g.NVIM_TREE_GET_ORDERED_REL_PATHS()
     local path = vim.g.NVIM_TREE_REL_PATH_TO_ABS_PATH(paths[i])
-    local node = require("nvim-tree.marks").get_mark { absolute_path = path }
-    vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
+    local mark = require("nvim-tree.marks").get_mark { absolute_path = path }
+    vim.g.NVIM_TREE_OPEN_OR_FOCUS(mark)
 end
 
 function vim.g.NVIM_TREE_SELECT_UI()
@@ -75,10 +73,20 @@ function vim.g.NVIM_TREE_SELECT_UI()
     }, function(path)
         if path ~= nil then
             path = vim.g.NVIM_TREE_REL_PATH_TO_ABS_PATH(path)
-            local node = require("nvim-tree.marks").get_mark { absolute_path = path }
-            vim.g.NVIM_TREE_OPEN_OR_FOCUS(node)
+            local mark = require("nvim-tree.marks").get_mark { absolute_path = path }
+            vim.g.NVIM_TREE_OPEN_OR_FOCUS(mark)
         end
     end)
+end
+
+function vim.g.OPENED_NEXT()
+    require('nvim-tree.api').node.navigate.opened.next()
+    require('nvim-tree.api').node.open.edit()
+end
+
+function vim.g.OPENED_PREVIOUS()
+    require('nvim-tree.api').node.navigate.opened.prev()
+    require('nvim-tree.api').node.open.edit()
 end
 
 function vim.g.SIBLING_NEXT()
@@ -91,16 +99,16 @@ function vim.g.SIBLING_PREVIOUS()
     require('nvim-tree.api').node.open.edit()
 end
 
+
 set({"n", "x"}, "mt", "<cmd>set wrap!<cr>", { noremap=true, desc = 'Toggle wrap' })
 set({"n", "x"}, "mw", require('nvim-tree.api').marks.navigate.prev)
 set({"n", "x"}, "me", require('nvim-tree.api').marks.navigate.next)
-set({"n", "x"}, "mc", require("nvim-tree.api").marks.clear)
+set({"n", "x"}, "ma", vim.g.OPENED_NEXT)
+set({"n", "x"}, "mx", vim.g.OPENED_PREVIOUS)
 set({"n", "x"}, "ms", vim.g.NVIM_TREE_SELECT_UI)
-set({"n", "x"}, "ma", vim.g.SIBLING_NEXT)
-set({"n", "x"}, "mx", vim.g.SIBLING_PREVIOUS)
 set({"n", "x"}, "mc", require("nvim-tree.api").marks.clear)
 for i = 1, 9 do
-    set({"n", "x"}, "g"..i, "<cmd>lua vim.g.NVIM_TREE_SELECT("..i..")<cr>")
+    set({"n", "x"}, "m"..i, "<cmd>lua vim.g.NVIM_TREE_SELECT("..i..")<cr>")
 end
 
 set({"n", "x"}, "mv", ":Gvdiffsplit!<cr>", {desc="Show conflict in vsplit"})
@@ -108,17 +116,46 @@ set({"n", "x"}, "m/", ":let @/ = ''<cr>", {desc="Show conflict in vsplit"})
 
 
 -- windows
+
 set({"n", "x"}, "w", "", { noremap=true })
 set({"n", "x"}, "wh", "<c-w>h", { noremap=true })
 set({"n", "x"}, "wj", "<c-w>j", { noremap=true })
 set({"n", "x"}, "wk", "<c-w>k", { noremap=true })
-set({"n", "x"}, "wl", "<c-w>l", { noremap=true})
+set({"n", "x"}, "wl", "<c-w>l", { noremap=true })
 set({"n", "x"}, "wf", "<cmd>w<cr>", { noremap=true, desc="Save file" })
 set({"n", "x"}, "wr", "<cmd>e<cr>", { noremap=true, desc="Reload from file" })
 set({"n", "x"}, "wR", "<cmd>e!<cr>", { noremap=true, desc="Forced reload from file" })
 set({"n", "x"}, "we", "<cmd>q<cr>", { noremap=true, desc="Close file" })
 set({"n", "x"}, "wt", "<cmd>q!<cr>", { noremap=true, desc="Forced close of file" })
 set({"n", "x"}, "wm", require("nvim-tree.api").marks.toggle)
+set({"n", "x"}, "wn", vim.g.SIBLING_NEXT)
+set({"n", "x"}, "wp", vim.g.SIBLING_PREVIOUS)
+
+
+--  macro recording
+
+local function toggle_recording()
+    local r = vim.fn.reg_recording()
+    if r == '' then
+        vim.api.nvim_feedkeys("qq", 'm', false)
+    else
+        vim.api.nvim_feedkeys("q", 'm', false)
+    end
+end
+
+local function play_recorded()
+    local r = vim.fn.reg_recording()
+    if r ~= '' then
+        vim.api.nvim_feedkeys("q", 'x', true)
+        local reg = vim.fn.getreg("q")
+        reg = string.sub(reg, 1, -2)
+        vim.fn.setreg("q", reg)
+    end
+    vim.api.nvim_feedkeys("@q", 'm', true)
+end
+
+set({"n", "x"}, "<cr>", toggle_recording, { noremap=true })
+set({"n", "x"}, ".", play_recorded, { noremap=true })
 
 
 -- autocomplete
@@ -179,8 +216,8 @@ set('n', 'gr', vim.lsp.buf.references, { noremap=true, silent=true, desc="show r
 set('n', '<leader>ö', function() vim.lsp.buf.format { async = false } end, { noremap=true, silent=true, desc="format file"})
 set('n', '<leader>th', vim.diagnostic.open_float, { noremap=true, silent=true, desc="show diagnostics"})
 set('n', '<leader>tl', vim.diagnostic.setloclist, { noremap=true, silent=true, desc="diagnostics quicklist"})
-set('n', ']t', vim.diagnostic.goto_next, { noremap=true, silent=true, desc="diagnostics next"})
-set('n', '[t', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diagnostics previous"})
+set('n', ']d', vim.diagnostic.goto_next, { noremap=true, silent=true, desc="diagnostics next"})
+set('n', '[d', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diagnostics previous"})
 
 -- jumping
 set({'n', 'x'}, ']q', ':cnext<cr>', { noremap=true })

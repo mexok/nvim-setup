@@ -109,10 +109,39 @@ require('motions').setup()
 
 require('voice-command').setup()
 
+
+local function on_attach_nvim_tree(bufnr)
+    local api = require "nvim-tree.api"
+    local function opts(desc)
+        return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+    api.config.mappings.default_on_attach(bufnr)
+    vim.keymap.set({'n', 'x'}, ']g', require('nvim-tree.api').node.navigate.git.next, opts('Git next'))
+    vim.keymap.set({'n', 'x'}, '[g', require('nvim-tree.api').node.navigate.git.prev, opts('Git previous'))
+    vim.keymap.set({'n', 'x'}, ']d', require('nvim-tree.api').node.navigate.diagnostics.next, opts('Diagnostics next'))
+    vim.keymap.set({'n', 'x'}, '[d', require('nvim-tree.api').node.navigate.diagnostics.prev, opts('Diagnostics previous'))
+    vim.keymap.set({'n', 'x'}, ']o', require('nvim-tree.api').node.navigate.opened.next, opts('Opened next'))
+    vim.keymap.set({'n', 'x'}, '[o', require('nvim-tree.api').node.navigate.opened.prev, opts('Opened previous'))
+    vim.keymap.set({'n', 'x'}, ']m', require('nvim-tree.api').marks.navigate.next, opts('Marks next'))
+    vim.keymap.set({'n', 'x'}, '[m', require('nvim-tree.api').marks.navigate.prev, opts('Marks previous'))
+end
+
+
 require("nvim-tree").setup {
+    renderer = {
+        highlight_diagnostics = true,
+        highlight_git = true,
+        highlight_opened_files = "all",
+    },
     update_focused_file = {
         enable = true,
-    }
+    },
+    diagnostics = {
+        enable = true,
+        show_on_dirs = true
+    },
+    on_attach = on_attach_nvim_tree
 }
 
 require("telescope").setup {
