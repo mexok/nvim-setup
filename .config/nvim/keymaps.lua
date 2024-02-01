@@ -23,24 +23,25 @@ set("n", "<leader>H", ":h ", { noremap = true, desc = "help" })
 local function toggle_recording()
     local r = vim.fn.reg_recording()
     if r == '' then
-        vim.api.nvim_feedkeys("qq", 'm', false)
+        vim.api.nvim_feedkeys("qq", 'nx', false)
     else
-        vim.api.nvim_feedkeys("q", 'm', false)
+        vim.api.nvim_feedkeys("q", 'nx', false)
     end
 end
 
 local function play_recorded()
     local r = vim.fn.reg_recording()
     if r ~= '' then
-        vim.api.nvim_feedkeys("q", 'x', true)
+        vim.api.nvim_feedkeys("q", 'nx', true)
         local reg = vim.fn.getreg("q")
         reg = string.sub(reg, 1, -2)
         vim.fn.setreg("q", reg)
     end
-    vim.api.nvim_feedkeys("@q", 'm', true)
+    vim.api.nvim_feedkeys("@q", 'nx', true)
 end
 
-set({"n", "x"}, "<cr>", toggle_recording, { noremap=true })
+set({"n", "x"}, "q", toggle_recording, { noremap=true })
+set({"n", "x"}, "<c-q>", "q", { noremap=true })
 set({"n", "x"}, ".", play_recorded, { noremap=true })
 
 
