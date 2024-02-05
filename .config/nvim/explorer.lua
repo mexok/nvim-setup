@@ -40,7 +40,7 @@ require("nvim-tree").setup {
 local nvim_tree_open_file = require "nvim-tree.actions.node.open-file"
 function vim.g.NVIM_TREE_OPEN_OR_FOCUS(mark)
     if mark and not mark.nodes then
-        nvim_tree_open_file.fn("edit_in_place", mark.absolute_path)
+        nvim_tree_open_file.fn("edit", mark.absolute_path)
     end
 end
 
