@@ -22,7 +22,6 @@ require("nvim-tree").setup {
     renderer = {
         highlight_diagnostics = true,
         highlight_git = true,
-        highlight_opened_files = "all",
     },
     update_focused_file = {
         enable = true,
