@@ -18,13 +18,14 @@ sudo wget -O /opt/nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/
 sudo tar -zxf /opt/nvim-linux64.tar.gz -C /opt
 sudo ln -s /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
 
-mkdir -p "$HOME/.config/nvim"
+mkdir -p "$HOME/.config/nvim/ftplugin"
 rm $HOME/.config/nvim/*.lua 2>/dev/null
 
 for f in ".config/nvim"/*.lua
 do
     ln -s "$PWD/$f" "$HOME/$f"
 done
+ln -s "$PWD/.config/nvim/ftplugin/java.lua" "$HOME/.config/nvim/ftplugin/java.lua"
 
 git config --global core.editor "nvim"
 

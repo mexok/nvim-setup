@@ -20,6 +20,7 @@ require("lazy").setup {
 
     -- Debugging
     'mfussenegger/nvim-dap',
+    'mfussenegger/nvim-jdtls',
 
     -- Code completion
     'neovim/nvim-lspconfig',

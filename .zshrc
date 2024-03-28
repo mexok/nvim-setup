@@ -11,4 +11,4 @@ bindkey '^[f' accept-line
 
 export LUA_PATH=~/.config/nvim/?.lua
 export GOPATH="$HOME/go"
-export PATH="$PATH:/opt/nvim-linux64/bin:$GOPATH/bin"
+export PATH="$PATH:/opt/nvim-linux64/bin:$GOPATH/bin:$HOME/.local/share/nvim/mason/bin"
