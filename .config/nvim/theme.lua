@@ -12,7 +12,7 @@ require('lualine').setup {
   winbar = {
     lualine_a = {'branch'},
     lualine_b = {'diagnostics'},
-    lualine_c = {'filename'},
+    lualine_c = {{'filename', path = 1}},
     lualine_x = {},
     lualine_y = {},
     lualine_z = {}
@@ -20,7 +20,7 @@ require('lualine').setup {
   inactive_winbar = {
     lualine_a = {'branch'},
     lualine_b = {'diagnostics'},
-    lualine_c = {'filename'},
+    lualine_c = {{'filename', path = 1}},
     lualine_x = {},
     lualine_y = {},
     lualine_z = {}

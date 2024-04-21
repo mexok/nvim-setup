@@ -126,6 +126,12 @@ dap.configurations.python = {
     }
 }
 
+dap.adapters.chrome = {
+    type = "executable",
+    command = "node",
+    args = {os.getenv("HOME") .. "/repos/vscode-chrome-debug/out/src/chromeDebug.js"}
+}
+
 dap.adapters.firefox = {
     type = 'executable';
     command = 'node';
@@ -133,20 +139,26 @@ dap.adapters.firefox = {
 }
 
 dap.configurations.typescript = {
+    -- {
+    --     type = 'firefox';
+    --     name = 'Debug 8080 webapp folder';
+    --     request = 'launch';
+    --     reAttach = true;
+    --     url = 'http://localhost:8080';
+    --     pathMappings = {
+    --         {
+    --             url = "webpack:///";
+    --             path = "${workspaceFolder}/webapp"
+    --         }
+    --     }
+    -- },
     {
-        type = 'firefox';
-        name = 'Debug 8080';
-        request = 'launch';
-        reAttach = true;
-        url = 'http://localhost:8080';
-        pathMappings = {
-            {
-                url = "webpack:///";
-                path = "${workspaceFolder}/webapp"
-            }
-        }
-
-    }
+        type = "chrome",
+        name = "Debug 4200",
+        request = "launch",
+        url = "http://localhost:4200",
+        webRoot = "${workspaceFolder}",
+    },
 }
 
 dap.configurations.vue = {
@@ -195,5 +207,15 @@ dap.configurations.go = {
         request = "launch",
         mode = "test",
         program = "./${relativeFileDirname}"
+    }
+}
+
+dap.configurations.java = {
+    {
+        type = 'java';
+        request = 'attach';
+        name = "Debug Attach - Port 38081";
+        hostName = "127.0.0.1";
+        port = 38081;
     }
 }

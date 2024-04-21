@@ -20,8 +20,12 @@ end
 
 require("nvim-tree").setup {
     renderer = {
-        highlight_diagnostics = true,
-        highlight_git = true,
+        highlight_diagnostics = "name",
+        highlight_git = "all",
+        icons = {
+          diagnostics_placement = "after",
+          bookmarks_placement = "signcolumn",
+        }
     },
     update_focused_file = {
         enable = true,

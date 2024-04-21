@@ -106,9 +106,9 @@ set('n', '<leader>tl', vim.diagnostic.setloclist, { noremap=true, silent=true, d
 set('n', ']d', vim.diagnostic.goto_next, { noremap=true, silent=true, desc="diagnostics next"})
 set('n', '[d', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diagnostics previous"})
 
--- jumping
-set({'n', 'x'}, ']q', ':cnext<cr>', { noremap=true })
-set({'n', 'x'}, '[q', ':cprevious<cr>', { noremap=true })
+-- java specific
+set('n', '<leader>jc', '<Cmd>lua require"jdtls".test_class()<CR>', { noremap=true })
+set('n', '<leader>jf', '<Cmd>lua require"jdtls".test_nearest_method()<CR>', { noremap=true })
 
 -- git gutter
 set('n', ']g', '<Plug>(GitGutterNextHunk)', { noremap=true, desc="git next"})
@@ -123,15 +123,17 @@ local search_word_forward_end = '<cmd>lua for i=1, math.max(vim.v.count, 1) do v
 local search_word_backward_begin = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("\\\\(^\\\\|\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)['..kwords..']", "be", vim.fn.line("w0")) end<cr>'
 local search_word_backward_end = '<cmd>lua for i=1, math.max(vim.v.count, 1) do vim.fn.search("['..kwords..']\\\\(\\\\n\\\\|\\\\s\\\\|[^'..kwords..']\\\\)", "b", vim.fn.line("w0")) end<cr>'
 
+set({"n", "x"}, "ge", "E", { noremap = true })
 set({"n", "x"}, "e", search_word_forward_end, { noremap = true })
-set({"n", "x"}, "E", search_word_backward_end, { noremap = true })
+set({"n", "x"}, "E", search_word_forward_begin, { noremap = true })
 set("i", "<A-e>", "<esc>"..search_word_forward_end.."a", { noremap = true })
-set("i", "<A-E>", "<esc>"..search_word_backward_end.."a", { noremap = true })
+set("i", "<A-E>", "<esc>"..search_word_forward_begin.."a", { noremap = true })
 
+set({"n", "x"}, "gb", "B", { noremap = true })
 set({"n", "x"}, "b", search_word_backward_begin, { noremap = true })
-set({"n", "x"}, "B", search_word_forward_begin, { noremap = true })
+set({"n", "x"}, "B", search_word_backward_end, { noremap = true })
 set("i", "<A-b>", "<right><esc>"..search_word_backward_begin.."i", { noremap = true })
-set("i", "<A-B>", "<right><esc>"..search_word_forward_begin.."i", { noremap = true })
+set("i", "<A-B>", "<right><esc>"..search_word_backward_end.."i", { noremap = true })
 
 set("i", "<A-L>", "<esc>Ea")
 set("i", "<A-H>", "<right><esc>Bi")
@@ -158,7 +160,6 @@ set("x", "H", "<gv", {noremap=true})
 
 set("i", "<C-l>", "<right>", {noremap=true})
 set("i", "<C-h>", "<left>", {noremap=true})
-set("i", "<C-e>", "<right><esc>ea", {noremap=true})
 
 set({"n", "v"}, "<C-k>", "K", {noremap=true})
 set("i", "<C-j>", "<right><esc>Ji", {noremap=true})
@@ -222,10 +223,16 @@ set({"i", "c", "o"}, "<C-V><C-V>", "<C-R>\"", { noremap=true })
 
 vim.cmd([[
 fun! SetKeymaps()
-    nmap <nowait><buffer> > <leader>~pn
-    xmap <nowait><buffer> > <leader>~pn
-    nmap <nowait><buffer> < <leader>~pp
-    xmap <nowait><buffer> < <leader>~pp
+
+    nnoremap <nowait><buffer> > :cnext<cr>
+    xnoremap <nowait><buffer> > :cnext<cr>
+    nnoremap <nowait><buffer> < :cprevious<cr>
+    xnoremap <nowait><buffer> < :cprevious<cr>
+
+    nmap <nowait><buffer> <leader>> <leader>~pn
+    xmap <nowait><buffer> <leader>> <leader>~pn
+    nmap <nowait><buffer> <leader>< <leader>~pp
+    xmap <nowait><buffer> <leader>< <leader>~pp
 
     nmap <nowait><buffer> } <leader>~fn
     xmap <nowait><buffer> } <leader>~fn

@@ -75,6 +75,7 @@ require("lazy").setup {
     'tpope/vim-abolish',
     'AndrewRadev/splitjoin.vim',
     'karb94/neoscroll.nvim',
+    'tpope/vim-sleuth',
 
     -- Git
     'tpope/vim-fugitive',
