@@ -30,7 +30,7 @@ require('lualine').setup {
     lualine_b = {},
     lualine_c = {'filename'},
     lualine_x = {'location'},
-    lualine_y = {'progress'},
+    lualine_y = {},
     lualine_z = {}
   },
   inactive_sections = {
@@ -38,7 +38,7 @@ require('lualine').setup {
     lualine_b = {},
     lualine_c = {'filename'},
     lualine_x = {'location'},
-    lualine_y = {'progress'},
+    lualine_y = {},
     lualine_z = {}
   }
 }

@@ -14,6 +14,7 @@ export GOPATH="$HOME/go"
 export PATH="$PATH:/opt/nvim-linux64/bin:$GOPATH/bin:$HOME/.local/share/nvim/mason/bin"
 
 alias dkl="docker container list -a"
+alias wdkl="watch docker container list -a"
 alias dksta="docker start"
 alias dksto="docker stop"
 alias dkrem="docker remove"
