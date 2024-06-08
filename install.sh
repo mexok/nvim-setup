@@ -5,8 +5,10 @@ sudo apt install -y wget
 
 # git + repo
 sudo apt install -y git
+sudo apt install -y git-flow
 git config --global user.name "mexok"
 git config --global user.email "konstantin@semerker.de"
+git config --global help.autocorrect prompt
 
 mkdir ~/repos
 cd ~/repos
@@ -45,6 +47,8 @@ ln -s ~/.tmux.conf "$HOME/.tmux.conf"
 sudo apt install -y ripgrep
 sudo apt install -y xsel
 sudo apt install -y rename
+sudo apt install -y thefuck
+sudo apt remove ghostscript
 
 # Nodejs
 sudo apt install -y ca-certificates curl gnupg

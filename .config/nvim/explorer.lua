@@ -132,7 +132,6 @@ for i = 1, 9 do
 end
 
 set({"n", "x"}, "mv", ":Gvdiffsplit!<cr>", {desc="Show conflict in vsplit"})
-set({"n", "x"}, "m/", ":let @/ = ''<cr>", {desc="Show conflict in vsplit"})
 
 
 -- windows
@@ -146,7 +145,9 @@ set({"n", "x"}, "wf", "<cmd>w<cr>", { noremap=true, desc="Save file" })
 set({"n", "x"}, "wr", "<cmd>e<cr>", { noremap=true, desc="Reload from file" })
 set({"n", "x"}, "wR", "<cmd>e!<cr>", { noremap=true, desc="Forced reload from file" })
 set({"n", "x"}, "we", "<cmd>q<cr>", { noremap=true, desc="Close file" })
+set({"n", "x"}, "wE", "<cmd>qa<cr>", { noremap=true, desc="Close file" })
 set({"n", "x"}, "wt", "<cmd>q!<cr>", { noremap=true, desc="Forced close of file" })
+set({"n", "x"}, "wi", ":let @/ = ''<cr>", {desc="Unhighlight search"})
 set({"n", "x"}, "wm", require("nvim-tree.api").marks.toggle)
 set({"n", "x"}, "wn", vim.g.SIBLING_NEXT)
 set({"n", "x"}, "wp", vim.g.SIBLING_PREVIOUS)

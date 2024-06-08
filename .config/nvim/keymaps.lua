@@ -64,15 +64,17 @@ set({"i", "s"}, "<C-s>", function()
     require('luasnip').jump(1)
 end, {silent = true})
 
+set({"n", "x"}, "<F6>", "<cmd>set relativenumber!<cr>", { desc = "Toggle relative number" })
+set({"n", "x"}, "<F12>", "<cmd>set wrap!<cr>", { desc = "Toggle line wrap" })
 
 -- debugging
 local reg_cmd = "<cmd>let $REG_A = @a<cr><cmd>let $REG_S = @s<cr><cmd>let $REG_D = @d<cr><cmd>let $REG_F = @f<cr>"
 set("n", "<F3>", reg_cmd .. "<cmd>lua require'dap'.run_last()<cr>", { silent = true, desc = "run last" })
 set("n", "<F4>", reg_cmd .. "<cmd>lua require'dap'.terminate()<cr>", { silent = true, desc = "terminate" })
 set("n", "<F5>", reg_cmd .. "<cmd>lua require'dap'.continue()<cr>", { silent = true, desc = "continue" })
-set("n", "<F6>", "<cmd>lua require'dap'.step_over()<cr>", { silent = true, desc = "step over"})
-set("n", "<F7>", "<cmd>lua require'dap'.step_into()<cr>", { silent = true, desc = "step into"})
-set("n", "<F8>", "<cmd>lua require'dap'.step_out()<cr>", { silent = true, desc = "step out" })
+set("n", "<F7>", "<cmd>lua require'dap'.step_out()<cr>", { silent = true, desc = "step out" })
+set("n", "<F8>", "<cmd>lua require'dap'.step_into()<cr>", { silent = true, desc = "step into"})
+set("n", "<F9>", "<cmd>lua require'dap'.step_over()<cr>", { silent = true, desc = "step over"})
 set("n", "<leader>i", "<cmd>lua require'dap'.down()<cr>", { silent = true, desc = "debugger down" })
 set("n", "<leader>o", "<cmd>lua require'dap'.up()<cr>", { silent = true, desc = "debugger up" })
 set("n", "<leader>m", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", { silent = true, desc = "toggle breakpoint"})
@@ -107,8 +109,8 @@ set('n', ']d', vim.diagnostic.goto_next, { noremap=true, silent=true, desc="diag
 set('n', '[d', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diagnostics previous"})
 
 -- java specific
-set('n', '<leader>jc', '<Cmd>lua require"jdtls".test_class()<CR>', { noremap=true })
-set('n', '<leader>jf', '<Cmd>lua require"jdtls".test_nearest_method()<CR>', { noremap=true })
+set('n', '<leader>jf', '<Cmd>lua require"jdtls".test_class()<CR>', { noremap=true })
+set('n', '<leader>js', '<Cmd>lua require"jdtls".test_nearest_method()<CR>', { noremap=true })
 
 -- git gutter
 set('n', ']g', '<Plug>(GitGutterNextHunk)', { noremap=true, desc="git next"})
