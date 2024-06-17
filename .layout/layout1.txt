@@ -35,7 +35,7 @@
 [del]>[esc]
 
 * pedal
-[pedl]>[lctr]
+[pedl]>[fn2s]
 
 * macros
 {lshf}{6}>{s9}{-lshf}{6}{6}
@@ -77,7 +77,7 @@
 [cbrk]>[apos]
 
 * pedal
-[pedl]>[lctr]
+[pedl]>[fn2s]
 
 <function1>
 
@@ -105,7 +105,7 @@
 [del]>[esc]
 
 * pedal
-[pedl]>[lctr]
+[pedl]>[fn2s]
 
 <function2>
 
@@ -166,7 +166,7 @@
 [del]>[esc]
 
 * pedal
-[pedl]>[lctr]
+[pedl]>[defs]
 
 * Custom macros for german keys on us international layout
 {u}>{s9}{-lshf}{apos}{+lshf}{u}
