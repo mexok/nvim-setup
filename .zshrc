@@ -17,6 +17,7 @@ unalias -a
 alias cl="clear"
 alias e="exit"
 alias v="nvim"
+alias m="less"
 alias vgd="nvim \`git status --porcelain | awk {'print \$2'}\`"
 alias vgdm="nvim \`git ls-files -m | awk {'print \$1'}\`"
 alias vz="nvim ~/.zshrc"
@@ -37,6 +38,7 @@ alias dks="docker ps -q | xargs -r docker stop && docker ps -aq | xargs -r docke
 alias dkk="docker ps -q | xargs -r docker kill && docker ps -aq | xargs -r docker rm"
 alias tx="tmux"
 alias txa="tmux attach"
+alias g="git"
 alias gs="git status"
 alias ga="git add"
 alias gal="git add ."
@@ -44,6 +46,7 @@ alias gb="git branch"
 alias gba="git branch -ar"
 alias gbd="git branch -d"
 alias gbD="git branch -D"
+alias gbm="git branch -m"
 alias gd="git diff"
 alias gdc="git diff --cached"
 alias go="git checkout"
@@ -57,5 +60,8 @@ alias gl="git log"
 alias glg="git log --graph"
 alias glog="git log --oneline --graph"
 alias gr="git restore"
+alias glist="find . -maxdepth 3 -name '.git' -type d -exec sh -c 'cd {} && cd .. && "\
+"REPO_NAME=\$(basename \$PWD) && BRANCH=\$(git rev-parse --abbrev-ref HEAD) && "\
+"( [ -z \"\$(git status --porcelain)\" ] && echo \"C \$REPO_NAME [\$BRANCH]\" || echo \"M \$REPO_NAME [\$BRANCH]\" )' \\;"
 
 eval $(thefuck --alias y)

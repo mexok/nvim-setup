@@ -224,5 +224,14 @@ dap.configurations.java = {
         name = "Debug Attach - Port 8084";
         hostName = "127.0.0.1";
         port = 8084;
+    },
+    {
+        type = 'java';
+        request = 'attach';
+        name = "Debug Attach - Port via UI";
+        hostName = "127.0.0.1";
+        port = function ()
+            return tonumber(vim.fn.input("Port: "))
+        end;
     }
 }
