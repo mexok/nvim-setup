@@ -60,6 +60,11 @@ require("lazy").setup {
             'nvim-telescope/telescope-live-grep-args.nvim',
         }
     },
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" }
+    },
 
     -- File explorer
     'nvim-tree/nvim-web-devicons',
@@ -110,6 +115,9 @@ require('reglist').setup {
 require('motions').setup()
 
 require('voice-command').setup()
+
+local harpoon = require("harpoon")
+harpoon:setup()
 
 require("telescope").setup {
     defaults = {

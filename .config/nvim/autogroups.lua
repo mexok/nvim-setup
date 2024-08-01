@@ -10,10 +10,25 @@ fun! RefreshGitGutter()
     execute ':GitGutterEnable'
 endfun
 
+fun! RefreshHarpoon()
+    lua vim.g.HARPOON_REFRESH()
+endfun
+
 augroup trim_whitespaces
     autocmd!
     autocmd BufWritePre * :call TrimWhitespaces()
+augroup end
+
+augroup refresh_git_gutter
+    autocmd!
     autocmd BufWritePost * :call RefreshGitGutter()
+augroup end
+
+augroup refresh_harpoon
+    autocmd!
+    autocmd BufWritePost * :call RefreshHarpoon()
+    autocmd BufLeave * :call RefreshHarpoon()
+    autocmd BufUnload * :call RefreshHarpoon()
 augroup end
 
 augroup gofmt
@@ -43,4 +58,4 @@ function _G.fix_perl_iskeyword()
     vim.opt.iskeyword:remove({":"})
 end
 
-vim.cmd('autocmd BufEnter * lua fix_perl_iskeyword()')
+vim.cmd('autocmd! BufEnter * lua fix_perl_iskeyword()')
