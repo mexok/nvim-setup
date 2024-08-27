@@ -122,13 +122,15 @@ harpoon:setup()
 require("telescope").setup {
     defaults = {
         layout_strategy = "horizontal",
-        hidden = true,
         vimgrep_arguments = {
             "rg",
             "--color=never",
             "--no-heading",
+            "--hidden",
             "--with-filename",
             "--line-number",
+            "--iglob",
+            "!.git",
             "--column",
             "--smart-case",
         }
@@ -151,6 +153,7 @@ require("telescope").setup {
         },
     }
 }
+require("telescope").load_extension("live_grep_args")
 
 require("mason").setup()
 require("mason-lspconfig").setup {

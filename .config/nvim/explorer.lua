@@ -17,15 +17,33 @@ local function on_attach_nvim_tree(bufnr)
     vim.keymap.set({'n', 'x'}, '[m', require('nvim-tree.api').marks.navigate.prev, opts('Marks previous'))
 end
 
-
 require("nvim-tree").setup {
+    view = {
+        centralize_selection = false,
+        number = true,
+        relativenumber = true,
+        float = {
+            enable = true,
+            open_win_config = function ()
+                return {
+                    relative = "editor",
+                    border = "rounded",
+                    row = 1,
+                    col = 1,
+                    height = vim.opt.lines:get()-5,
+                    width = 9999,
+                }
+            end
+        },
+        width = 9999,
+    },
     renderer = {
         highlight_diagnostics = "name",
         highlight_git = "all",
         icons = {
-          diagnostics_placement = "after",
-          bookmarks_placement = "signcolumn",
-        }
+            diagnostics_placement = "after",
+            bookmarks_placement = "signcolumn",
+        },
     },
     update_focused_file = {
         enable = true,
@@ -37,70 +55,7 @@ require("nvim-tree").setup {
     on_attach = on_attach_nvim_tree
 }
 
-
 -- nvim tree
-
-local nvim_tree_open_file = require "nvim-tree.actions.node.open-file"
-function vim.g.NVIM_TREE_OPEN_OR_FOCUS(mark)
-    if mark and not mark.nodes then
-        nvim_tree_open_file.fn("edit", mark.absolute_path)
-    end
-end
-
-function vim.g.NVIM_TREE_GET_ORDERED_REL_PATHS()
-    local paths = vim.tbl_map(function(n)
-        local cwd = vim.fn.getcwd()
-        local path = n.absolute_path
-        if string.find(path, cwd, nil, true) ~= nil then
-            path = string.sub(path, string.len(cwd)+2)
-        end
-        return path
-    end, require("nvim-tree.marks").get_marks())
-
-    table.sort(paths, function (a, b)
-        -- Files in subdictionaries should be displayed before files.
-        -- Also, names with a '-' and similiar should not be ordered
-        -- before folders ('/').
-        -- Thats why we modify the paths a bit to have a ' /1' before
-        -- subdictionaries and a ' /2' before files
-        local slash_cnt
-        a, slash_cnt = string.gsub("/"..a, "/", " /2")
-        a = string.gsub(a, "/2", "/1", slash_cnt - 1)
-        b, slash_cnt = string.gsub("/"..b, "/", " /2")
-        b = string.gsub(b, "/2", "/1", slash_cnt - 1)
-        return string.lower(a) < string.lower(b)
-    end)
-    return paths
-end
-
-function vim.g.NVIM_TREE_REL_PATH_TO_ABS_PATH(path)
-    local cwd = vim.fn.getcwd()
-    if string.find(path, cwd, nil, true) == nil then
-        path = cwd .. '/' .. path
-    end
-    return path
-end
-
-function vim.g.NVIM_TREE_SELECT(i)
-    local paths = vim.g.NVIM_TREE_GET_ORDERED_REL_PATHS()
-    local path = vim.g.NVIM_TREE_REL_PATH_TO_ABS_PATH(paths[i])
-    local mark = require("nvim-tree.marks").get_mark { absolute_path = path }
-    vim.g.NVIM_TREE_OPEN_OR_FOCUS(mark)
-end
-
-function vim.g.NVIM_TREE_SELECT_UI()
-    local paths = vim.g.NVIM_TREE_GET_ORDERED_REL_PATHS()
-    vim.ui.select(paths, {
-        prompt = "Select mark",
-    }, function(path)
-        if path ~= nil then
-            path = vim.g.NVIM_TREE_REL_PATH_TO_ABS_PATH(path)
-            local mark = require("nvim-tree.marks").get_mark { absolute_path = path }
-            vim.g.NVIM_TREE_OPEN_OR_FOCUS(mark)
-        end
-    end)
-end
-
 function vim.g.OPENED_NEXT()
     require('nvim-tree.api').node.navigate.opened.next()
     require('nvim-tree.api').node.open.edit()
@@ -121,7 +76,7 @@ function vim.g.SIBLING_PREVIOUS()
     require('nvim-tree.api').node.open.edit()
 end
 
-
+-- harpoon
 local harpoon = require("harpoon")
 
 function vim.g.HARPOON_GLOB_MARKS()
@@ -133,7 +88,7 @@ function vim.g.HARPOON_GLOB_MARKS()
     end
 end
 
-function vim.g.HARPOON_SELECT_MARKS()
+function vim.g.HARPOON_SELECT_MARK()
     local paths = {}
     for i = 1, harpoon:list():length() do
         table.insert(paths, harpoon:list():get(i).value)
@@ -152,6 +107,27 @@ function vim.g.HARPOON_SELECT_MARKS()
     end)
 end
 
+function vim.g.HARPOON_DELETE_MARK()
+    local paths = {}
+    for i = 1, harpoon:list():length() do
+        table.insert(paths, harpoon:list():get(i).value)
+    end
+    vim.ui.select(paths, {
+        prompt = "Delete mark",
+    }, function(path)
+        local len = harpoon:list():length()
+        for i = 1, len do
+            if path == harpoon:list():get(i).value then
+                harpoon:list().items[i] = harpoon:list().items[len]
+                harpoon:list().items[len] = nil
+                harpoon:list()._length = len - 1
+                vim.g.HARPOON_SORT()
+                return
+            end
+        end
+    end)
+end
+
 function vim.g.HARPOON_SELECT(i)
     harpoon:list():select(i);
     harpoon:list()._index = i;
@@ -163,14 +139,26 @@ function vim.g.HARPOON_SORT()
         table.insert(nodes, harpoon:list():get(i))
     end
 
+    vim.g.SORT_MARKS(nodes)
+
+    for i = 1, harpoon:list():length() do
+        harpoon:list().items[i] = nodes[i]
+    end
+end
+
+function vim.g.SORT_MARKS(nodes)
     table.sort(nodes, function (a, b)
         -- Files in subdictionaries should be displayed before files.
         -- Also, names with a '-' and similiar should not be ordered
         -- before folders ('/').
         -- Thats why we modify the paths a bit to have a ' /1' before
         -- subdictionaries and a ' /2' before files
-        a = a.value
-        b = b.value
+        if type(a) == "table" then
+            a = a.value
+        end
+        if type(b) == "table" then
+            b = b.value
+        end
         local slash_cnt
         a, slash_cnt = string.gsub("/"..a, "/", " /2")
         a = string.gsub(a, "/2", "/1", slash_cnt - 1)
@@ -178,9 +166,38 @@ function vim.g.HARPOON_SORT()
         b = string.gsub(b, "/2", "/1", slash_cnt - 1)
         return string.lower(a) < string.lower(b)
     end)
+end
 
-    for i = 1, harpoon:list():length() do
-        harpoon:list().items[i] = nodes[i]
+function vim.g.HARPOON_ADD()
+    local len = harpoon:list():length()
+    harpoon:list():add()
+    if harpoon:list():length() ~= len then
+        print("Mark added")
+        vim.g.HARPOON_SORT()
+    else
+        print("File already added")
+    end
+end
+
+function vim.g.HARPOON_REMOVE()
+    local len = harpoon:list():length()
+    harpoon:list():remove()
+    local removed = 0
+    for i = 1, len do
+        if harpoon:list().items[i] == nil then
+            harpoon:list().items[i] = harpoon:list().items[len]
+            harpoon:list().items[len] = nil
+            harpoon:list()._length = len - 1
+            removed = 1
+            break
+        end
+    end
+
+    if removed == 1 then
+        print("Mark removed")
+        vim.g.HARPOON_SORT()
+    else
+        print("File already removed")
     end
 end
 
@@ -199,6 +216,9 @@ function vim.g.HARPOON_TOGGLE()
 
     if harpoon:list():length() == len then
         harpoon:list():add()
+        print("Mark added")
+    else
+        print("Mark removed")
     end
 
     vim.g.HARPOON_SORT()
@@ -219,7 +239,7 @@ function vim.g.HARPOON_REFRESH()
     harpoon:sync()
 end
 
-function vim.g.HARPOON_GIT_DIFF_MARKS()
+function vim.g.HARPOON_GIT_DIFF_POPULATE_MARKS()
     local handle = io.popen("git status --porcelain | awk {'print $2'}")
     if handle == nil then
         print("Error populating marks from git diff")
@@ -243,41 +263,99 @@ function vim.g.HARPOON_GIT_DIFF_MARKS()
     print("Successfully populated marks from git diff")
 end
 
-vim.keymap.set("n", "wm", vim.g.HARPOON_TOGGLE)
+function vim.g.GIT_DIFF_SHOW_MARKS()
+    local handle = io.popen("git status --porcelain | awk {'print $2'}")
+    if handle == nil then
+        print("Error populating marks from git diff")
+        return
+    end
+
+    local result = handle:read("*a")
+    handle:close()
+
+    local paths = {}
+
+    for name in string.gmatch(result, "[^\n]+") do
+        table.insert(paths, name)
+    end
+
+    vim.g.SORT_MARKS(paths)
+
+    vim.ui.select(paths, {
+        prompt = "Select file",
+    }, function(path)
+        if path ~= nil then
+            vim.cmd.edit(path)
+        end
+    end)
+end
+
+function vim.g.GIT_DIFF_SHOW_MARKS_SIMPLIFIED()
+    local handle = io.popen("git status --porcelain | awk {'print $2'}")
+    if handle == nil then
+        print("Error populating marks from git diff")
+        return
+    end
+
+    local result = handle:read("*a")
+    handle:close()
+
+    local paths = {}
+    local simplified_paths = {}
+
+    for name in string.gmatch(result, "[^\n]+") do
+        table.insert(paths, name)
+        local simplified_name = string.gsub(name, ".*/", "")
+
+        if simplified_paths[simplified_name] == nil then
+            simplified_paths[simplified_name] = {value = simplified_name, paths = {}}
+        end
+        table.insert(simplified_paths[simplified_name].paths, name)
+    end
+
+    local ui_selection = {}
+    for key, _ in pairs(simplified_paths) do
+        table.insert(ui_selection, key)
+    end
+    vim.g.SORT_MARKS(ui_selection)
+
+    vim.ui.select(ui_selection, {
+        prompt = "Select file",
+    }, function(selected)
+        if selected ~= nil then
+            if #simplified_paths[selected].paths == 1 then
+                vim.cmd.edit(simplified_paths[selected].paths[1])
+            else
+                print("\n")
+                vim.g.SORT_MARKS(simplified_paths[selected].paths)
+                vim.ui.select(simplified_paths[selected].paths, {
+                    prompt = "Specify file",
+                }, function(specified)
+                    if specified ~= nil then
+                        vim.cmd.edit(specified)
+                    end
+                end)
+            end
+        end
+    end)
+end
+
 vim.keymap.set("n", "mg", "<cmd>lua vim.g.HARPOON_GLOB_MARKS()<cr>", {noremap = true})
-vim.keymap.set("n", "ms", "<cmd>lua vim.g.HARPOON_SELECT_MARKS()<cr>", {noremap = true})
+vim.keymap.set("n", "ms", "<cmd>lua vim.g.HARPOON_SELECT_MARK()<cr>", {noremap = true})
+vim.keymap.set("n", "md", "<cmd>lua vim.g.HARPOON_DELETE_MARK()<cr>", {noremap = true})
 
 
 for i = 1, 10 do
     vim.keymap.set("n", "m"..i%10, "<cmd>lua vim.g.HARPOON_SELECT("..i..")<cr>")
 end
 
--- vim.keymap.set("n", "m1", function() harpoon:list():select(1); harpoon:list()._index = 1 end)
--- vim.keymap.set("n", "m2", function() harpoon:list():select(2) end)
--- vim.keymap.set("n", "m3", function() harpoon:list():select(3) end)
--- vim.keymap.set("n", "m4", function() harpoon:list():select(4) end)
--- vim.keymap.set("n", "m5", function() harpoon:list():select(5) end)
--- vim.keymap.set("n", "m6", function() harpoon:list():select(6) end)
--- vim.keymap.set("n", "m7", function() harpoon:list():select(7) end)
--- vim.keymap.set("n", "m8", function() harpoon:list():select(8) end)
--- vim.keymap.set("n", "m9", function() harpoon:list():select(9) end)
--- vim.keymap.set("n", "m0", function() harpoon:list():select(10) end)
-
-vim.keymap.set("n", "mlgd", "<cmd>lua vim.g.HARPOON_GIT_DIFF_MARKS()<cr>")
+vim.keymap.set("n", "mlD", "<cmd>lua vim.g.HARPOON_GIT_DIFF_POPULATE_MARKS()<cr>")
+vim.keymap.set("n", "mld", "<cmd>lua vim.g.GIT_DIFF_SHOW_MARKS()<cr>")
+vim.keymap.set("n", "mls", "<cmd>lua vim.g.GIT_DIFF_SHOW_MARKS_SIMPLIFIED()<cr>")
 vim.keymap.set("n", "mw", function() harpoon:list():prev() end)
 vim.keymap.set("n", "me", function() harpoon:list():next() end)
 vim.keymap.set("n", "mc", function() harpoon:list():clear() end)
 
--- set({"n", "x"}, "mt", "<cmd>set wrap!<cr>", { noremap=true, desc = 'Toggle wrap' })
--- set({"n", "x"}, "mw", require('nvim-tree.api').marks.navigate.prev)
--- set({"n", "x"}, "me", require('nvim-tree.api').marks.navigate.next)
--- set({"n", "x"}, "ma", vim.g.OPENED_NEXT)
--- set({"n", "x"}, "mx", vim.g.OPENED_PREVIOUS)
--- set({"n", "x"}, "ms", vim.g.NVIM_TREE_SELECT_UI)
--- set({"n", "x"}, "mc", require("nvim-tree.api").marks.clear)
--- for i = 1, 9 do
---     set({"n", "x"}, "m"..i, "<cmd>lua vim.g.NVIM_TREE_SELECT("..i..")<cr>")
--- end
 
 set({"n", "x"}, "mv", ":Gvdiffsplit!<cr>", {desc="Show conflict in vsplit"})
 
@@ -292,12 +370,16 @@ set({"n", "x"}, "wl", "<c-w>l", { noremap=true })
 set({"n", "x"}, "wf", "<cmd>w<cr>", { noremap=true, desc="Save file" })
 set({"n", "x"}, "wr", "<cmd>e<cr>", { noremap=true, desc="Reload from file" })
 set({"n", "x"}, "wR", "<cmd>e!<cr>", { noremap=true, desc="Forced reload from file" })
-set({"n", "x"}, "we", "<cmd>q<cr>", { noremap=true, desc="Close file" })
+set({"n", "x"}, "we", "<cmd>bdelete<cr>", { noremap=true, desc="Close file" })
 set({"n", "x"}, "wE", "<cmd>qa<cr>", { noremap=true, desc="Close file" })
-set({"n", "x"}, "wt", "<cmd>q!<cr>", { noremap=true, desc="Forced close of file" })
+set({"n", "x"}, "wt", "<cmd>q<cr>", { noremap=true, desc="Forced close of file" })
+set({"n", "x"}, "wT", "<cmd>q!<cr>", { noremap=true, desc="Forced close of file" })
 set({"n", "x"}, "wi", ":let @/ = ''<cr>", {desc="Unhighlight search"})
--- set({"n", "x"}, "wm", require("nvim-tree.api").marks.toggle)
-set({"n", "x"}, "wn", vim.g.SIBLING_NEXT)
-set({"n", "x"}, "wp", vim.g.SIBLING_PREVIOUS)
+set({"n", "x"}, "wx", "<C-W>x", { noremap=true, desc="Swap windows" })
+set({"n", "x"}, "wn", "<cmd>NvimTreeFocus<cr><cmd>lua vim.g.SIBLING_NEXT()<cr>")
+set({"n", "x"}, "wp", "<cmd>NvimTreeFocus<cr><cmd>lua vim.g.SIBLING_PREVIOUS()<cr>")
 set({"n", "x"}, "wv", "<C-W>v", { noremap=true, desc="Split vertical" })
 set({"n", "x"}, "ws", "<C-W>s", { noremap=true, desc="Split horizontal" })
+set({"n", "x"}, "wm", vim.g.HARPOON_TOGGLE)
+set({"n", "x"}, "wa", vim.g.HARPOON_ADD)
+set({"n", "x"}, "wd", vim.g.HARPOON_REMOVE)

@@ -48,6 +48,7 @@ sudo apt install -y ripgrep
 sudo apt install -y xsel
 sudo apt install -y rename
 sudo apt install -y thefuck
+sudo apt install -y libnotify-bin
 sudo apt remove ghostscript
 
 # Nodejs

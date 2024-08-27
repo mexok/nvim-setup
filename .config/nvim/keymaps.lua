@@ -4,11 +4,33 @@ set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
 
 set("n", "<leader>f", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
     { noremap = true, desc = "search text in project" })
-set("v", "<leader>f", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); "..
+
+function vim.g.GSUB_GREP_STRING(str)
+    local orig = str
+    str = string.gsub(str, '\n.*', '')
+    str = string.gsub(str, '\\', '\\\\')
+    str = string.gsub(str, '"', '\\"')
+    str = string.gsub(str, "'", "\\'")
+    str = string.gsub(str, '%^', '\\^')
+    str = string.gsub(str, '%[', '\\[')
+    str = string.gsub(str, '%]', '\\]')
+    str = string.gsub(str, '%?', '\\?')
+    str = string.gsub(str, '%$', '\\$')
+    str = string.gsub(str, '%(', '\\(')
+    str = string.gsub(str, '%)', '\\)')
+    str = string.gsub(str, '%{', '\\{')
+    str = string.gsub(str, '%}', '\\}')
+    if orig == str then
+        return str
+    end
+    return '"' .. str .. '"'
+end
+set("v", "<leader>f", "y:lua local tmp = vim.g.GSUB_GREP_STRING(vim.fn.getreg('\"')); "..
     "require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\", default_text = tmp })<cr>",
     { noremap = true, desc = "search marked text in project"})
-set("n", "<leader>F", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true, desc = "search files in project" })
-set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp })<cr>", { noremap = true, desc = "search files in project with marked text"})
+
+set("n", "<leader>F", "<cmd>lua require('telescope.builtin').find_files({find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' }})<cr>", { noremap = true, desc = "search files in project" })
+set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp, find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' } })<cr>", { noremap = true, desc = "search files in project with marked text"})
 set("n", "<leader>e", "<cmd>NvimTreeFocus<cr>", { desc = "explorer"})
 set("n", "<leader>E", "<cmd>Oil<cr>", { desc = "nvim oil"})
 set("n", "<leader>te", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
@@ -115,6 +137,10 @@ set('n', '<leader>js', '<Cmd>lua require"jdtls".test_nearest_method()<CR>', { no
 -- git gutter
 set('n', ']g', '<Plug>(GitGutterNextHunk)', { noremap=true, desc="git next"})
 set('n', '[g', '<Plug>(GitGutterPrevHunk)', { noremap=true, desc="git prev"})
+
+-- uuid
+set('n', '<leader>gu', 'a<C-R>=systemlist("python3 -c \\"import uuid; print(uuid.uuid4())\\"")[0]<cr><esc>')
+set('v', '<leader>gu', 's<C-R>=systemlist("python3 -c \\"import uuid; print(uuid.uuid4())\\"")[0]<cr><esc>')
 
 -- editing
 
