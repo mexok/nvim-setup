@@ -10,8 +10,12 @@ fun! RefreshGitGutter()
     execute ':GitGutterEnable'
 endfun
 
-fun! RefreshHarpoon()
-    lua vim.g.HARPOON_REFRESH()
+fun! SyncHarpoon()
+    lua vim.g.HARPOON_SYNC()
+endfun
+
+fun! RefreshIndexHarpoon()
+    lua vim.g.HARPOON_REFRESH_INDEX()
 endfun
 
 augroup trim_whitespaces
@@ -24,16 +28,28 @@ augroup refresh_git_gutter
     autocmd BufWritePost * :call RefreshGitGutter()
 augroup end
 
-augroup refresh_harpoon
+augroup sync_harpoon
     autocmd!
-    autocmd BufWritePost * :call RefreshHarpoon()
-    autocmd BufLeave * :call RefreshHarpoon()
-    autocmd BufUnload * :call RefreshHarpoon()
+    autocmd BufWritePost * :call SyncHarpoon()
+    autocmd BufLeave * :call SyncHarpoon()
+    autocmd BufUnload * :call SyncHarpoon()
+augroup end
+
+augroup refresh_index_harpoon
+    autocmd!
+    autocmd BufReadPost * :call RefreshIndexHarpoon()
+    autocmd BufEnter * :call RefreshIndexHarpoon()
+    autocmd BufNew * :call RefreshIndexHarpoon()
 augroup end
 
 augroup gofmt
     autocmd!
     autocmd BufWritePost *.go !gofmt -w %
+augroup end
+
+augroup initially_disable_rainbow_delimiters
+    autocmd!
+    autocmd BufEnter * :lua require('rainbow-delimiters').disable(0)
 augroup end
 ]]
 

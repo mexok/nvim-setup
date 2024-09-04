@@ -78,171 +78,199 @@ end
 
 -- harpoon
 local harpoon = require("harpoon")
+harpoon:setup()
 
-function vim.g.HARPOON_GLOB_MARKS()
+-- function vim.g.HARPOON_GLOB_MARKS()
+--     for i = 1, harpoon:list():length() do
+--         print(i..": "..harpoon:list():get(i).value)
+--     end
+--     if harpoon:list():length() == 0 then
+--         print("No marks")
+--     end
+-- end
+
+-- function vim.g.HARPOON_SELECT_MARK()
+--     local paths = {}
+--     for i = 1, harpoon:list():length() do
+--         table.insert(paths, harpoon:list():get(i).value)
+--     end
+--     vim.ui.select(paths, {
+--         prompt = "Select file",
+--     }, function(path)
+--         vim.g.HARPOON_SELECT_PATH(path)
+--     end)
+-- end
+
+-- function vim.g.HARPOON_SELECT_MARK_SIMPLIFIED()
+--     local paths = {}
+--     for i = 1, harpoon:list():length() do
+--         table.insert(paths, harpoon:list():get(i).value)
+--     end
+--     vim.g.SELECT_SIMPLIFIED(paths, vim.g.HARPOON_SELECT_PATH)
+-- end
+
+-- function vim.g.HARPOON_DELETE_MARK()
+--     local paths = {}
+--     for i = 1, harpoon:list():length() do
+--         table.insert(paths, harpoon:list():get(i).value)
+--     end
+--     vim.ui.select(paths, {
+--         prompt = "Delete mark",
+--     }, function(path)
+--         local len = harpoon:list():length()
+--         for i = 1, len do
+--             if path == harpoon:list():get(i).value then
+--                 harpoon:list().items[i] = harpoon:list().items[len]
+--                 harpoon:list().items[len] = nil
+--                 harpoon:list()._length = len - 1
+--                 vim.g.HARPOON_SORT()
+--                 return
+--             end
+--         end
+--     end)
+-- end
+
+-- function vim.g.HARPOON_SELECT_PATH(path)
+--     if path ~= nil then
+--         for i = 1, harpoon:list():length() do
+--             if harpoon:list():get(i).value == path then
+--                 vim.g.HARPOON_SELECT(i)
+--                 break
+--             end
+--         end
+--     end
+-- end
+
+-- function vim.g.HARPOON_SELECT(i)
+--     harpoon:list():select(i);
+--     harpoon:list()._index = i;
+-- end
+
+-- function vim.g.HARPOON_SORT()
+--     local nodes = {}
+--     for i = 1, harpoon:list():length() do
+--         table.insert(nodes, harpoon:list():get(i))
+--     end
+
+--     vim.g.SORT_MARKS(nodes)
+
+--     for i = 1, harpoon:list():length() do
+--         harpoon:list().items[i] = nodes[i]
+--     end
+-- end
+
+-- function vim.g.SORT_MARKS(nodes)
+--     table.sort(nodes, function (a, b)
+--         -- Files in subdictionaries should be displayed before files.
+--         -- Also, names with a '-' and similiar should not be ordered
+--         -- before folders ('/').
+--         -- Thats why we modify the paths a bit to have a ' /1' before
+--         -- subdictionaries and a ' /2' before files
+--         if type(a) == "table" then
+--             a = a.value
+--         end
+--         if type(b) == "table" then
+--             b = b.value
+--         end
+--         local slash_cnt
+--         a, slash_cnt = string.gsub("/"..a, "/", " /2")
+--         a = string.gsub(a, "/2", "/1", slash_cnt - 1)
+--         b, slash_cnt = string.gsub("/"..b, "/", " /2")
+--         b = string.gsub(b, "/2", "/1", slash_cnt - 1)
+--         return string.lower(a) < string.lower(b)
+--     end)
+-- end
+
+-- function vim.g.HARPOON_ADD()
+--     local len = harpoon:list():length()
+--     harpoon:list():add()
+--     if harpoon:list():length() ~= len then
+--         print("Mark added")
+--         vim.g.HARPOON_SORT()
+--     else
+--         print("File already added")
+--     end
+-- end
+
+-- function vim.g.HARPOON_REMOVE()
+--     local len = harpoon:list():length()
+--     harpoon:list():remove()
+--     local removed = 0
+--     for i = 1, len do
+--         if harpoon:list().items[i] == nil then
+--             harpoon:list().items[i] = harpoon:list().items[len]
+--             harpoon:list().items[len] = nil
+--             harpoon:list()._length = len - 1
+--             removed = 1
+--             break
+--         end
+--     end
+
+--     if removed == 1 then
+--         print("Mark removed")
+--         vim.g.HARPOON_SORT()
+--     else
+--         print("File already removed")
+--     end
+-- end
+
+-- function vim.g.HARPOON_TOGGLE()
+--     local len = harpoon:list():length()
+--     harpoon:list():remove()
+
+--     for i = 1, len do
+--         if harpoon:list().items[i] == nil then
+--             harpoon:list().items[i] = harpoon:list().items[len]
+--             harpoon:list().items[len] = nil
+--             harpoon:list()._length = len - 1
+--             break
+--         end
+--     end
+
+--     if harpoon:list():length() == len then
+--         harpoon:list():add()
+--         print("Mark added")
+--     else
+--         print("Mark removed")
+--     end
+
+--     vim.g.HARPOON_SORT()
+-- end
+
+-- function vim.g.HARPOON_REFRESH()
+--     local len = harpoon:list():length()
+--     harpoon:list():remove()
+--     for i = 1, len do
+--         if harpoon:list().items[i] == nil then
+--             harpoon:list().items[i] = harpoon:list().items[len]
+--             harpoon:list()._length = len - 1
+--             harpoon:list():add()
+--             vim.g.HARPOON_SORT()
+--             break
+--         end
+--     end
+--     harpoon:sync()
+-- end
+--
+--
+function vim.g.HARPOON_REFRESH_INDEX()
+    local li = harpoon:list().config.create_list_item(harpoon:list().config)
     for i = 1, harpoon:list():length() do
-        print(i..": "..harpoon:list():get(i).value)
-    end
-    if harpoon:list():length() == 0 then
-        print("No marks")
-    end
-end
-
-function vim.g.HARPOON_SELECT_MARK()
-    local paths = {}
-    for i = 1, harpoon:list():length() do
-        table.insert(paths, harpoon:list():get(i).value)
-    end
-    vim.ui.select(paths, {
-        prompt = "Select mark",
-    }, function(path)
-        if path ~= nil then
-            for i = 1, harpoon:list():length() do
-                if harpoon:list():get(i).value == path then
-                    vim.g.HARPOON_SELECT(i)
-                    break
-                end
-            end
-        end
-    end)
-end
-
-function vim.g.HARPOON_DELETE_MARK()
-    local paths = {}
-    for i = 1, harpoon:list():length() do
-        table.insert(paths, harpoon:list():get(i).value)
-    end
-    vim.ui.select(paths, {
-        prompt = "Delete mark",
-    }, function(path)
-        local len = harpoon:list():length()
-        for i = 1, len do
-            if path == harpoon:list():get(i).value then
-                harpoon:list().items[i] = harpoon:list().items[len]
-                harpoon:list().items[len] = nil
-                harpoon:list()._length = len - 1
-                vim.g.HARPOON_SORT()
-                return
-            end
-        end
-    end)
-end
-
-function vim.g.HARPOON_SELECT(i)
-    harpoon:list():select(i);
-    harpoon:list()._index = i;
-end
-
-function vim.g.HARPOON_SORT()
-    local nodes = {}
-    for i = 1, harpoon:list():length() do
-        table.insert(nodes, harpoon:list():get(i))
-    end
-
-    vim.g.SORT_MARKS(nodes)
-
-    for i = 1, harpoon:list():length() do
-        harpoon:list().items[i] = nodes[i]
-    end
-end
-
-function vim.g.SORT_MARKS(nodes)
-    table.sort(nodes, function (a, b)
-        -- Files in subdictionaries should be displayed before files.
-        -- Also, names with a '-' and similiar should not be ordered
-        -- before folders ('/').
-        -- Thats why we modify the paths a bit to have a ' /1' before
-        -- subdictionaries and a ' /2' before files
-        if type(a) == "table" then
-            a = a.value
-        end
-        if type(b) == "table" then
-            b = b.value
-        end
-        local slash_cnt
-        a, slash_cnt = string.gsub("/"..a, "/", " /2")
-        a = string.gsub(a, "/2", "/1", slash_cnt - 1)
-        b, slash_cnt = string.gsub("/"..b, "/", " /2")
-        b = string.gsub(b, "/2", "/1", slash_cnt - 1)
-        return string.lower(a) < string.lower(b)
-    end)
-end
-
-function vim.g.HARPOON_ADD()
-    local len = harpoon:list():length()
-    harpoon:list():add()
-    if harpoon:list():length() ~= len then
-        print("Mark added")
-        vim.g.HARPOON_SORT()
-    else
-        print("File already added")
-    end
-end
-
-function vim.g.HARPOON_REMOVE()
-    local len = harpoon:list():length()
-    harpoon:list():remove()
-    local removed = 0
-    for i = 1, len do
-        if harpoon:list().items[i] == nil then
-            harpoon:list().items[i] = harpoon:list().items[len]
-            harpoon:list().items[len] = nil
-            harpoon:list()._length = len - 1
-            removed = 1
+        if harpoon:list():get(i).value == li.value then
+            harpoon:list()._index = i
             break
         end
     end
-
-    if removed == 1 then
-        print("Mark removed")
-        vim.g.HARPOON_SORT()
-    else
-        print("File already removed")
-    end
 end
 
-function vim.g.HARPOON_TOGGLE()
-    local len = harpoon:list():length()
-    harpoon:list():remove()
-
-    for i = 1, len do
-        if harpoon:list().items[i] == nil then
-            harpoon:list().items[i] = harpoon:list().items[len]
-            harpoon:list().items[len] = nil
-            harpoon:list()._length = len - 1
-            break
-        end
-    end
-
-    if harpoon:list():length() == len then
-        harpoon:list():add()
-        print("Mark added")
-    else
-        print("Mark removed")
-    end
-
-    vim.g.HARPOON_SORT()
-end
-
-function vim.g.HARPOON_REFRESH()
-    local len = harpoon:list():length()
-    harpoon:list():remove()
-    for i = 1, len do
-        if harpoon:list().items[i] == nil then
-            harpoon:list().items[i] = harpoon:list().items[len]
-            harpoon:list()._length = len - 1
-            harpoon:list():add()
-            vim.g.HARPOON_SORT()
-            break
-        end
-    end
+function vim.g.HARPOON_SYNC()
     harpoon:sync()
 end
 
-function vim.g.HARPOON_GIT_DIFF_POPULATE_MARKS()
-    local handle = io.popen("git status --porcelain | awk {'print $2'}")
+function vim.g.HARPOON_POPULATE_MARKS(cmd)
+    local handle = io.popen(cmd)
     if handle == nil then
-        print("Error populating marks from git diff")
+        print("Error populating marks: "..cmd)
         return
     end
 
@@ -259,14 +287,15 @@ function vim.g.HARPOON_GIT_DIFF_POPULATE_MARKS()
             },
         })
     end
-    vim.g.HARPOON_REFRESH()
-    print("Successfully populated marks from git diff")
+    harpoon:sync()
+    -- vim.g.HARPOON_REFRESH()
+    print("Successfully populated marks with: "..cmd)
 end
 
-function vim.g.GIT_DIFF_SHOW_MARKS()
-    local handle = io.popen("git status --porcelain | awk {'print $2'}")
+function vim.g.SHOW_FILES(cmd)
+    local handle = io.popen(cmd)
     if handle == nil then
-        print("Error populating marks from git diff")
+        print("Error executing: "..cmd)
         return
     end
 
@@ -279,7 +308,7 @@ function vim.g.GIT_DIFF_SHOW_MARKS()
         table.insert(paths, name)
     end
 
-    vim.g.SORT_MARKS(paths)
+    -- vim.g.SORT_MARKS(paths)
 
     vim.ui.select(paths, {
         prompt = "Select file",
@@ -290,10 +319,10 @@ function vim.g.GIT_DIFF_SHOW_MARKS()
     end)
 end
 
-function vim.g.GIT_DIFF_SHOW_MARKS_SIMPLIFIED()
-    local handle = io.popen("git status --porcelain | awk {'print $2'}")
+function vim.g.SHOW_FILES_SIMPLIFIED(cmd)
+    local handle = io.popen(cmd)
     if handle == nil then
-        print("Error populating marks from git diff")
+        print("Error executing: "..cmd)
         return
     end
 
@@ -301,10 +330,19 @@ function vim.g.GIT_DIFF_SHOW_MARKS_SIMPLIFIED()
     handle:close()
 
     local paths = {}
-    local simplified_paths = {}
 
     for name in string.gmatch(result, "[^\n]+") do
         table.insert(paths, name)
+    end
+
+    vim.g.SELECT_SIMPLIFIED(paths, vim.cmd.edit)
+end
+
+
+function vim.g.SELECT_SIMPLIFIED(paths, select_fn)
+    local simplified_paths = {}
+
+    for _, name in ipairs(paths) do
         local simplified_name = string.gsub(name, ".*/", "")
 
         if simplified_paths[simplified_name] == nil then
@@ -317,14 +355,14 @@ function vim.g.GIT_DIFF_SHOW_MARKS_SIMPLIFIED()
     for key, _ in pairs(simplified_paths) do
         table.insert(ui_selection, key)
     end
-    vim.g.SORT_MARKS(ui_selection)
+    -- vim.g.SORT_MARKS(ui_selection)
 
     vim.ui.select(ui_selection, {
         prompt = "Select file",
     }, function(selected)
         if selected ~= nil then
             if #simplified_paths[selected].paths == 1 then
-                vim.cmd.edit(simplified_paths[selected].paths[1])
+                select_fn(simplified_paths[selected].paths[1])
             else
                 print("\n")
                 vim.g.SORT_MARKS(simplified_paths[selected].paths)
@@ -332,7 +370,7 @@ function vim.g.GIT_DIFF_SHOW_MARKS_SIMPLIFIED()
                     prompt = "Specify file",
                 }, function(specified)
                     if specified ~= nil then
-                        vim.cmd.edit(specified)
+                        select_fn(specified)
                     end
                 end)
             end
@@ -340,18 +378,32 @@ function vim.g.GIT_DIFF_SHOW_MARKS_SIMPLIFIED()
     end)
 end
 
-vim.keymap.set("n", "mg", "<cmd>lua vim.g.HARPOON_GLOB_MARKS()<cr>", {noremap = true})
-vim.keymap.set("n", "ms", "<cmd>lua vim.g.HARPOON_SELECT_MARK()<cr>", {noremap = true})
-vim.keymap.set("n", "md", "<cmd>lua vim.g.HARPOON_DELETE_MARK()<cr>", {noremap = true})
+vim.keymap.set("n", "mf", function() harpoon:list():add(); harpoon:list():sync() end)
+vim.keymap.set("n", "ms", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "mw", function() harpoon:list():prev() end)
+vim.keymap.set("n", "me", function() harpoon:list():next() end)
 
+function vim.g.HARPOON_SELECT(i)
+    harpoon:list():select(i)
+end
 
 for i = 1, 10 do
     vim.keymap.set("n", "m"..i%10, "<cmd>lua vim.g.HARPOON_SELECT("..i..")<cr>")
 end
 
-vim.keymap.set("n", "mlD", "<cmd>lua vim.g.HARPOON_GIT_DIFF_POPULATE_MARKS()<cr>")
-vim.keymap.set("n", "mld", "<cmd>lua vim.g.GIT_DIFF_SHOW_MARKS()<cr>")
-vim.keymap.set("n", "mls", "<cmd>lua vim.g.GIT_DIFF_SHOW_MARKS_SIMPLIFIED()<cr>")
+local cmd_all_files = "\"git status --porcelain | awk {'print $2'}\""
+vim.keymap.set("n", "mls", "<cmd>lua vim.g.SHOW_FILES_SIMPLIFIED("..cmd_all_files..")<cr>")
+vim.keymap.set("n", "mlfs", "<cmd>lua vim.g.SHOW_FILES("..cmd_all_files..")<cr>")
+vim.keymap.set("n", "mles", "<cmd>lua vim.g.HARPOON_POPULATE_MARKS("..cmd_all_files..")<cr>")
+
+local cmd_files_commit_base = "git show --pretty=\\\"\\\" --name-only HEAD~"
+for i = 1, 10 do
+    local d = i%10
+    vim.keymap.set("n", "ml"..d, "<cmd>lua vim.g.SHOW_FILES_SIMPLIFIED(\""..cmd_files_commit_base..d.."\")<cr>")
+    vim.keymap.set("n", "mlf"..d, "<cmd>lua vim.g.SHOW_FILES(\""..cmd_files_commit_base..d.."\")<cr>")
+    vim.keymap.set("n", "mle"..d, "<cmd>lua vim.g.HARPOON_POPULATE_MARKS(\""..cmd_files_commit_base..d.."\")<cr>")
+end
+
 vim.keymap.set("n", "mw", function() harpoon:list():prev() end)
 vim.keymap.set("n", "me", function() harpoon:list():next() end)
 vim.keymap.set("n", "mc", function() harpoon:list():clear() end)
@@ -370,16 +422,16 @@ set({"n", "x"}, "wl", "<c-w>l", { noremap=true })
 set({"n", "x"}, "wf", "<cmd>w<cr>", { noremap=true, desc="Save file" })
 set({"n", "x"}, "wr", "<cmd>e<cr>", { noremap=true, desc="Reload from file" })
 set({"n", "x"}, "wR", "<cmd>e!<cr>", { noremap=true, desc="Forced reload from file" })
-set({"n", "x"}, "we", "<cmd>bdelete<cr>", { noremap=true, desc="Close file" })
-set({"n", "x"}, "wE", "<cmd>qa<cr>", { noremap=true, desc="Close file" })
-set({"n", "x"}, "wt", "<cmd>q<cr>", { noremap=true, desc="Forced close of file" })
-set({"n", "x"}, "wT", "<cmd>q!<cr>", { noremap=true, desc="Forced close of file" })
+set({"n", "x"}, "we", "<cmd>q<cr>", { noremap=true, desc="Close file" })
+set({"n", "x"}, "wE", "<cmd>q!<cr>", { noremap=true, desc="Forced close file" })
+set({"n", "x"}, "wt", "<cmd>qa<cr>", { noremap=true, desc="Close all files" })
+set({"n", "x"}, "wT", "<cmd>qa!<cr>", { noremap=true, desc="Forced close all files" })
 set({"n", "x"}, "wi", ":let @/ = ''<cr>", {desc="Unhighlight search"})
 set({"n", "x"}, "wx", "<C-W>x", { noremap=true, desc="Swap windows" })
 set({"n", "x"}, "wn", "<cmd>NvimTreeFocus<cr><cmd>lua vim.g.SIBLING_NEXT()<cr>")
 set({"n", "x"}, "wp", "<cmd>NvimTreeFocus<cr><cmd>lua vim.g.SIBLING_PREVIOUS()<cr>")
 set({"n", "x"}, "wv", "<C-W>v", { noremap=true, desc="Split vertical" })
 set({"n", "x"}, "ws", "<C-W>s", { noremap=true, desc="Split horizontal" })
-set({"n", "x"}, "wm", vim.g.HARPOON_TOGGLE)
-set({"n", "x"}, "wa", vim.g.HARPOON_ADD)
-set({"n", "x"}, "wd", vim.g.HARPOON_REMOVE)
+-- set({"n", "x"}, "wm", vim.g.HARPOON_TOGGLE)
+-- set({"n", "x"}, "wa", vim.g.HARPOON_ADD)
+-- set({"n", "x"}, "wd", vim.g.HARPOON_REMOVE)

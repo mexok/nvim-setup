@@ -17,6 +17,7 @@ require("lazy").setup {
     'navarasu/onedark.nvim',
     'nvim-lualine/lualine.nvim',
     'folke/which-key.nvim',
+    'HiPhish/rainbow-delimiters.nvim',
 
     -- Debugging
     'mfussenegger/nvim-dap',
@@ -122,6 +123,10 @@ harpoon:setup()
 require("telescope").setup {
     defaults = {
         layout_strategy = "horizontal",
+        path_display = function(opts, path)
+            local tail = require("telescope.utils").path_tail(path)
+            return string.format("%s -> %s", tail, path)
+        end,
         vimgrep_arguments = {
             "rg",
             "--color=never",

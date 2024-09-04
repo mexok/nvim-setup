@@ -29,11 +29,10 @@ set("v", "<leader>f", "y:lua local tmp = vim.g.GSUB_GREP_STRING(vim.fn.getreg('\
     "require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\", default_text = tmp })<cr>",
     { noremap = true, desc = "search marked text in project"})
 
-set("n", "<leader>F", "<cmd>lua require('telescope.builtin').find_files({find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' }})<cr>", { noremap = true, desc = "search files in project" })
-set("v", "<leader>F", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp, find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' } })<cr>", { noremap = true, desc = "search files in project with marked text"})
-set("n", "<leader>e", "<cmd>NvimTreeFocus<cr>", { desc = "explorer"})
+set("n", "<leader>r", "<cmd>lua require('telescope.builtin').find_files({find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' }})<cr>", { noremap = true, desc = "search files in project" })
+set("v", "<leader>r", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp, find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' } })<cr>", { noremap = true, desc = "search files in project with marked text"})
+set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
 set("n", "<leader>E", "<cmd>Oil<cr>", { desc = "nvim oil"})
-set("n", "<leader>te", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
 set("n", "<leader>b", "<cmd>Git blame<cr>", { desc = "git blame"})
 set("n", "<leader>a", "gg0vG$", { noremap = true, desc = "select all"})
 set("n", "<leader>tv", "<cmd>cex system('PYTHONPATH=src vulture src/*') | copen<cr>", { desc = "use python vulture for src dir" })
@@ -139,8 +138,8 @@ set('n', ']g', '<Plug>(GitGutterNextHunk)', { noremap=true, desc="git next"})
 set('n', '[g', '<Plug>(GitGutterPrevHunk)', { noremap=true, desc="git prev"})
 
 -- uuid
-set('n', '<leader>gu', 'a<C-R>=systemlist("python3 -c \\"import uuid; print(uuid.uuid4())\\"")[0]<cr><esc>')
-set('v', '<leader>gu', 's<C-R>=systemlist("python3 -c \\"import uuid; print(uuid.uuid4())\\"")[0]<cr><esc>')
+set('n', '<leader>x', 'a<C-R>=systemlist("python3 -c \\"import uuid; print(uuid.uuid4())\\"")[0]<cr><esc>')
+set('v', '<leader>x', 's<C-R>=systemlist("python3 -c \\"import uuid; print(uuid.uuid4())\\"")[0]<cr><esc>')
 
 -- editing
 
@@ -205,10 +204,10 @@ set("n", "<leader>g", ":%g/", {noremap = true})
 set("x", "<leader>g", ":g/", {noremap = true})
 set("n", "<leader>v", ":%v/", {noremap = true})
 set("x", "<leader>v", ":v/", {noremap = true})
-set("n", "<leader>r", ":%! perl -e", {noremap = true})
-set("x", "<leader>r", ":! perl -e", {noremap = true})
-set("n", "<leader>R", ":%! perl -e 'while(<>){print;}'", {noremap = true})
-set("x", "<leader>R", ":! perl -e 'while(<>){print;}'", {noremap = true})
+-- set("n", "<leader>r", ":%! perl -e", {noremap = true})
+-- set("x", "<leader>r", ":! perl -e", {noremap = true})
+-- set("n", "<leader>R", ":%! perl -e 'while(<>){print;}'", {noremap = true})
+-- set("x", "<leader>R", ":! perl -e 'while(<>){print;}'", {noremap = true})
 
 set("n", "ß", 'vi"', {noremap = true})
 set("x", "ß", '<esc>vi"', {noremap = true})

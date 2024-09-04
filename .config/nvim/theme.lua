@@ -44,3 +44,28 @@ require('lualine').setup {
 }
 
 require('which-key').setup {}
+
+local rainbow_delimiters = require 'rainbow-delimiters'
+require('rainbow-delimiters.setup').setup {
+    strategy = {
+        [''] = rainbow_delimiters.strategy['global'],
+    },
+    query = {
+        [''] = 'rainbow-delimiters',
+    },
+    priority = {
+        [''] = 110,
+        lua = 210,
+    },
+    highlight = {
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterCyan',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterBlue',
+    },
+}
+
+vim.keymap.set("n", "<F2>", "<cmd>lua require('rainbow-delimiters').toggle(0)<cr>", { noremap = true, desc = "toggle rainbow delimiters"})
