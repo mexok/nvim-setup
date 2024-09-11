@@ -78,7 +78,15 @@ end
 
 -- harpoon
 local harpoon = require("harpoon")
-harpoon:setup()
+harpoon:setup({
+    default = {
+        display = function(list_item)
+            local name = list_item.value
+            name = string.gsub(name, ".*/", "")
+            return name
+        end,
+    }
+})
 
 -- function vim.g.HARPOON_GLOB_MARKS()
 --     for i = 1, harpoon:list():length() do
@@ -378,7 +386,7 @@ function vim.g.SELECT_SIMPLIFIED(paths, select_fn)
     end)
 end
 
-vim.keymap.set("n", "mf", function() harpoon:list():add(); harpoon:list():sync() end)
+vim.keymap.set("n", "mf", function() harpoon:list():add(); harpoon:sync(); vim.g.HARPOON_REFRESH_INDEX() end)
 vim.keymap.set("n", "ms", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 vim.keymap.set("n", "mw", function() harpoon:list():prev() end)
 vim.keymap.set("n", "me", function() harpoon:list():next() end)

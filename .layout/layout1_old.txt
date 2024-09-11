@@ -21,21 +21,22 @@
 * keys thumbs
 [lctr]>[lalt]
 [rctr]>[lalt]
-[lalt]>[caps]
-[del]>[esc]
 
 * keys bottom
 [grav]>[bsls]
-[caps]>[tab]
+[caps]>[fn2s]
 [left]>[lshf]
-[rght]>[fn2s]
-[up]>[fn2s]
+[rght]>[tab]
+[up]>[caps]
 [down]>[lshf]
-[obrk]>[tab]
+[obrk]>[fn2s]
 [cbrk]>[apos]
 
+* keys thumbs - mapping
+[del]>[esc]
+
 * pedal
-[pedl]>[fn2s]
+{pedl}>{s9}{-lctr}{b}{+lctr}
 
 <keypad>
 
@@ -60,21 +61,16 @@
 * keys thumbs
 [lctr]>[lalt]
 [rctr]>[lalt]
-[lalt]>[caps]
-[del]>[esc]
 
 * keys bottom
 [grav]>[bsls]
-[caps]>[tab]
+[caps]>[fn2s]
 [left]>[lshf]
-[rght]>[fn2s]
-[up]>[fn2s]
+[rght]>[tab]
+[up]>[caps]
 [down]>[lshf]
-[obrk]>[tab]
+[obrk]>[fn2s]
 [cbrk]>[apos]
-
-* pedal
-[pedl]>[fn2s]
 
 <function1>
 
@@ -87,22 +83,19 @@
 * keys thumbs
 [lctr]>[lalt]
 [rctr]>[lalt]
-[lalt]>[caps]
-[del]>[esc]
 
 * keys bottom
 [grav]>[bsls]
-[caps]>[tab]
+[caps]>[fn2s]
 [left]>[lshf]
-[rght]>[fn2s]
-[up]>[fn2s]
+[rght]>[tab]
+[up]>[caps]
 [down]>[lshf]
-[obrk]>[tab]
+[obrk]>[fn2s]
 [cbrk]>[apos]
 
-* pedal
-[pedl]>[fn2s]
-
+* keys thumbs - mapping
+[del]>[esc]
 
 <function2>
 
@@ -126,17 +119,15 @@
 * keys thumbs
 [lctr]>[lalt]
 [rctr]>[lalt]
-[lalt]>[caps]
-[del]>[esc]
 
 * keys bottom - fn toggle modifications
 [grav]>[bsls]
-[caps]>[tab]
+[caps]>[defs]
 [left]>[lshf]
-[rght]>[defs]
-[up]>[defs]
+[rght]>[tab]
+[up]>[caps]
 [down]>[lshf]
-[obrk]>[tab]
+[obrk]>[defs]
 [cbrk]>[apos]
 
 * Layer keybindings
@@ -157,8 +148,11 @@
 [t]>[grav]
 [r]>[bsls]
 
+* keys thumbs - mapping
+[del]>[esc]
+
 * pedal
-[pedl]>[defs]
+{pedl}>{s9}{-lctr}{b}{+lctr}
 
 * Custom macros for german keys on us international layout
 {u}>{s9}{-lctr}{-lshf}{u}{+lshf}{+lctr}{0}{0}{f}{c}{spc}
