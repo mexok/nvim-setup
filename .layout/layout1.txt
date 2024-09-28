@@ -152,10 +152,14 @@
 [i]>[pgup]
 
 [b]>[home]
-[e]>[end]
+[f]>[end]
 [d]>[del]
 [t]>[grav]
 [r]>[bsls]
+{e}>{s9}{-lshf}{obrk}{+lshf}{ent}
+{lshf}{e}>{s9}{-lshf}{obrk}{ent}
+{w}>{s9}{-lshf}{9}{0}{+lshf}
+{lshf}{w}>{s9}{-lshf}{9}{0}
 
 * pedal
 [pedl]>[defs]

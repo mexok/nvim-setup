@@ -132,6 +132,8 @@ set('n', '[d', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diag
 -- java specific
 set('n', '<leader>jf', '<Cmd>lua require"jdtls".test_class()<CR>', { noremap=true })
 set('n', '<leader>js', '<Cmd>lua require"jdtls".test_nearest_method()<CR>', { noremap=true })
+set('n', '<leader>jc', 'gg/class <cr>:let @/ = \'\'<cr>_', { noremap=true })
+set('n', '<leader>ji', 'gg/interface <cr>:let @/ = \'\'<cr>_', { noremap=true })
 
 -- git gutter
 set('n', ']g', '<Plug>(GitGutterNextHunk)', { noremap=true, desc="git next"})
@@ -261,10 +263,10 @@ fun! SetKeymaps()
     nmap <nowait><buffer> <leader>< <leader>~pp
     xmap <nowait><buffer> <leader>< <leader>~pp
 
-    nmap <nowait><buffer> } <leader>~fn
-    xmap <nowait><buffer> } <leader>~fn
-    nmap <nowait><buffer> { <leader>~fp
-    xmap <nowait><buffer> { <leader>~fp
+    nmap <nowait><buffer> <leader>] <leader>~fn
+    xmap <nowait><buffer> <leader>] <leader>~fn
+    nmap <nowait><buffer> <leader>[ <leader>~fp
+    xmap <nowait><buffer> <leader>[ <leader>~fp
 
     nnoremap <leader>cr <Plug>(abolish-coerce-word)
     nnoremap <leader>ds <Plug>Dsurround

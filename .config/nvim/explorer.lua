@@ -264,7 +264,7 @@ harpoon:setup({
 function vim.g.HARPOON_REFRESH_INDEX()
     local li = harpoon:list().config.create_list_item(harpoon:list().config)
     for i = 1, harpoon:list():length() do
-        if harpoon:list():get(i).value == li.value then
+        if harpoon:list():get(i) ~= nil and harpoon:list():get(i).value == li.value then
             harpoon:list()._index = i
             break
         end
@@ -443,3 +443,7 @@ set({"n", "x"}, "ws", "<C-W>s", { noremap=true, desc="Split horizontal" })
 -- set({"n", "x"}, "wm", vim.g.HARPOON_TOGGLE)
 -- set({"n", "x"}, "wa", vim.g.HARPOON_ADD)
 -- set({"n", "x"}, "wd", vim.g.HARPOON_REMOVE)
+
+-- navigating buffers
+set("n", "{", "<cmd>bprev<cr>", { noremap=true, desc="buffer prev" })
+set("n", "}", "<cmd>bnext<cr>", { noremap=true, desc="buffer next" })
