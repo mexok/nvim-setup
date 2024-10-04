@@ -2,7 +2,7 @@ local set = vim.keymap.set
 
 set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
 
-set("n", "<leader>f", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
+set("n", "<leader>w", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
     { noremap = true, desc = "search text in project" })
 
 function vim.g.GSUB_GREP_STRING(str)
@@ -25,12 +25,12 @@ function vim.g.GSUB_GREP_STRING(str)
     end
     return '"' .. str .. '"'
 end
-set("v", "<leader>f", "y:lua local tmp = vim.g.GSUB_GREP_STRING(vim.fn.getreg('\"')); "..
+set("v", "<leader>w", "y:lua local tmp = vim.g.GSUB_GREP_STRING(vim.fn.getreg('\"')); "..
     "require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\", default_text = tmp })<cr>",
     { noremap = true, desc = "search marked text in project"})
 
-set("n", "<leader>w", "<cmd>lua require('telescope.builtin').find_files({find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' }})<cr>", { noremap = true, desc = "search files in project" })
-set("v", "<leader>w", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp, find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' } })<cr>", { noremap = true, desc = "search files in project with marked text"})
+set("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files({find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' }})<cr>", { noremap = true, desc = "search files in project" })
+set("v", "<leader>f", "y:lua local tmp = string.gsub(vim.fn.getreg('\"'), '\\n.*', ''); require('telescope.builtin').find_files({ default_text = tmp, find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' } })<cr>", { noremap = true, desc = "search files in project with marked text"})
 set("n", "<leader>e", "<cmd>NvimTreeToggle<cr>", { desc = "explorer"})
 set("n", "<leader>E", "<cmd>Oil<cr>", { desc = "nvim oil"})
 set("n", "<leader>b", "<cmd>Git blame<cr>", { desc = "git blame"})
