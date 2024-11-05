@@ -221,6 +221,13 @@ dap.configurations.java = {
     {
         type = 'java';
         request = 'attach';
+        name = "Debug Attach - Port 48081";
+        hostName = "127.0.0.1";
+        port = 48081;
+    },
+    {
+        type = 'java';
+        request = 'attach';
         name = "Debug Attach - Port 8084";
         hostName = "127.0.0.1";
         port = 8084;

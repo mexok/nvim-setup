@@ -43,7 +43,7 @@ require('lualine').setup {
   }
 }
 
-require('which-key').setup {}
+-- require('which-key').setup {}
 
 local rainbow_delimiters = require 'rainbow-delimiters'
 require('rainbow-delimiters.setup').setup {

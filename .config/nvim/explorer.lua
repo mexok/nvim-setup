@@ -400,16 +400,16 @@ for i = 1, 10 do
 end
 
 local cmd_all_files = "\"git status --porcelain | awk {'print $2'}\""
-vim.keymap.set("n", "mls", "<cmd>lua vim.g.SHOW_FILES_SIMPLIFIED("..cmd_all_files..")<cr>")
-vim.keymap.set("n", "mlfs", "<cmd>lua vim.g.SHOW_FILES("..cmd_all_files..")<cr>")
-vim.keymap.set("n", "mles", "<cmd>lua vim.g.HARPOON_POPULATE_MARKS("..cmd_all_files..")<cr>")
+vim.keymap.set("n", "mg", "<cmd>lua vim.g.SHOW_FILES_SIMPLIFIED("..cmd_all_files..")<cr>")
+vim.keymap.set("n", "mG", "<cmd>lua vim.g.SHOW_FILES("..cmd_all_files..")<cr>")
+vim.keymap.set("n", "mlig", "<cmd>lua vim.g.HARPOON_POPULATE_MARKS("..cmd_all_files..")<cr>")
 
 local cmd_files_commit_base = "git show --pretty=\\\"\\\" --name-only HEAD~"
 for i = 1, 10 do
     local d = i%10
     vim.keymap.set("n", "ml"..d, "<cmd>lua vim.g.SHOW_FILES_SIMPLIFIED(\""..cmd_files_commit_base..d.."\")<cr>")
-    vim.keymap.set("n", "mlf"..d, "<cmd>lua vim.g.SHOW_FILES(\""..cmd_files_commit_base..d.."\")<cr>")
-    vim.keymap.set("n", "mle"..d, "<cmd>lua vim.g.HARPOON_POPULATE_MARKS(\""..cmd_files_commit_base..d.."\")<cr>")
+    vim.keymap.set("n", "mL"..d, "<cmd>lua vim.g.SHOW_FILES(\""..cmd_files_commit_base..d.."\")<cr>")
+    vim.keymap.set("n", "mli"..d, "<cmd>lua vim.g.HARPOON_POPULATE_MARKS(\""..cmd_files_commit_base..d.."\")<cr>")
 end
 
 vim.keymap.set("n", "mw", function() harpoon:list():prev() end)

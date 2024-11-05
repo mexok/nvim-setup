@@ -27,3 +27,7 @@ vim.opt.backup = false
 vim.opt.incsearch = true
 
 vim.opt.colorcolumn = "80"
+
+vim.cmd [[
+filetype plugin indent on
+]]

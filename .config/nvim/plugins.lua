@@ -16,7 +16,12 @@ require("lazy").setup {
     -- Theme
     'navarasu/onedark.nvim',
     'nvim-lualine/lualine.nvim',
-    'folke/which-key.nvim',
+    {
+      "folke/which-key.nvim",
+      event = "VeryLazy",
+      opts = {},
+      keys = {},
+    },
     'HiPhish/rainbow-delimiters.nvim',
 
     -- Debugging

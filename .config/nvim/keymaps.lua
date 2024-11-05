@@ -2,7 +2,7 @@ local set = vim.keymap.set
 
 set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
 
-set("n", "<leader>w", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
+set("n", "<leader>g", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
     { noremap = true, desc = "search text in project" })
 
 function vim.g.GSUB_GREP_STRING(str)
@@ -25,7 +25,7 @@ function vim.g.GSUB_GREP_STRING(str)
     end
     return '"' .. str .. '"'
 end
-set("v", "<leader>w", "y:lua local tmp = vim.g.GSUB_GREP_STRING(vim.fn.getreg('\"')); "..
+set("v", "<leader>g", "y:lua local tmp = vim.g.GSUB_GREP_STRING(vim.fn.getreg('\"')); "..
     "require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\", default_text = tmp })<cr>",
     { noremap = true, desc = "search marked text in project"})
 
@@ -111,8 +111,9 @@ set("n", "<leader>ts", "<cmd>lua require('dap.ui.widgets').sidebar(require('dap.
 set("n", "<leader>tp", "<cmd>PackerUpdate<cr>", { noremap = true, desc = "update plugins"})
 set("n", "<leader>to", "<cmd>SymbolsOutline<cr>")
 set({"n", "x"}, "<leader>k", "<cmd>ToggleTerm<cr>")
-set("n", "<leader>K", ":ToggleTermSendCurrentLine<cr>")
-set("x", "<leader>K", ":ToggleTermSendVisualSelection<cr>")
+set("n", "<leader>K", "<cmd>ToggleTermSendCurrentLine<cr>")
+set("x", "<leader>K", "<cmd>ToggleTermSendVisualSelection<cr>")
+set("n", "<leader>;", "<cmd>term<cr>")
 set({"n", "x"}, "/", "/\\M")
 set({"n", "x"}, "?", "?\\M")
 
@@ -202,8 +203,8 @@ set("n", "<leader>s", ":%s/", {noremap = true})
 set("x", "<leader>s", ":s/", {noremap = true})
 set("n", "<leader>n", ":%norm ", {noremap = true})
 set("x", "<leader>n", ":norm ", {noremap = true})
-set("n", "<leader>g", ":%g/", {noremap = true})
-set("x", "<leader>g", ":g/", {noremap = true})
+set("n", "<leader>G", ":%g/", {noremap = true})
+set("x", "<leader>G", ":g/", {noremap = true})
 set("n", "<leader>V", ":%v/", {noremap = true})
 set("x", "<leader>V", ":v/", {noremap = true})
 -- set("n", "<leader>r", ":%! perl -e", {noremap = true})
