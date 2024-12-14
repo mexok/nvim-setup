@@ -2,7 +2,7 @@ local set = vim.keymap.set
 
 set("n", "<leader> ", " ", { noremap = true, desc = "escape leader"})
 
-set("n", "<leader>g", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
+set("n", "<leader>r", "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\" })<cr>",
     { noremap = true, desc = "search text in project" })
 
 function vim.g.GSUB_GREP_STRING(str)
@@ -25,7 +25,7 @@ function vim.g.GSUB_GREP_STRING(str)
     end
     return '"' .. str .. '"'
 end
-set("v", "<leader>g", "y:lua local tmp = vim.g.GSUB_GREP_STRING(vim.fn.getreg('\"')); "..
+set("v", "<leader>r", "y:lua local tmp = vim.g.GSUB_GREP_STRING(vim.fn.getreg('\"')); "..
     "require('telescope').extensions.live_grep_args.live_grep_args({ theme = \"ivy\", default_text = tmp })<cr>",
     { noremap = true, desc = "search marked text in project"})
 
@@ -44,7 +44,7 @@ set("n", "<leader>H", ":h ", { noremap = true, desc = "help" })
 local function toggle_recording()
     local r = vim.fn.reg_recording()
     if r == '' then
-        vim.api.nvim_feedkeys("qq", 'nx', false)
+        vim.api.nvim_feedkeys("qn", 'nx', false)
     else
         vim.api.nvim_feedkeys("q", 'nx', false)
     end
@@ -54,11 +54,11 @@ local function play_recorded()
     local r = vim.fn.reg_recording()
     if r ~= '' then
         vim.api.nvim_feedkeys("q", 'nx', true)
-        local reg = vim.fn.getreg("q")
+        local reg = vim.fn.getreg("n")
         reg = string.sub(reg, 1, -2)
-        vim.fn.setreg("q", reg)
+        vim.fn.setreg("n", reg)
     end
-    vim.api.nvim_feedkeys("@q", 'nx', true)
+    vim.api.nvim_feedkeys("@n", 'nx', true)
 end
 
 set({"n", "x"}, "q", toggle_recording, { noremap=true })
@@ -191,18 +191,29 @@ set("x", "H", "<gv", {noremap=true})
 set("i", "<C-l>", "<right>", {noremap=true})
 set("i", "<C-h>", "<left>", {noremap=true})
 
-set({"n", "v"}, "<C-k>", "K", {noremap=true})
-set("i", "<C-j>", "<right><esc>Ji", {noremap=true})
-set({"n", "v"}, "<C-j>", "J", {noremap=true})
+set({"n", "x"}, "<C-j>", "J", {noremap=true})
+local split_cmd = "<cmd>let g:TEMP_AT_SLASH = @/<cr>:<left><left><left><left><left>silent!<right><right><right><right><right> s/\\s\\+/\\r/g<cr><cmd>let @/ = g:TEMP_AT_SLASH<cr>"
+set("n", "<C-s>", "V"..split_cmd.."<esc>", {noremap=true})
+set("x", "<C-s>", split_cmd, {noremap=true})
+
+set("n", "<C-d>", "Vyp", {noremap=true})
 
 set("n", "<C-p>", "vp", {noremap = true})
-set("v", "<C-p>", "p", {noremap = true})
+set("x", "<C-p>", "p", {noremap = true})
 set("x", "p", "P", {noremap = true})
 
 set("n", "<leader>s", ":%s/", {noremap = true})
 set("x", "<leader>s", ":s/", {noremap = true})
 set("n", "<leader>n", ":%norm ", {noremap = true})
 set("x", "<leader>n", ":norm ", {noremap = true})
+set("n", "<leader>g", ":grep \"\" %<left><left><left>", {noremap = true})
+
+function vim.g.GREP_FROM_REG()
+    local value = vim.fn.getreg('\"')
+    value = string.gsub(value, "\"", "\\\"")
+    vim.api.nvim_feedkeys(":grep \"" .. value .. "\" %\r:copen\r", 'n', false)
+end
+set("x", "<leader>g", "y<cmd>lua vim.g.GREP_FROM_REG()<cr>", {noremap = true})
 set("n", "<leader>G", ":%g/", {noremap = true})
 set("x", "<leader>G", ":g/", {noremap = true})
 set("n", "<leader>V", ":%v/", {noremap = true})
@@ -250,6 +261,11 @@ set({"i", "c", "o"}, "<>", "<lt>><Left>", { noremap=true })
 
 set({"i", "c", "o"}, "<C-V>", "<C-R>", { noremap=true })
 set({"i", "c", "o"}, "<C-V><C-V>", "<C-R>\"", { noremap=true })
+
+set("n", "<left>", "hhhh", { noremap=true })
+set("n", "<right>", "llll", { noremap=true })
+
+set({"n", "x"}, "'", "\"", { noremap=true })
 
 vim.cmd([[
 fun! SetKeymaps()

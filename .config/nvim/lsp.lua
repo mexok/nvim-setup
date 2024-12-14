@@ -12,8 +12,8 @@ cmp.setup {
         end,
     },
     mapping = cmp.mapping.preset.insert({
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-k>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-j>'] = cmp.mapping.scroll_docs(4),
         ['<cr>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = false,
@@ -70,7 +70,7 @@ local lspconfig = require('lspconfig')
 -- )
 -- lsp_defaults.capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-local servers = { 'pyright', 'tsserver'}
+local servers = { 'pyright', 'ts_ls'}
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
         root_dir = function () return vim.fn.getcwd() end,

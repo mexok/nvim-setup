@@ -59,10 +59,10 @@ require("lazy").setup {
     -- File lookup
     {
         'nvim-telescope/telescope.nvim',
-        tag = '0.1.5',
+        tag = '0.1.8',
         dependencies = {
             'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-fzf-native.nvim',
+            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
             'nvim-telescope/telescope-live-grep-args.nvim',
         }
     },
@@ -87,6 +87,7 @@ require("lazy").setup {
     'AndrewRadev/splitjoin.vim',
     'karb94/neoscroll.nvim',
     'tpope/vim-sleuth',
+    'tpope/vim-sensible',
 
     -- Git
     'tpope/vim-fugitive',
@@ -125,6 +126,9 @@ require('voice-command').setup()
 local harpoon = require("harpoon")
 harpoon:setup()
 
+
+local actions = require("telescope.actions")
+local lga_actions = require("telescope-live-grep-args.actions")
 require("telescope").setup {
     defaults = {
         layout_strategy = "horizontal",
@@ -161,8 +165,29 @@ require("telescope").setup {
         marks = {
             theme = "ivy"
         },
+    },
+    extensions = {
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
+        },
+
+        live_grep_args = {
+              auto_quoting = true, -- enable/disable auto-quoting
+              -- define mappings, e.g.
+              mappings = { -- extend mappings
+                i = {
+                  ["<C-k>"] = lga_actions.quote_prompt(),
+                  ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+                  ["<C-space>"] = actions.to_fuzzy_refine,
+                },
+              },
+        }
     }
 }
+require('telescope').load_extension('fzf')
 require("telescope").load_extension("live_grep_args")
 
 require("mason").setup()
@@ -170,17 +195,22 @@ require("mason-lspconfig").setup {
     ensure_installed = {
         "lua_ls",
         "perlnavigator",
-        "gopls",
     },
 }
 
-require('neoscroll').setup()
+local neoscroll = require('neoscroll')
+neoscroll.setup({mappings = {}})
 
-local t = {}
-t['<PageUp>'] = {'scroll', {'-vim.wo.scroll', 'true', '250'}}
-t['<PageDown>'] = {'scroll', {'vim.wo.scroll', 'true', '250'}}
-
-require('neoscroll.config').set_mappings(t)
+local keymap = {
+  ["<up>"] = function() neoscroll.ctrl_u({ duration = 250 }) end;
+  ['<PageUp>'] = function() neoscroll.ctrl_b({ duration = 250 }) end;
+  ["<down>"] = function() neoscroll.ctrl_d({ duration = 250 }) end;
+  ['<PageDown>'] = function() neoscroll.ctrl_f({ duration = 250 }) end;
+}
+local modes = { 'n', 'v', 'x' }
+for key, func in pairs(keymap) do
+  vim.keymap.set(modes, key, func)
+end
 
 require("toggleterm").setup {
     start_in_insert = false,

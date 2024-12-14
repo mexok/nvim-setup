@@ -17,6 +17,8 @@
 [rshf]>[lctr]
 [esc]>[eql]
 [apos]>[hyph]
+[hk2]>[caps]
+[hk4]>[caps]
 
 * keys thumbs
 [lctr]>[lalt]
@@ -56,6 +58,9 @@
 [rshf]>[lctr]
 [esc]>[eql]
 [apos]>[hyph]
+[hk2]>[caps]
+[hk4]>[caps]
+
 
 * keys thumbs
 [lctr]>[lalt]
@@ -83,6 +88,8 @@
 [rshf]>[lctr]
 [esc]>[f1]
 [apos]>[f12]
+[hk2]>[caps]
+[hk4]>[caps]
 
 * keys thumbs
 [lctr]>[lalt]
@@ -122,6 +129,8 @@
 [rshf]>[lctr]
 [esc]>[eql]
 [apos]>[hyph]
+[hk2]>[caps]
+[hk4]>[caps]
 
 * keys thumbs
 [lctr]>[lalt]
