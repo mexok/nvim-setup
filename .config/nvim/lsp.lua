@@ -70,19 +70,31 @@ local lspconfig = require('lspconfig')
 -- )
 -- lsp_defaults.capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-local servers = { 'pyright', 'ts_ls'}
-for _, lsp in ipairs(servers) do
-    lspconfig[lsp].setup {
-        root_dir = function () return vim.fn.getcwd() end,
-        settings = {
-            python = {
-                autoSearchPaths = true,
-                diagnosticMode = "workspace",
-                useLibraryCodeForTypes = true
-            }
+lspconfig.pyright.setup {
+    root_dir = function () return vim.fn.getcwd() end,
+    settings = {
+        python = {
+            autoSearchPaths = true,
+            diagnosticMode = "workspace",
+            useLibraryCodeForTypes = true
         }
     }
-end
+}
+
+local mason_registry = require('mason-registry')
+local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
+lspconfig.ts_ls.setup {
+  init_options = {
+    plugins = {
+      {
+        name = '@vue/typescript-plugin',
+        location = vue_language_server_path,
+        languages = { 'vue' },
+      },
+    },
+  },
+  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+}
 
 lspconfig.gopls.setup {
     settings = {

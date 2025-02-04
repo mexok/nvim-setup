@@ -82,7 +82,7 @@ harpoon:setup({
     default = {
         display = function(list_item)
             local name = list_item.value
-            name = string.gsub(name, ".*/", "")
+            name = string.gsub(name, ".*/", "") .. " > " .. string.gsub(string.gsub(string.gsub(name, "(.*)/.*", "%1"), "([^/])[^/]*/", "%1/"), "/([^/])[^/]*", "/%1")
             return name
         end,
     }
@@ -363,7 +363,6 @@ function vim.g.SELECT_SIMPLIFIED(paths, select_fn)
     for key, _ in pairs(simplified_paths) do
         table.insert(ui_selection, key)
     end
-    -- vim.g.SORT_MARKS(ui_selection)
 
     vim.ui.select(ui_selection, {
         prompt = "Select file",
@@ -373,7 +372,6 @@ function vim.g.SELECT_SIMPLIFIED(paths, select_fn)
                 select_fn(simplified_paths[selected].paths[1])
             else
                 print("\n")
-                vim.g.SORT_MARKS(simplified_paths[selected].paths)
                 vim.ui.select(simplified_paths[selected].paths, {
                     prompt = "Specify file",
                 }, function(specified)
@@ -387,7 +385,7 @@ function vim.g.SELECT_SIMPLIFIED(paths, select_fn)
 end
 
 vim.keymap.set("n", "mf", function() harpoon:list():add(); harpoon:sync(); vim.g.HARPOON_REFRESH_INDEX() end)
-vim.keymap.set("n", "ms", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "ms", "<cmd>lua require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())<cr><cmd>set wrap!<cr>")
 vim.keymap.set("n", "mw", function() harpoon:list():prev() end)
 vim.keymap.set("n", "me", function() harpoon:list():next() end)
 
