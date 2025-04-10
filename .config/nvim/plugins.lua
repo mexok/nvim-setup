@@ -95,7 +95,7 @@ require("lazy").setup {
 
     'mexok/voice-command.nvim',
     'mexok/motions.nvim',
-    {dir = '~/repos/reglist.nvim'}
+    'mexok/reglist.nvim'
 }
 
 require('reglist').setup {
