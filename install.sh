@@ -16,7 +16,7 @@ git clone git@github.com:mexok/nvim-setup.git
 cd nvim-setup
 
 # nvim
-sudo wget -O /opt/nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+sudo wget -O /opt/nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.tar.gz
 sudo tar -zxf /opt/nvim-linux64.tar.gz -C /opt
 sudo ln -s /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
 
@@ -41,16 +41,21 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 rm $HOME/.tmux.conf
-ln -s ~/repos/nvim-setup/.tmux.conf "$HOME/.tmux.conf"
+ln -s ~/internal/nvim-setup/.tmux.conf "$HOME/.tmux.conf"
 
 # zellij
+# Install manually
 mkdir -p "$HOME/.config/zellij/layouts"
-ln -s ~/repos/nvim-setup/config.kdl "$HOME/.config/zellij/config.kdl"
-ln -s ~/repos/nvim-setup/mylayout.kdl "$HOME/.config/zellij/layouts/mylayout.kdl"
+ln -s ~/internal/nvim-setup/config.kdl "$HOME/.config/zellij/config.kdl"
+ln -s ~/internal/nvim-setup/mylayout.kdl "$HOME/.config/zellij/layouts/mylayout.kdl"
 
 # ghostty
+# Manual install from: https://github.com/mkasberg/ghostty-ubuntu
 mkdir -p "$HOME/.config/ghostty"
-ln -s ~/repos/nvim-setup/config-ghostty "$HOME/.config/ghostty/config"
+ln -s ~/internal/nvim-setup/config-ghostty "$HOME/.config/ghostty/config"
+
+# zsh
+ln -s ~/internal/nvim-setup/.zshrc.setup "$HOME/.zshrc.setup"
 
 # Other CLI
 sudo apt install -y ripgrep
@@ -58,7 +63,7 @@ sudo apt install -y xsel
 sudo apt install -y rename
 sudo apt install -y thefuck
 sudo apt install -y libnotify-bin
-sudo apt remove ghostscript
+sudo apt remove -y ghostscript
 
 # Nodejs
 sudo apt install -y ca-certificates curl gnupg
@@ -73,7 +78,7 @@ sudo npm install -g typescript-language-server typescript
 sudo npm install vls -g
 
 # Golang
-sudo apt install -y golang
+# Install manually
 go install github.com/go-delve/delve/cmd/dlv@latest
 
 # Python
@@ -146,8 +151,7 @@ sudo apt update
 sudo apt install -y helm
 
 # Install java for pyspark
-
-sudo apt install -y default-jdk
+# Install manually
 
 # upgrade all packages
 sudo apt upgrade

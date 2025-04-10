@@ -4,7 +4,11 @@ keybind = ctrl+shift+j=unbind
 keybind = ctrl+shift+k=unbind
 keybind = ctrl+shift+l=unbind
 font-feature = -calt, -liga, -dlig
-window-decoration = none
+# window-decoration = none
+fullscreen = true
+
+initial-command = "EDITOR=nvim zellij --layout=mylayout options --scroll-buffer-size 100000000"
+
 
 #	black = "#0e1013",
 #	bg0 = "#1f2329",

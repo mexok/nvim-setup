@@ -1,3 +1,5 @@
+# Put this line into .zshrc: source ~/.zshrc.setup
+
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
@@ -10,8 +12,8 @@ bindkey '^[l' forward-word
 bindkey '^[f' accept-line
 
 export LUA_PATH=~/.config/nvim/?.lua
-export GOPATH="$HOME/go"
-export PATH="$PATH:/opt/nvim-linux64/bin:$GOPATH/bin:$HOME/.local/share/nvim/mason/bin"
+export GOPATH="/usr/local/go"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin:$GOPATH/bin:$HOME/.local/share/nvim/mason/bin"
 
 unalias -a
 alias cl="clear"
@@ -25,7 +27,7 @@ alias ll="ls -al"
 alias vgd="nvim \`git status --porcelain | awk {'print \$2'}\`"
 alias vgdm="nvim \`git ls-files -m | awk {'print \$1'}\`"
 alias vz="nvim ~/.zshrc"
-alias vs="cd ~/repos/nvim-setup && nvim"
+alias vs="cd ~/internal/nvim-setup && nvim"
 alias dk="docker"
 alias dkl="docker container list -a"
 alias wdkl="watch docker container list -a"
