@@ -130,15 +130,22 @@ set('n', '<leader>tl', vim.diagnostic.setloclist, { noremap=true, silent=true, d
 set('n', ']d', vim.diagnostic.goto_next, { noremap=true, silent=true, desc="diagnostics next"})
 set('n', '[d', vim.diagnostic.goto_prev, { noremap=true, silent=true, desc="diagnostics previous"})
 
+vim.diagnostic.config({
+  virtual_text = false,
+})
+
 -- java specific
-set('n', '<leader>jf', '<Cmd>lua require"jdtls".test_class()<CR>', { noremap=true })
-set('n', '<leader>js', '<Cmd>lua require"jdtls".test_nearest_method()<CR>', { noremap=true })
+set('n', '<leader>jf', '<cmd>lua require"jdtls".test_class()<cr>', { noremap=true })
+set('n', '<leader>js', '<cmd>lua require"jdtls".test_nearest_method()<cr>', { noremap=true })
 set('n', '<leader>jc', 'gg/class <cr>:let @/ = \'\'<cr>_', { noremap=true })
 set('n', '<leader>ji', 'gg/interface <cr>:let @/ = \'\'<cr>_', { noremap=true })
+set('n', '<leader>jw', '<cmd>JdtWipeDataAndRestart<cr>', { noremap=true })
+-- <leader>jt for initialization
 
 -- git gutter
-set('n', ']g', '<Plug>(GitGutterNextHunk)', { noremap=true, desc="git next"})
-set('n', '[g', '<Plug>(GitGutterPrevHunk)', { noremap=true, desc="git prev"})
+set('n', '<c-s-j>', '<Plug>(GitGutterNextHunk)', { noremap=true, silent=true, desc="git next hunk"})
+set('n', '<c-s-k>', '<Plug>(GitGutterPrevHunk)', { noremap=true, silent=true, desc="git prev hunk"})
+set('n', '<c-s-l>', '<cmd>GitGutterQuickFixCurrentFile<cr><cmd>copen<cr>', { noremap=true, silent=true, desc="git hunks to quick fix list"})
 
 -- uuid
 set('n', '<leader>x', 'a<C-R>=systemlist("python3 -c \\"import uuid; print(uuid.uuid4())\\"")[0]<cr><esc>')

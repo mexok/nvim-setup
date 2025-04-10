@@ -43,6 +43,15 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 rm $HOME/.tmux.conf
 ln -s ~/repos/nvim-setup/.tmux.conf "$HOME/.tmux.conf"
 
+# zellij
+mkdir -p "$HOME/.config/zellij/layouts"
+ln -s ~/repos/nvim-setup/config.kdl "$HOME/.config/zellij/config.kdl"
+ln -s ~/repos/nvim-setup/mylayout.kdl "$HOME/.config/zellij/layouts/mylayout.kdl"
+
+# ghostty
+mkdir -p "$HOME/.config/ghostty"
+ln -s ~/repos/nvim-setup/config-ghostty "$HOME/.config/ghostty/config"
+
 # Other CLI
 sudo apt install -y ripgrep
 sudo apt install -y xsel

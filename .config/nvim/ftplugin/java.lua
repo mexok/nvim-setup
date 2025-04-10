@@ -26,6 +26,13 @@ local config = {
     },
     root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
     init_options = {
+        settings = {
+            java = {
+                autobuild = {
+                    enabled = false
+                },
+            },
+        },
         bundles = bundles
     },
 }

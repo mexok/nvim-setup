@@ -95,7 +95,7 @@ require("lazy").setup {
 
     'mexok/voice-command.nvim',
     'mexok/motions.nvim',
-    'mexok/reglist.nvim'
+    {dir = '~/repos/reglist.nvim'}
 }
 
 require('reglist').setup {
@@ -202,10 +202,10 @@ local neoscroll = require('neoscroll')
 neoscroll.setup({mappings = {}})
 
 local keymap = {
-  ["<up>"] = function() neoscroll.ctrl_u({ duration = 250 }) end;
-  ['<PageUp>'] = function() neoscroll.ctrl_b({ duration = 250 }) end;
-  ["<down>"] = function() neoscroll.ctrl_d({ duration = 250 }) end;
-  ['<PageDown>'] = function() neoscroll.ctrl_f({ duration = 250 }) end;
+  ["<PageUp>"] = function() neoscroll.ctrl_u({ duration = 250 }) end;
+  ['<up>'] = function() neoscroll.ctrl_b({ duration = 250 }) end;
+  ["<PageDown>"] = function() neoscroll.ctrl_d({ duration = 250 }) end;
+  ['<down>'] = function() neoscroll.ctrl_f({ duration = 250 }) end;
 }
 local modes = { 'n', 'v', 'x' }
 for key, func in pairs(keymap) do

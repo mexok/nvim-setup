@@ -2,6 +2,11 @@ require('onedark').setup {
     style = 'darker',
     transparent = true,
     term_colors = true,
+
+    highlights = {
+        NvimTreeNormal = { fg = "#a0a8b7", bg = "#282c34" },
+        NvimTreeNormalFloat = { fg = "#a0a8b7", bg = "#282c34" }
+    }
 }
 require('onedark').load()
 
@@ -12,35 +17,22 @@ require('lualine').setup {
   winbar = {
     lualine_a = {'branch'},
     lualine_b = {'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {},
+    lualine_c = {{'filename', path = 1}},
+    lualine_x = {'location'},
     lualine_y = {},
     lualine_z = {}
   },
   inactive_winbar = {
     lualine_a = {'branch'},
     lualine_b = {'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  sections = {
-    lualine_a = {},
-    lualine_b = {},
     lualine_c = {{'filename', path = 1}},
     lualine_x = {'location'},
     lualine_y = {},
     lualine_z = {}
   },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {{'filename', path = 1}},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  }
+  tabline = {},
+  sections = {},
+  inactive_sections = {}
 }
 
 -- require('which-key').setup {}

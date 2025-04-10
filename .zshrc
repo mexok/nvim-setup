@@ -17,6 +17,8 @@ unalias -a
 alias cl="clear"
 alias e="exit"
 alias v="nvim"
+alias zy="EDITOR=nvim zellij --layout=mylayout options --scroll-buffer-size 100000000"
+alias cs="cinnamon-settings"
 alias m="less"
 alias la="ls -a"
 alias ll="ls -al"

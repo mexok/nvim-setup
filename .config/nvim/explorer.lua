@@ -30,7 +30,7 @@ require("nvim-tree").setup {
                     border = "rounded",
                     row = 1,
                     col = 1,
-                    height = vim.opt.lines:get()-5,
+                    height = vim.opt.lines:get()-3,
                     width = 9999,
                 }
             end
