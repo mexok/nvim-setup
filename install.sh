@@ -10,8 +10,8 @@ git config --global user.name "mexok"
 git config --global user.email "konstantin@semerker.de"
 git config --global help.autocorrect prompt
 
-mkdir ~/repos
-cd ~/repos
+mkdir ~/internal
+cd ~/internal
 git clone git@github.com:mexok/nvim-setup.git
 cd nvim-setup
 
@@ -21,6 +21,7 @@ sudo tar -zxf /opt/nvim-linux64.tar.gz -C /opt
 sudo ln -s /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
 
 mkdir -p "$HOME/.config/nvim/ftplugin"
+mkdir -p "$HOME/.config/nvim-search"
 rm $HOME/.config/nvim/*.lua 2>/dev/null
 
 for f in ".config/nvim"/*.lua
@@ -28,6 +29,8 @@ do
     ln -s "$PWD/$f" "$HOME/$f"
 done
 ln -s "$PWD/.config/nvim/ftplugin/java.lua" "$HOME/.config/nvim/ftplugin/java.lua"
+
+ln -s "$PWD/.config/nvim-search/init.lua" "$HOME/.config/nvim-search/init.lua"
 
 git config --global core.editor "nvim"
 
@@ -48,6 +51,7 @@ ln -s ~/internal/nvim-setup/.tmux.conf "$HOME/.tmux.conf"
 mkdir -p "$HOME/.config/zellij/layouts"
 ln -s ~/internal/nvim-setup/config.kdl "$HOME/.config/zellij/config.kdl"
 ln -s ~/internal/nvim-setup/mylayout.kdl "$HOME/.config/zellij/layouts/mylayout.kdl"
+ln -s ~/internal/nvim-setup/mylayout.swap.kdl "$HOME/.config/zellij/layouts/mylayout.swap.kdl"
 
 # ghostty
 # Manual install from: https://github.com/mkasberg/ghostty-ubuntu
@@ -63,6 +67,7 @@ sudo apt install -y xsel
 sudo apt install -y rename
 sudo apt install -y thefuck
 sudo apt install -y libnotify-bin
+sudo apt install -y xclip
 sudo apt remove -y ghostscript
 
 # Nodejs
@@ -80,6 +85,7 @@ sudo npm install vls -g
 # Golang
 # Install manually
 go install github.com/go-delve/delve/cmd/dlv@latest
+go install golang.org/x/tools/gopls@latest
 
 # Python
 sudo apt install -y python3-dev

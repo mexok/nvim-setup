@@ -129,7 +129,7 @@ dap.configurations.python = {
 dap.adapters.chrome = {
     type = "executable",
     command = "node",
-    args = {os.getenv("HOME") .. "/repos/vscode-chrome-debug/out/src/chromeDebug.js"}
+    args = {os.getenv("HOME") .. "/.local/share/nvim/mason/packages/chrome-debug-adapter/out/src/chromeDebug.js"}
 }
 
 dap.adapters.firefox = {
@@ -154,6 +154,7 @@ dap.configurations.typescript = {
     -- },
     {
         type = "chrome",
+        runtimeExecutable = "/usr/bin/chromium",
         name = "Debug 4200",
         request = "launch",
         url = "http://localhost:4200",

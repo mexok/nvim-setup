@@ -12,14 +12,16 @@ bindkey '^[l' forward-word
 bindkey '^[f' accept-line
 
 export LUA_PATH=~/.config/nvim/?.lua
-export GOPATH="/usr/local/go"
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin:$GOPATH/bin:$HOME/.local/share/nvim/mason/bin"
+export GOROOT="/usr/local/go"
+export GOPATH="$HOME/go"
+export BKTPATH="$HOME/internal/bkt"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin:$GOROOT/bin:$GOPATH/bin:$BKTPATH/bin:$HOME/.local/share/nvim/mason/bin"
 
 unalias -a
 alias cl="clear"
 alias e="exit"
 alias v="nvim"
-alias zy="EDITOR=nvim zellij --layout=mylayout options --scroll-buffer-size 100000000"
+alias zy="zellij --layout=mylayout options --scroll-buffer-size 100000000"
 alias cs="cinnamon-settings"
 alias m="less"
 alias la="ls -a"
@@ -75,3 +77,8 @@ alias glist="find . -maxdepth 3 -name '.git' -type d -exec sh -c 'cd {} && cd ..
 "( [ -z \"\$(git status --porcelain)\" ] && echo \"C \$REPO_NAME [\$BRANCH]\" || echo \"M \$REPO_NAME [\$BRANCH]\" )' \\;"
 
 eval $(thefuck --alias y)
+
+alias s="bkt save"
+l() {
+    BKT_LINK_PATH=`bkt get $@` && cd "$BKT_LINK_PATH"
+}
