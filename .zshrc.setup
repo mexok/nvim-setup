@@ -11,6 +11,7 @@ bindkey '^[h' backward-word
 bindkey '^[l' forward-word
 bindkey '^[f' accept-line
 
+export EDITOR=/opt/nvim-linux-x86_64/bin/nvim
 export LUA_PATH=~/.config/nvim/?.lua
 export GOROOT="/usr/local/go"
 export GOPATH="$HOME/go"

@@ -114,8 +114,8 @@ set({"n", "x"}, "<leader>k", "<cmd>ToggleTerm<cr>")
 set("n", "<leader>K", "<cmd>ToggleTermSendCurrentLine<cr>")
 set("x", "<leader>K", "<cmd>ToggleTermSendVisualSelection<cr>")
 set("n", "<leader>;", "<cmd>term<cr>")
-set({"n", "x"}, "/", "/\\M")
-set({"n", "x"}, "?", "?\\M")
+set({"n", "x"}, "/", "/\\V")
+set({"n", "x"}, "?", "?\\V")
 
 -- lsp setup
 set('n', 'gs', vim.lsp.buf.declaration, { noremap=true, silent=true, desc="go to declaration" })
