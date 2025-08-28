@@ -32,6 +32,10 @@ ln -s "$PWD/.config/nvim/ftplugin/java.lua" "$HOME/.config/nvim/ftplugin/java.lu
 
 ln -s "$PWD/.config/nvim-search/init.lua" "$HOME/.config/nvim-search/init.lua"
 
+ln -s "$PWD/nvim.desktop" "$HOME/.local/share/applications/nvim.desktop"
+ln -s "$PWD/nvim-search.desktop" "$HOME/.local/share/applications/nvim-search.desktop"
+xdg-mime default nvim.desktop text/plain
+
 git config --global core.editor "nvim"
 
 # tmux and zsh

@@ -62,6 +62,29 @@ set("i", "<A-a>", "<right><esc>", { noremap=true })
 set("i", "<A-i>", "<esc>", { noremap=true })
 
 
+set("n", "gp", "`[v`]", { desc="select pasted text in visual mode" })
+set("x", "gp", "<esc>`[v`]", { desc="select pasted text in visual mode" })
+set({"n", "v"}, "<leader>p", "\"+p", { noremap=true, desc="p using global buffer" })
+set({"n", "v"}, "<leader>P", "\"+P", { noremap=true, desc="P using global buffer" })
+set({"n", "v"}, "<leader>y", "\"+yl", { noremap=true, desc="y using global buffer" })
+set({"n", "v"}, "<leader>Y", "\"+Y", { noremap=true, desc="Y using global buffer" })
+set({"n", "v"}, "<leader>d", "\"+x", { noremap=true, desc="d using global buffer" })
+
+set("n", "J", "v:m '>+1<cr>gv=", {noremap=true})
+set("n", "K", "v:m '<-2<cr>gv=", {noremap=true})
+set("x", "J", ":m '>+1<cr>gv=gv", {noremap=true})
+set("x", "K", ":m '<-2<cr>gv=gv", {noremap=true})
+set("n", "L", ">>", {noremap = true})
+set("n", "H", "<<", {noremap = true})
+set("x", "L", ">gv", {noremap=true})
+set("x", "H", "<gv", {noremap=true})
+
+set("i", "<C-l>", "<right>", {noremap=true})
+set("i", "<C-h>", "<left>", {noremap=true})
+
+set({"n", "x"}, "<C-j>", "J", {noremap=true})
+
+
 vim.cmd([[
 fun! SetMotionsKeymaps()
     nnoremap <nowait><buffer> d x
@@ -90,4 +113,135 @@ augroup set_motions_keymaps
 augroup end
 
 call SetMotionsKeymaps()
+
+fun! TrimWhitespaces()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
+augroup trim_whitespaces
+    autocmd!
+    autocmd BufRead * :call TrimWhitespaces()
+augroup end
 ]])
+
+
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
+end
+vim.opt.rtp:prepend(lazypath)
+
+
+require("lazy").setup {
+    -- Theme
+    'navarasu/onedark.nvim',
+
+    -- Treesitter
+    {
+        "nvim-treesitter/nvim-treesitter",
+        version = false,
+        build = ":TSUpdate",
+        cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
+    },
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'simrat39/symbols-outline.nvim',
+}
+
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = { "c", "python", "perl", "lua", "vim", "go" },
+    sync_install = true,
+    auto_install = true,
+    autotag = {
+        enable = true,
+    },
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    },
+    indent = {enable = true},
+    textobjects = {
+        select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+                ["if"] = { query = "@function.inner", desc = "Select inner part of a function region" },
+                ["af"] = { query = "@function.outer", desc = "Select outer part of a function region" },
+                ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+                ["ac"] = { query = "@class.outer", desc = "Select outer part of a class region" },
+                ["ih"] = { query = "@conditional.inner", desc = "Select inner part of a condition region" },
+                ["ah"] = { query = "@conditional.outer", desc = "Select outer part of a condition region" },
+                ["il"] = { query = "@loop.inner", desc = "Select inner part of a loop region" },
+                ["al"] = { query = "@loop.outer", desc = "Select outer part of a loop region" },
+                ["ip"] = { query = "@parameter.inner", desc = "Select inner part of a parameter region" },
+                ["ap"] = { query = "@parameter.outer", desc = "Select outer part of a parameter region" },
+            }
+        },
+        swap = {
+            enable = true,
+            swap_next = {
+                ['<leader>~pn'] = '@parameter.inner',
+                ['<leader>~fn'] = '@function.outer',
+            },
+            swap_previous = {
+                ['<leader>~pp'] = '@parameter.inner',
+                ['<leader>~fp'] = '@function.outer',
+            }
+        },
+        move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+                ["]f"] = { query = "@function.outer", desc = "Next function start"},
+                ["]b"] = { query = "@function.inner", desc = "Next function body start"},
+                ["]c"] = { query = "@class.outer", desc = "Next class start" },
+                ["]l"] = { query = "@loop.outer", desc = "Next loop start" },
+                ["]o"] = { query = "@conditional.outer", desc = "Next conditional start" },
+            },
+            goto_next_end = {
+                ["]F"] = { query = "@function.outer", desc = "Next function end"},
+                ["]B"] = { query = "@function.inner", desc = "Next function body start"},
+                ["]C"] = { query = "@class.outer", desc = "Next class end" },
+                ["]L"] = { query = "@loop.outer", desc = "Next loop end" },
+                ["]O"] = { query = "@conditional.outer", desc = "Next conditional end" },
+            },
+            goto_previous_start = {
+                ["[f"] = { query = "@function.outer", desc = "Previous function start"},
+                ["[b"] = { query = "@function.inner", desc = "Previous function body start"},
+                ["[c"] = { query = "@class.outer", desc = "Previous class start" },
+                ["[l"] = { query = "@loop.outer", desc = "Previous loop start" },
+                ["[o"] = { query = "@conditional.outer", desc = "Previous conditional start" },
+            },
+            goto_previous_end = {
+                ["[F"] = { query = "@function.outer", desc = "Previous function end"},
+                ["[B"] = { query = "@function.inner", desc = "Previous function body end"},
+                ["[C"] = { query = "@class.outer", desc = "Previous class end" },
+                ["[L"] = { query = "@loop.outer", desc = "Previous loop end" },
+                ["[O"] = { query = "@conditional.outer", desc = "Previous conditional end" },
+            },
+        }
+    }
+}
+
+require("symbols-outline").setup()
+
+require('onedark').setup {
+    style = 'darker',
+    transparent = true,
+    term_colors = true,
+
+    highlights = {
+        NvimTreeNormal = { fg = "#a0a8b7", bg = "#282c34" },
+        NvimTreeNormalFloat = { fg = "#a0a8b7", bg = "#282c34" }
+    }
+}
+require('onedark').load()

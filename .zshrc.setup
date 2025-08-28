@@ -83,3 +83,26 @@ alias s="bkt save"
 l() {
     BKT_LINK_PATH=`bkt get $@` && cd "$BKT_LINK_PATH"
 }
+
+
+zellij_tab_name_update() {
+    if [[ -n $ZELLIJ ]]; then
+        if [[ $PWD == "/" ]]; then
+            tabname="/"
+        elif [[ $PWD == $HOME ]]; then
+            tabname="~"
+        else
+            tabname=${PWD##*/}
+        fi
+
+#        if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+#            tabname+="($( git rev-parse --abbrev-ref HEAD ))"
+#        fi
+
+        command nohup zellij action rename-tab $tabname >/dev/null 2>&1
+    fi
+}
+
+zellij_tab_name_update
+chpwd_functions+=(zellij_tab_name_update)
+

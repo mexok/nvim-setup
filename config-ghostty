@@ -3,6 +3,7 @@ scrollback-limit = 10000000
 keybind = ctrl+shift+j=unbind
 keybind = ctrl+shift+k=unbind
 keybind = ctrl+shift+l=unbind
+keybind = ctrl+g=write_screen_file:open
 font-feature = -calt, -liga, -dlig
 # fullscreen = true
 

@@ -18,17 +18,17 @@ require('lualine').setup {
     lualine_a = {'branch'},
     lualine_b = {'diagnostics'},
     lualine_c = {{'filename', path = 1}},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
+    lualine_x = {'selectioncount'},
+    lualine_y = {'location'},
+    lualine_z = {'lsp_status'}
   },
   inactive_winbar = {
     lualine_a = {'branch'},
     lualine_b = {'diagnostics'},
     lualine_c = {{'filename', path = 1}},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
+    lualine_x = {'selectioncount'},
+    lualine_y = {'location'},
+    lualine_z = {'lsp_status'}
   },
   tabline = {},
   sections = {},

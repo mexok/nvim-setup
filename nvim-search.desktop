@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=NeoVim Text Editor
+Comment=Edit text files
+Exec=env LUA_PATH=/home/mexok/.config/nvim-search/?.lua ghostty --fullscreen -e /opt/nvim-linux-x86_64/bin/nvim
+Terminal=false
+Type=Application
+Icon=terminal
+Categories=Utility;TextEditor;
+StartupNotify=true
+MimeType=text/plain;
+Name[en_US]=nvim.desktop
