@@ -88,6 +88,7 @@ require("lazy").setup {
     'karb94/neoscroll.nvim',
     'tpope/vim-sleuth',
     'tpope/vim-sensible',
+    'ggandor/leap.nvim',
 
     -- Git
     'tpope/vim-fugitive',
@@ -118,6 +119,20 @@ require('reglist').setup {
         "o",  -- 15
     }
 }
+
+require('leap').opts.preview = function (ch0, ch1, ch2)
+  return not (
+    ch1:match('%s')
+    or (ch0:match('%a') and ch1:match('%a') and ch2:match('%a'))
+  )
+end
+require('leap').opts.equivalence_classes = {
+  ' \t\r\n', '([{', ')]}', '\'"`'
+}
+--require('leap.user').set_repeat_keys('<enter>', '<backspace>')
+
+vim.keymap.set({'n', 'x'}, 'gf', '<Plug>(leap)')
+vim.keymap.set({'n', 'x'}, 'gF', '<Plug>(leap-from-window)')
 
 require('motions').setup()
 
