@@ -80,29 +80,31 @@ alias glist="find . -maxdepth 3 -name '.git' -type d -exec sh -c 'cd {} && cd ..
 eval $(thefuck --alias y)
 
 alias s="bkt save"
-l() {
-    BKT_LINK_PATH=`bkt get $@` && cd "$BKT_LINK_PATH"
-}
 
-
-zellij_tab_name_update() {
-    if [[ -n $ZELLIJ ]]; then
-        if [[ $PWD == "/" ]]; then
-            tabname="/"
-        elif [[ $PWD == $HOME ]]; then
-            tabname="~"
-        else
-            tabname=${PWD##*/}
-        fi
-
-#        if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-#            tabname+="($( git rev-parse --abbrev-ref HEAD ))"
-#        fi
-
-        command nohup zellij action rename-tab $tabname >/dev/null 2>&1
+set_tabname() {
+    if [[ $1 == $HOME ]]; then
+        wezterm cli set-tab-title "~"
+    else
+        wezterm cli set-tab-title "$(basename $1)"
     fi
 }
 
-zellij_tab_name_update
-chpwd_functions+=(zellij_tab_name_update)
+l() {
+    BKT_LINK_PATH=`bkt get $@` && cd "$BKT_LINK_PATH"
+    set_tabname $BKT_LINK_PATH
+}
 
+cd() {
+    builtin cd "$@"
+    set_tabname $(pwd)
+}
+
+..() {
+    builtin cd ..
+    set_tabname $(pwd)
+}
+
+set_tabname $(pwd)
+
+alias mvnci="mvn clean install"
+alias mvncis="mvn clean install -DskipTests"

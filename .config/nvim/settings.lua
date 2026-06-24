@@ -5,7 +5,7 @@ vim.g.surround_no_mappings = true
 vim.g.gitgutter_show_msg_on_hunk_jumping = 0
 
 vim.opt.laststatus = 0
-vim.opt.cmdheight = 0
+--vim.opt.cmdheight = 0
 
 vim.opt.iskeyword:append({"$", "@-@", "%"})
 

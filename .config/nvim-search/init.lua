@@ -33,6 +33,7 @@ vim.opt.incsearch = true
 
 vim.opt.colorcolumn = "80"
 
+
 set("n", "<esc>", "<cmd>q!<cr>", { noremap=true, desc="use esc to quit" })
 
 -- editing
@@ -101,9 +102,8 @@ fun! SetMotionsKeymaps()
     xnoremap <nowait><buffer> x vvV
     nnoremap <nowait><buffer> V v$<left>
     xnoremap <nowait><buffer> V $<left>
-    nnoremap <nowait><buffer> y "+yl<cmd>q!<cr>
-    nnoremap <nowait><buffer> Y v$<left>"+y<cmd>q!<cr>
-    xnoremap <nowait><buffer> y "+y<cmd>q!<cr>
+    nnoremap <nowait><buffer> <cr> "+yl<cmd>q!<cr>
+    xnoremap <nowait><buffer> <cr> "+y<cmd>q!<cr>
 endfun
 
 augroup set_motions_keymaps

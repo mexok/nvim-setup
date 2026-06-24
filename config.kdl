@@ -5,12 +5,17 @@ keybinds {
     unbind "Ctrl q"
     normal {
         unbind "Ctrl o"
-        bind "Ctrl s" { SwitchToMode "session"; }
+        bind "Ctrl f" { EditScrollback; }
+    }
+    tab {
+        bind "l" { MoveTab "Right"; }
+        bind "h" { MoveTab "Left"; }
+    }
+    scroll {
         bind "Ctrl f" { EditScrollback; }
     }
     session {
         unbind "Ctrl o"
-        bind "Ctrl s" { SwitchToMode "normal"; }
     }
 }
 

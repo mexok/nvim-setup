@@ -64,6 +64,7 @@ ln -s ~/internal/nvim-setup/config-ghostty "$HOME/.config/ghostty/config"
 
 # zsh
 ln -s ~/internal/nvim-setup/.zshrc.setup "$HOME/.zshrc.setup"
+ln -s ~/internal/nvim-setup/.wezterm.lua "$HOME/.wezterm.lua"
 
 # Other CLI
 sudo apt install -y ripgrep
@@ -167,3 +168,16 @@ sudo apt install -y helm
 sudo apt upgrade
 
 echo "Please update .zshrc manually."
+
+
+# LLM
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull qwen3-coder-next
+ollama pull qwen3-coder:30b
+
+sudo systemctl edit ollama.service
+#[Service]
+#Environment="OLLAMA_KEEP_ALIVE=-1"
+
+sudo systemctl daemon-reload
+sudo systemctl restart ollama

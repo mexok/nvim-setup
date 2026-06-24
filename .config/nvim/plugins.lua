@@ -94,10 +94,109 @@ require("lazy").setup {
     'tpope/vim-fugitive',
     'airblade/vim-gitgutter',
 
+    {
+      "olimorris/codecompanion.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "ravitemer/codecompanion-history.nvim",
+      },
+      opts = {
+        -- NOTE: The log_level is in `opts.opts`
+        opts = {
+          log_level = "DEBUG", -- or "TRACE"
+        },
+      },
+    },
+
     'mexok/voice-command.nvim',
     'mexok/motions.nvim',
     'mexok/reglist.nvim'
 }
+
+require("codecompanion").setup({
+  adapters = {
+    ollama = function()
+      return require("codecompanion.adapters").extend("ollama", {
+        name = "qwen3_coder",
+        schema = {
+          model = {
+            default = "qwen3-coder:30b",
+          },
+          num_ctx = {
+            default = 32768,
+          },
+        },
+        env = {
+          url = "http://127.0.0.1:11434", -- Default Ollama port
+        },
+      })
+    end,
+  },
+  -- Set the default strategies to use your local model
+  strategies = {
+    chat = { adapter = "ollama" },
+    inline = { adapter = "ollama" },
+    agent = { adapter = "ollama" },
+  },
+  opts = {
+    log_level = "DEBUG", -- or "TRACE"
+  },
+
+  extensions = {
+    history = {
+      enabled = true,
+      opts = {
+        -- Keymap to open the history picker from inside a chat buffer
+        keymap = "gh",
+
+        -- Keymap to manually save the current chat (useful if auto_save is false)
+        -- save_chat_keymap = "sc",
+
+        -- Whether to automatically save chats as you type (recommended)
+        auto_save = true,
+
+        -- Enable detailed logging for history operations
+        enable_logging = false,
+
+        -- ----------------------------------------------------
+        -- Summarization Features
+        -- ----------------------------------------------------
+        summary = {
+          -- Keymap to generate a summary for the current chat
+          create_summary_keymap = "gcs",
+          -- Keymap to browse existing summaries
+          browse_summaries_keymap = "gbs",
+        },
+
+        -- ----------------------------------------------------
+        -- Memory Tool (VectorCode Integration)
+        -- ----------------------------------------------------
+        memory = {
+          -- Automatically create a searchable vector memory when a summary is generated
+          auto_create_memories_on_summary_generation = true,
+
+          -- Path to the `vectorcode` executable (make sure it's in your PATH)
+          vectorcode_exe = "vectorcode",
+
+          tool_opts = {
+            -- Default number of past memories to retrieve when the agent searches
+            default_num = 10,
+          },
+
+          -- Whether to show Neovim notifications when memory tasks run
+          notify = true,
+        }
+      }
+    }
+  }
+})
+
+vim.api.nvim_set_keymap("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
 
 require('reglist').setup {
     default_mappings = '<leader>l',
