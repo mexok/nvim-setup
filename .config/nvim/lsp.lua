@@ -61,6 +61,7 @@ cmp.setup.cmdline(':', {
     })
 })
 -- lsp
+local lspconfig = require('lspconfig')
 -- local lsp_defaults = lspconfig.util.default_config
 -- lsp_defaults.capabilities = vim.tbl_deep_extend(
 --     'force',
@@ -69,7 +70,7 @@ cmp.setup.cmdline(':', {
 -- )
 -- lsp_defaults.capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-vim.lsp.config['pyright'] = {
+lspconfig.pyright.setup {
     root_dir = function () return vim.fn.getcwd() end,
     settings = {
         python = {
@@ -79,9 +80,23 @@ vim.lsp.config['pyright'] = {
         }
     }
 }
-vim.lsp.enable('pyright')
 
-vim.lsp.config['gopls'] = {
+local mason_registry = require('mason-registry')
+local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
+lspconfig.ts_ls.setup {
+  init_options = {
+    plugins = {
+      {
+        name = '@vue/typescript-plugin',
+        location = vue_language_server_path,
+        languages = { 'vue' },
+      },
+    },
+  },
+  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+}
+
+lspconfig.gopls.setup {
     settings = {
         gopls = {
             analyses = {
@@ -90,9 +105,7 @@ vim.lsp.config['gopls'] = {
         }
     }
 }
-vim.lsp.enable('gopls')
-
-vim.lsp.config['lua_ls'] = {
+lspconfig.lua_ls.setup {
     settings = {
         Lua = {
             diagnostics = {
@@ -101,23 +114,22 @@ vim.lsp.config['lua_ls'] = {
         }
     }
 }
-vim.lsp.enable('lua_ls')
 
---lspconfig.cmake.setup({})
---lspconfig.clangd.setup({})
---lspconfig.perlnavigator.setup{
---    settings = {
---      perlnavigator = {
---          perlPath = 'perl',
---          enableWarnings = true,
---          perltidyProfile = '',
---          perlcriticProfile = '',
---          perlcriticEnabled = false,
---      }
---    }
---}
---lspconfig.volar.setup{}
---lspconfig.terraformls.setup{}
+lspconfig.cmake.setup({})
+lspconfig.clangd.setup({})
+lspconfig.perlnavigator.setup{
+    settings = {
+      perlnavigator = {
+          perlPath = 'perl',
+          enableWarnings = true,
+          perltidyProfile = '',
+          perlcriticProfile = '',
+          perlcriticEnabled = false,
+      }
+    }
+}
+lspconfig.volar.setup{}
+lspconfig.terraformls.setup{}
 
 -- to disable weired behavior when entering insert mode
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
