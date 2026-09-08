@@ -88,7 +88,7 @@ require("lazy").setup {
     'karb94/neoscroll.nvim',
     'tpope/vim-sleuth',
     'tpope/vim-sensible',
-    'ggandor/leap.nvim',
+    {url = 'https://codeberg.org/andyg/leap.nvim', name = 'leap.nvim'},
 
     -- Git
     'tpope/vim-fugitive',
