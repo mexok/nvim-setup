@@ -310,6 +310,7 @@ require("mason-lspconfig").setup {
         "lua_ls",
         "perlnavigator",
     },
+    automatic_enable = { exclude = { "jdtls" } },
 }
 
 local neoscroll = require('neoscroll')
